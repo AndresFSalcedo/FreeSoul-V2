@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "6141fb0d5e33d356a8c86e98"
+  },
+  "design": "HolaPrueba1",
+  "codColor": "rojo",
+  "S": 1,
+  "M": 2,
+  "L": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6141fb1b5e33d356a8c86e9c"
+  },
+  "design": "HolaPrueba",
+  "codColor": "rojo",
+  "S": 0,
+  "M": 0,
+  "L": 0,
+  "__v": 0
+}]
