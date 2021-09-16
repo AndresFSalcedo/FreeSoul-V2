@@ -18,6 +18,11 @@ let stockSchema = new Schema({
 		required: [true, "El color es obligatorio"]
 	},
 
+	price:{
+		type: Number,
+		required: [true, "El precio es obligatorio"]
+	},
+
 	S: {
 		type: Number,
 		required: [true, "Asignar valor es obligatorio"]

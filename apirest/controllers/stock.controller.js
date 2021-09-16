@@ -72,6 +72,15 @@ let createStock = (req, res) => {
 		})
 	}
 
+	if (!req.body.price) {
+
+		res.json({
+
+			status: 500,
+			mensaje: "El color no puede ir vacio"
+		})
+	}
+
 	if (!req.body.S) {
 
 		res.json({
@@ -104,6 +113,7 @@ let createStock = (req, res) => {
 
 		design: `${body.design}`,
 		codColor: `${body.codColor}`,
+		price: `${body.price}`,
 		S: `${body.S}`,
 		M: `${body.M}`,
 		L: `${body.L}`,
@@ -172,8 +182,9 @@ let editStock = (req, res) => {
 		let dataChangeDb = (id, body) => {
 
 			return new Promise((resolve, reject) => {
-				let newSizes = {
+				let newData = {
 
+					price: body.price,
 					S: body.S,
 					M: body.M,
 					L: body.L
@@ -181,7 +192,7 @@ let editStock = (req, res) => {
 
 				//Actualizamos en MongoDb
 
-				Stock.findByIdAndUpdate(id, newSizes, {
+				Stock.findByIdAndUpdate(id, newData, {
 					new: true,
 					runValidators: true
 				}, (err, data) => {
