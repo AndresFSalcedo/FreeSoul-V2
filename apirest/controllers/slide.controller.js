@@ -4,6 +4,7 @@ const Slide = require('../models/slide.model')
 
 //Administrados de carpetas y files
 const fs = require('fs')
+const path = require('path')
 
 // FUNCION GET
 
@@ -338,7 +339,7 @@ let deleteSlide = (req, res) => {
 			return res.json({
 
 				status: 500,
-				mensaje: "Error en el servidor",
+				msg: "Error en el servidor",
 				err
 			})
 		}
@@ -348,7 +349,7 @@ let deleteSlide = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "La foto de la Slide no existente",
+				msg: "La foto de la Slide no existente",
 			})
 		}
 
@@ -367,23 +368,45 @@ let deleteSlide = (req, res) => {
 				return res.json({
 
 					status: 500,
-					mensaje: "Error en el servidor",
+					msg: "Error en el servidor",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				mensaje:"La foto de la Slide eliminado"
+				msg:"La foto de la Slide eliminado"
 			})
 		})
 	})
 
 }
 
+// FUNCION GET PARA ACCESO A IMAGENES SEPARADAS
+
+let showImg = (req, res)=>{
+
+	let image = req.params.image
+	let imgRoute = `./files/slide/${image}`
+
+	fs.exists(imgRoute, exists =>{
+
+		if(!exists){
+			return res.json({
+				status:400,
+				msg: "La imagen no existe"
+			})
+		}
+
+		res.sendFile(path.resolve(imgRoute))
+	})
+}
+
+
 module.exports = {
 	showSlide,
 	createSlide,
 	editSlide,
-	deleteSlide
+	deleteSlide,
+	showImg
 }
