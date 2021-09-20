@@ -1,21 +1,23 @@
 [{
   "_id": {
-    "$oid": "6141fb0d5e33d356a8c86e98"
+    "$oid": "61429cafef47299355982dc1"
   },
-  "design": "HolaPrueba1",
-  "codColor": "rojo",
-  "S": 1,
-  "M": 2,
-  "L": 0,
+  "design": "C-BoobsA",
+  "codColor": "#000000",
+  "price": 75000,
+  "S": 5,
+  "M": 7,
+  "L": 24,
   "__v": 0
 },{
   "_id": {
-    "$oid": "6141fb1b5e33d356a8c86e9c"
+    "$oid": "61429cceef47299355982dc3"
   },
-  "design": "HolaPrueba",
-  "codColor": "rojo",
-  "S": 0,
-  "M": 0,
-  "L": 0,
+  "design": "C-BoobsA",
+  "codColor": "#FFFFFF",
+  "price": 55000,
+  "S": 1,
+  "M": 1,
+  "L": 1,
   "__v": 0
 }]

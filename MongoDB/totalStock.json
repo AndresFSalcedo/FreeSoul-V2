@@ -1,17 +1,100 @@
 [{
   "_id": {
-    "$oid": "61420d6e397d58da71dbe1fe"
+    "$oid": "614299bcb4df646b7c0c9c29"
   },
   "design": "C-BoobsA",
-  "image": "7502.jpg",
+  "image": "9695.jpg",
   "__v": 0,
-  "stock": []
+  "Stock": [
+    {
+      "_id": {
+        "$oid": "61429cafef47299355982dc1"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#000000",
+      "price": 75000,
+      "S": 5,
+      "M": 7,
+      "L": 24,
+      "__v": 0
+    },
+    {
+      "_id": {
+        "$oid": "61429cceef47299355982dc3"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#FFFFFF",
+      "price": 55000,
+      "S": 1,
+      "M": 1,
+      "L": 1,
+      "__v": 0
+    }
+  ]
 },{
   "_id": {
-    "$oid": "61421bfb8a09fb37db01efb9"
+    "$oid": "614299c3b4df646b7c0c9c2b"
   },
   "design": "C-BoobsA",
-  "image": "9385.jpg",
+  "image": "2210.jpg",
   "__v": 0,
-  "stock": []
+  "Stock": [
+    {
+      "_id": {
+        "$oid": "61429cafef47299355982dc1"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#000000",
+      "price": 75000,
+      "S": 5,
+      "M": 7,
+      "L": 24,
+      "__v": 0
+    },
+    {
+      "_id": {
+        "$oid": "61429cceef47299355982dc3"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#FFFFFF",
+      "price": 55000,
+      "S": 1,
+      "M": 1,
+      "L": 1,
+      "__v": 0
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "61429a2eb4df646b7c0c9c2d"
+  },
+  "design": "C-BoobsA",
+  "image": "3047.jpg",
+  "__v": 0,
+  "Stock": [
+    {
+      "_id": {
+        "$oid": "61429cafef47299355982dc1"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#000000",
+      "price": 75000,
+      "S": 5,
+      "M": 7,
+      "L": 24,
+      "__v": 0
+    },
+    {
+      "_id": {
+        "$oid": "61429cceef47299355982dc3"
+      },
+      "design": "C-BoobsA",
+      "codColor": "#FFFFFF",
+      "price": 55000,
+      "S": 1,
+      "M": 1,
+      "L": 1,
+      "__v": 0
+    }
+  ]
 }]
