@@ -384,7 +384,7 @@ let deleteSlide = (req, res) => {
 
 // FUNCION GET PARA ACCESO A IMAGENES SEPARADAS
 
-let showImg = (req, res)=>{
+let showSlideImg = (req, res)=>{
 
 	let image = req.params.image
 	let imgRoute = `./files/slide/${image}`
@@ -408,5 +408,5 @@ module.exports = {
 	createSlide,
 	editSlide,
 	deleteSlide,
-	showImg
+	showSlideImg
 }

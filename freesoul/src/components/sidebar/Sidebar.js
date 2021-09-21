@@ -37,9 +37,9 @@ export default function Sidebar(){
 					</div>
 
 					<div className="info">
-						<a href="#/" className="d-block text-decoration-none">
+						<p className="text-white">
 							{user}		
-						</a>
+						</p>
 					</div>
 
 				</div>
@@ -74,7 +74,7 @@ export default function Sidebar(){
 						</li>
 
 						<li className="nav-item">
-							<a href="/" className="nav-link">
+							<a href="/stocks" className="nav-link">
 								<i className="nav-icon fas fa-tshirt"></i>
 								<p>Gestor de Inventario</p>
 							</a>

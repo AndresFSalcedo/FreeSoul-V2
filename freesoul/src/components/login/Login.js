@@ -47,7 +47,7 @@ export default function Login(){
 			localStorage.setItem("ID", result.data._id);
 			localStorage.setItem("USERNAME", result.data.username);
 
-			window.location.href = "/";
+			window.location.href = "/stocks";
 		}
 
 	}
@@ -157,9 +157,6 @@ const loginAPI = data =>{
 	return fetch(url, params).then( response =>{
 
 		return response.json();
-	}).then( result =>{
-
-		return result;
 	}).catch(err =>{
 
 		return err;

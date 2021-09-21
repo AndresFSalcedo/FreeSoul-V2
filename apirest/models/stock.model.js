@@ -6,6 +6,12 @@ let Schema = mongoose.Schema;
 
 let stockSchema = new Schema({
 
+	productType: {
+
+		type: String,
+		required: [true, "El tipo de producto es obligatorio"]
+	},
+
 	design: {
 
 		type: String,
@@ -36,6 +42,12 @@ let stockSchema = new Schema({
 	L: {
 		type: Number,
 		required: [true, "Asignar valor es obligatorio"]
+	},
+
+	productCode: {
+
+		type: String,
+		required: false
 	}
 
 	

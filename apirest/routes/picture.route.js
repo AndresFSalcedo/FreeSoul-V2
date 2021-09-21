@@ -19,6 +19,8 @@ app.put('/edit-Picture/:id', verifyToken, Picture.editPicture);
 
 app.delete('/delete-Picture/:id', verifyToken, Picture.deletePicture);
 
+app.get('/show-pictureImg/:image', Picture.showPictureImg);
+
 //EXPORTAR LA RUTA
 
 module.exports = app

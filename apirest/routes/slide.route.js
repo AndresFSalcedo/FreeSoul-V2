@@ -19,7 +19,7 @@ app.put('/edit-slide/:id', verifyToken, Slide.editSlide);
 
 app.delete('/delete-slide/:id', verifyToken, Slide.deleteSlide);
 
-app.get('/show-img/:image', Slide.showImg)
+app.get('/show-slideImg/:image', Slide.showSlideImg)
 
 //EXPORTAR LA RUTA
 

@@ -17,7 +17,7 @@ let showStock = (req, res) => {
 				return res.json({
 
 					status: 500,
-					mensaje: "Error en la peticion"
+					msg: "Error en la peticion"
 				})
 			}
 
@@ -30,7 +30,7 @@ let showStock = (req, res) => {
 					return res.json({
 
 						status: 500,
-						mensaje: "Error en la peticion",
+						msg: "Error en la peticion",
 						err
 					})
 				}
@@ -54,12 +54,21 @@ let createStock = (req, res) => {
 
 	//SE PREGUNTA SI VIENEN TODOS LOS CAMPOS
 
+	if (!req.body.productType) {
+
+		res.json({
+
+			status: 500,
+			msg: "El tipo de producto no puede ir vacio"
+		})
+	}
+
 	if (!req.body.design) {
 
 		res.json({
 
 			status: 500,
-			mensaje: "El diseño no puede ir vacio"
+			msg: "El diseño no puede ir vacio"
 		})
 	}
 
@@ -68,7 +77,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			mensaje: "El color no puede ir vacio"
+			msg: "El color no puede ir vacio"
 		})
 	}
 
@@ -77,7 +86,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			mensaje: "El color no puede ir vacio"
+			msg: "El precio no puede ir vacio"
 		})
 	}
 
@@ -86,7 +95,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			mensaje: "La talla S no puede ir vacia"
+			msg: "La talla S no puede ir vacia"
 		})
 	}
 
@@ -95,7 +104,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			mensaje: "La talla M no puede ir vacia"
+			msg: "La talla M no puede ir vacia"
 		})
 	}
 
@@ -104,19 +113,21 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			mensaje: "La talla L no puede ir vacia"
+			msg: "La talla L no puede ir vacia"
 		})
 	}
 
 	// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
 	let stock = new Stock({
 
+		productType: `${body.productType}`,
 		design: `${body.design}`,
 		codColor: `${body.codColor}`,
 		price: `${body.price}`,
 		S: `${body.S}`,
 		M: `${body.M}`,
 		L: `${body.L}`,
+		productCode:`${body.productType}-${body.design}`
 	})
 
 
@@ -128,7 +139,7 @@ let createStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "Error al almacenar el stock",
+				msg: "Error al almacenar el stock",
 				err
 			})
 		}
@@ -137,7 +148,7 @@ let createStock = (req, res) => {
 
 			status: 200,
 			data,
-			mensaje: "El stock ha sido creado con exito"
+			msg: "El stock ha sido creado con exito"
 		})
 	})
 }
@@ -163,7 +174,7 @@ let editStock = (req, res) => {
 			return res.json({
 
 				status: 500,
-				mensaje: "Error en el servidor",
+				msg: "Error en el servidor",
 				err
 			})
 		}
@@ -173,7 +184,7 @@ let editStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "El objeto no existe",
+				msg: "El objeto no existe",
 			})
 		}
 
@@ -184,10 +195,13 @@ let editStock = (req, res) => {
 			return new Promise((resolve, reject) => {
 				let newData = {
 
+					productType: body.productType,
+					design:body.design,
 					price: body.price,
 					S: body.S,
 					M: body.M,
-					L: body.L
+					L: body.L,
+					productCode:`${body.productType}-${body.design}`
 				}
 
 				//Actualizamos en MongoDb
@@ -199,42 +213,42 @@ let editStock = (req, res) => {
 
 					if (err) {
 
-						let respuesta = {
+						let response = {
 
 							res: res,
 							err: err
 						}
-						reject(respuesta)
+						reject(response)
 					}
 
-					let respuesta = {
+					let response = {
 
 						res: res,
 						data: data
 					}
 
-					resolve(respuesta)
+					resolve(response)
 				})
 			})
 		}
 
 		//SINCRONIZAMOS LAS PROMESAS
 
-		dataChangeDb(id, body).then(respuesta => {
+		dataChangeDb(id, body).then(response => {
 
-			respuesta["res"].json({
+			response["res"].json({
 				status: 200,
-				data: respuesta["data"],
-				mensaje: "El stock ha sido actualizado con exito"
+				data: response["data"],
+				msg: "El stock ha sido actualizado con exito"
 			})
 
-		}).catch(respuesta => {
+		}).catch(response => {
 
-			respuesta["res"].json({
+			response["res"].json({
 
 				status: 400,
-				err: respuesta["err"],
-				mensaje: "Error al editar el stock"
+				err: response["err"],
+				msg: "Error al editar el stock"
 			})
 		})
 
@@ -259,7 +273,7 @@ let deleteStock = (req, res) => {
 			return res.json({
 
 				status: 500,
-				mensaje: "Error en el servidor",
+				msg: "Error en el servidor",
 				err
 			})
 		}
@@ -269,7 +283,7 @@ let deleteStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "El objeto no existe",
+				msg: "El objeto no existe",
 			})
 		}
 
@@ -282,14 +296,14 @@ let deleteStock = (req, res) => {
 				return res.json({
 
 					status: 500,
-					mensaje: "Error en el servidor",
+					msg: "Error en el servidor",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				mensaje:"El objeto ha sido eliminado"
+				msg:"El objeto ha sido eliminado"
 			})
 		})
 	})

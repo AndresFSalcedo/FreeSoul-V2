@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode';
+import './App.css';
 
 // Componente Login
 import Login from './components/login/Login';
@@ -41,11 +42,10 @@ export default function App() {
         <BrowserRouter>
 
           <Switch>
-            
+            <Route exact path="/stocks" component={Stocks}/>
             <Route exact path="/admins" component={Admins}/>
             <Route exact path="/slide" component={Slides}/>
             <Route exact path="/pictures" component={Pictures}/>
-            <Route exact path="/" component={Stocks}/>
             <Route exact path="/users" component={Users}/>
             <Route component={Error404}/>
 

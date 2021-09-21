@@ -50,41 +50,6 @@ let showAdmins = (req, res) => {
 
 }
 
-//FUNCION POST
-
-let createAdmin = (req, res)=>{
-
-	//OBTENER EL CUERPOD EL FORMULARIO
-	let body = req.body;
-
-	// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
-	let admins = new Admins({
-		
-
-		username: body.username,
-		password: bcrypt.hashSync(body.password, 10)
-	})
-
-	admins.save((err, data) => {
-
-		if (err) {
-			return res.json({
-
-				status: 400,
-				mensaje: "Error al almacenar el administrador",
-				err
-			})
-		}
-
-		res.json({
-
-			status: 200,
-			data,
-			mensaje: "El administrador ha sido creado con exito"
-		})
-	})
-}
-
 //FUNCION PUT
 
 let editAdmin = (req, res) => {
@@ -274,7 +239,6 @@ let login = (req, res) => {
 //EXPORTAR FUNCIONES DEL CONTROLADOR
 module.exports = {
 	showAdmins,
-	createAdmin,
 	editAdmin,
 	login
 }

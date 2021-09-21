@@ -4,6 +4,7 @@ const Picture = require('../models/picture.model')
 
 //Administrados de carpetas y archivos
 const fs = require('fs')
+const path = require('path')
 
 // FUNCION GET
 
@@ -53,7 +54,7 @@ let createPicture = (req, res) => {
 
 	let body = req.body
 
-	//SE PREGUNTA SI VIENE UN file
+	//SE PREGUNTA SI VIENE UN FILE
 
 	if (!req.files) {
 
@@ -88,13 +89,13 @@ let createPicture = (req, res) => {
 		})
 	}
 
-	//CAMBIAR name AL file
+	//CAMBIAR NOMBRE AL FILE
 
 	let name = Math.floor(Math.random() * 10000)
 
 	let extension = file.name.split('.').pop()
 
-	//Mover file a la carpeta
+	//MOVER FILE A LA CARPETA
 
 	file.mv(`./files/picture/${name}.${extension}`, err => {
 		if (err) {
@@ -110,8 +111,10 @@ let createPicture = (req, res) => {
 		// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
 		let picture = new Picture({
 			
+			productType:body.productType,
 			design:body.design,
-			image: `${name}.${extension}`
+			image: `${name}.${extension}`,
+			productCode: `${body.productType}-${body.design}`
 		})
 
 		//GUARDAR EN MONGODB
@@ -258,9 +261,10 @@ let editPicture = (req, res) => {
 			return new Promise((resolve, reject) => {
 				let dataPicture = {
 					
-					
+					productType: body.productType,
 					design: body.design,
-					image: picRoute
+					image: picRoute,
+					productCode: `${body.productType}-${body.design}`
 				}
 
 				//Actualizamos en MongoDb
@@ -300,7 +304,7 @@ let editPicture = (req, res) => {
 				respu["res"].json({
 					status: 200,
 					data: respu["data"],
-					msg: "El Slide ha sido actualizado con exito"
+					msg: "La Imagen ha sido actualizada con exito"
 				})
 
 			}).catch(respu => {
@@ -309,7 +313,7 @@ let editPicture = (req, res) => {
 
 					status: 400,
 					err: respu["err"],
-					msg: "Error al editar el Slide"
+					msg: "Error al editar la Imagen"
 				})
 			})
 		}).catch(respu => {
@@ -382,11 +386,32 @@ let deletePicture = (req, res) => {
 
 }
 
+let showPictureImg = (req,res)=>{
+
+	let image = req.params.image
+	let imgRoute = `./files/picture/${image}`
+
+	fs.exists(imgRoute, exists =>{
+
+		if(!exists){
+			return res.json({
+				status:400,
+				msg: "La imagen no existe"
+			})
+		}
+
+		res.sendFile(path.resolve(imgRoute))
+	})
+}
+
+
+
 //Exports of functions 
 
 module.exports = {
 	showPictures,
 	createPicture,
 	editPicture,
-	deletePicture
+	deletePicture,
+	showPictureImg
 }

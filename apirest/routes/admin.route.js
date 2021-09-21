@@ -13,8 +13,6 @@ const { verifyToken } = require('../middlewares/autentification');
 
 app.get('/show-admins', verifyToken, Admins.showAdmins);
 
-app.post('/create-admin', verifyToken, Admins.createAdmin);
-
 app.put('/edit-admin/:id', verifyToken, Admins.editAdmin);
 
 app.post('/login', Admins.login)
