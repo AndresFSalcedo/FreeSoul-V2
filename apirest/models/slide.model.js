@@ -10,6 +10,12 @@ let slideSchema = new Schema({
 
 		type: String,
 		required: [true, "La imagen es obligatoria"]
+	},
+
+	position: {
+
+		type: Number,
+		required: [true, "La posicion es obligatoria"]
 	}
 })
 

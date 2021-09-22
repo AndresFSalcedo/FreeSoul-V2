@@ -64,6 +64,15 @@ let createSlide = (req, res) => {
 		})
 	}
 
+	if (!req.body.position) {
+
+		res.json({
+
+			status: 500,
+			msg: "La posicion no puede ir vacia"
+		})
+	}
+
 	//CAPTURA DE file
 	
 	let file = req.files.picture
@@ -110,7 +119,8 @@ let createSlide = (req, res) => {
 		// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
 		let slide = new Slide({
 
-			picture: `${name}.${extension}`
+			picture: `${name}.${extension}`,
+			position: `${body.position}`
 		})
 
 
@@ -225,7 +235,7 @@ let editSlide = (req, res) => {
 							let respu = {
 
 								res: res,
-								msg: "Error al guardar imagen"
+								msg: "Error al guardar el Slide"
 							}
 
 							reject(respu)
@@ -258,7 +268,8 @@ let editSlide = (req, res) => {
 			return new Promise((resolve, reject) => {
 				let dataSlide = {
 
-					picture: picRoute
+					picture: picRoute,
+					position: body.position
 				}
 
 				//Actualizamos en MongoDb
@@ -349,7 +360,7 @@ let deleteSlide = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "La foto de la Slide no existente",
+				msg: "El slide no existe",
 			})
 		}
 
@@ -375,7 +386,7 @@ let deleteSlide = (req, res) => {
 
 			res.json({
 				status:200,
-				msg:"La foto de la Slide eliminado"
+				msg:"El slide ha sido eliminado"
 			})
 		})
 	})

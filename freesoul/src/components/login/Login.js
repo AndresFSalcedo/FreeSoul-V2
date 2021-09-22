@@ -39,7 +39,7 @@ export default function Login(){
 		const result = await loginAPI(admins);
 		if(result.status !== 200){
 
-			$("button[type='submit']").before(`<div class="alert alert-danger">${result.mensaje}</div>`);
+			$("button[type='submit']").before(`<div class="alert alert-danger">${result.msg}</div>`);
 
 		}else{
 

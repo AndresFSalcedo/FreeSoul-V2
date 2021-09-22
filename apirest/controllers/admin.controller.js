@@ -20,7 +20,7 @@ let showAdmins = (req, res) => {
 				return res.json({
 
 					status: 500,
-					mensaje: "Error en la peticion"
+					msg: "Error en la peticion"
 				})
 			}
 
@@ -33,7 +33,7 @@ let showAdmins = (req, res) => {
 					return res.json({
 
 						status: 500,
-						mensaje: "Error en la peticion",
+						msg: "Error en la peticion",
 						err
 					})
 				}
@@ -71,7 +71,7 @@ let editAdmin = (req, res) => {
 			return res.json({
 
 				status: 500,
-				mensaje: "Error en el servidor",
+				msg: "Error en el servidor",
 				err
 			})
 		}
@@ -81,7 +81,7 @@ let editAdmin = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "Administrador no existente",
+				msg: "Administrador no existente",
 			})
 		}
 
@@ -154,7 +154,7 @@ let editAdmin = (req, res) => {
 				respuesta["res"].json({
 					status: 200,
 					data: respuesta["data"],
-					mensaje: "El Admin ha sido actualizado con exito"
+					msg: "El Admin ha sido actualizado con exito"
 				})
 
 			}).catch(respuesta => {
@@ -163,7 +163,7 @@ let editAdmin = (req, res) => {
 
 					status: 400,
 					err: respuesta["err"],
-					mensaje: "Error al editar el Admin"
+					msg: "Error al editar el Admin"
 				})
 			})
 		}).catch(respuesta => {
@@ -171,7 +171,7 @@ let editAdmin = (req, res) => {
 			respuesta["res"].json({
 
 				status: 400,
-				mensaje: respuesta["mensaje"]
+				msg: respuesta["msg"]
 			})
 		})
 	})
@@ -194,7 +194,7 @@ let login = (req, res) => {
 			return res.json({
 
 				status: 500,
-				mensaje: "Error en el servidor",
+				msg: "Error en el servidor",
 				err
 			})
 		}
@@ -206,7 +206,7 @@ let login = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "Usuario no existente",
+				msg: "Usuario no existente",
 			})
 		}
 
@@ -216,7 +216,7 @@ let login = (req, res) => {
 			return res.json({
 
 				status: 400,
-				mensaje: "Contraseña incorrecta"
+				msg: "Contraseña incorrecta"
 			})
 		}
 
