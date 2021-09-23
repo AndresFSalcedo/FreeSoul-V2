@@ -31,7 +31,15 @@ app.use(require('./routes/blog.route'))
 
 // CONEXION A LA BASE DE DATOS
 
-mongoose.connect('mongodb://localhost:27017/freesouldb', {
+// mongoose.connect('mongodb://localhost:27017/freesouldb', {
+// 	useNewUrlParser: true,
+// 	useUnifiedTopology: true
+// }, (err, res) => {
+// 	if (err) throw err;
+// 	console.log("Conectado a la BD")
+// });
+
+mongoose.connect('mongodb+srv://Andres:Colombia1819@cluster0.zwotq.mongodb.net/freesoul', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true
 }, (err, res) => {
@@ -46,3 +54,5 @@ app.listen(process.env.PORT, () => {
 
 	console.log(`Habilitado puerto ${process.env.PORT}`)
 })
+
+//mongodb+srv://Andres:Colombia1819@cluster0.zwotq.mongodb.net/freesoul

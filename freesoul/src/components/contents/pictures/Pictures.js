@@ -8,7 +8,9 @@ import 'datatables.net-responsive';
 
 export default function Pictures(){
 
-	const Picture01 = `${apiRoute}/show-pictureImg/1151.jpg`;
+	const Picture01 = `${apiRoute}/show-pictureImg/5132.jpg`;
+	const Picture02 = `${apiRoute}/show-pictureImg/7564.jpg`;
+	const Picture03 = `${apiRoute}/show-pictureImg/8570.jpg`;
 
 	/*=============================================
 	CREAR DATASET
@@ -16,7 +18,8 @@ export default function Pictures(){
 
 	const dataSet = [
 		[1, Picture01 , "Camiseta", "BoobsA", "id1"],
-		[2, "", "Camiseta", "BoobsC", "id2"]
+		[2, Picture02, "Camiseta", "BoobsA", "id2"],
+		[3, Picture03, "Buzo", "BoobsC", "id3"]
 	]
 
 	/*=============================================

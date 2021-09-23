@@ -55,35 +55,49 @@ export default function Sidebar(){
 						<li className="nav-item">
 							<a href="/admins" className="nav-link">
 								<i className="nav-icon fas fa-user-cog"></i>
-								<p>Administradores</p>
-							</a>
-						</li>
-
-						<li className="nav-item">
-							<a href="/slide" className="nav-link">
-								<i className="nav-icon fas fa-sliders-h"></i>
-								<p>Gestor Carousel</p>
-							</a>
-						</li>
-
-						<li className="nav-item">
-							<a href="/pictures" className="nav-link">
-								<i className="nav-icon fas fa-images"></i>
-								<p>Gestor de Imagenes</p>
+								<p>Admin</p>
 							</a>
 						</li>
 
 						<li className="nav-item">
 							<a href="/stocks" className="nav-link">
 								<i className="nav-icon fas fa-tshirt"></i>
-								<p>Gestor de Inventario</p>
+								<p>Stock Management</p>
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a href="#/" className="nav-link">
+								<i className="nav-icon fas fa-cart-arrow-down"></i>
+								<p>Client's Reservs</p>
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a href="/slide" className="nav-link">
+								<i className="nav-icon fas fa-sliders-h"></i>
+								<p>Slides Management</p>
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a href="/pictures" className="nav-link">
+								<i className="nav-icon fas fa-images"></i>
+								<p>Pictures</p>
+							</a>
+						</li>
+
+						<li className="nav-item">
+							<a href="#/" className="nav-link">
+								<i className="nav-icon fas fa-file-upload"></i>
+								<p>Blog Content</p>
 							</a>
 						</li>
 
 						<li className="nav-item">
 							<a href="/users" className="nav-link">
 								<i className="nav-icon fas fa-users"></i>
-								<p>Usuarios</p>
+								<p>Users</p>
 							</a>
 						</li>
 					</ul>

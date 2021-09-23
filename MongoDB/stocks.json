@@ -1,23 +1,40 @@
 [{
   "_id": {
-    "$oid": "61429cafef47299355982dc1"
+    "$oid": "6148d559b048e2bde14db747"
   },
-  "design": "C-BoobsA",
-  "codColor": "#000000",
-  "price": 75000,
+  "productType": "Camiseta",
+  "design": "BoobsA",
+  "codColor": "#FFFFF",
+  "price": 55000,
   "S": 5,
   "M": 7,
   "L": 24,
+  "productCode": "Camiseta-BoobsA",
   "__v": 0
 },{
   "_id": {
-    "$oid": "61429cceef47299355982dc3"
+    "$oid": "6148d6a719e30c2e8bffa7ae"
   },
-  "design": "C-BoobsA",
-  "codColor": "#FFFFFF",
+  "productType": "Camiseta",
+  "design": "BoobsC",
+  "codColor": "#FFFFF",
   "price": 55000,
   "S": 1,
   "M": 1,
   "L": 1,
+  "productCode": "Camiseta-BoobsC",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6148d87e4002e5bf40b23a83"
+  },
+  "productType": "Buzo",
+  "design": "SoyLaMondá",
+  "codColor": "#FFFFFF",
+  "price": 75000,
+  "S": 2,
+  "M": 5,
+  "L": 6,
+  "productCode": "Buzo-SoyLaMondá",
   "__v": 0
 }]

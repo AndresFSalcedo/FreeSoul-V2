@@ -1,22 +1,28 @@
 [{
   "_id": {
-    "$oid": "614299bcb4df646b7c0c9c29"
+    "$oid": "614bbda5bed7d10f657c4d80"
   },
-  "design": "C-BoobsA",
-  "image": "9695.jpg",
+  "productType": "Camiseta",
+  "design": "BoobsA",
+  "image": "8570.jpg",
+  "productCode": "Camiseta-BoobsA",
   "__v": 0
 },{
   "_id": {
-    "$oid": "614299c3b4df646b7c0c9c2b"
+    "$oid": "614bbdadbed7d10f657c4d82"
   },
-  "design": "C-BoobsA",
-  "image": "2210.jpg",
+  "productType": "Camiseta",
+  "design": "BoobsA",
+  "image": "7564.jpg",
+  "productCode": "Camiseta-BoobsA",
   "__v": 0
 },{
   "_id": {
-    "$oid": "61429a2eb4df646b7c0c9c2d"
+    "$oid": "614bbdb3bed7d10f657c4d84"
   },
-  "design": "C-BoobsA",
-  "image": "3047.jpg",
+  "productType": "Buzo",
+  "design": "BoobC",
+  "image": "3802.jpg",
+  "productCode": "Buzo-BoobC",
   "__v": 0
 }]
