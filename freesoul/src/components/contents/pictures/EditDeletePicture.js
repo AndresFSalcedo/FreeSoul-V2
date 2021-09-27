@@ -3,16 +3,17 @@ import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 
-export default function EditDeleteSlide(){
+export default function EditDeletePicture(){
 
 	/*=============================================
 	HOOK PARA CAPTURAR DATOS
 	=============================================*/
 	
-	const [slide, editSlide] = useState({
+	const [picture, editPicture] = useState({
 
 		image: null,
-		position: "",
+		productType: "",
+		design: "",
 		id:""
 	})
 
@@ -56,10 +57,11 @@ export default function EditDeleteSlide(){
 					
 					$(".previsualizationImg").attr("src", fileRoute)
 
-					editSlide({
+					editPicture({
 
 						'image': image,
-						'position': $("#newPosition").val(),
+						'productType': $("#newProductType").val(),
+						'design': $("#newDesign").val(),
 						'id': $("#editId").val()
 					})
 				})
@@ -67,10 +69,11 @@ export default function EditDeleteSlide(){
 			}
 		}else{
 
-			editSlide({
+			editPicture({
 
 				'image': null,
-				'position': $("#newPosition").val(),
+				'productType': $("#newProductType").val(),
+				'design': $("#newDesign").val(),
 				'id': $("#editId").val()
 			})
 
@@ -87,25 +90,42 @@ export default function EditDeleteSlide(){
 
 		e.preventDefault();
 
-		const {position} = slide;
+		const {productType, design} = picture;
 
-		/*VALIDAMOS SI NO VIENE LA POSICION*/
-		if(position === ""){
+		/*VALIDAMOS SI NO VIENE EL PRODUCTO Y DISEÑO*/
+		if(productType === ""){
 
-			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-productType").show()
+			$(".invalid-productType").html("El tipo de producto no puede ir vacio")
+			return;
+		}
+		if(design === ""){
+
+			$(".invalid-design").show()
+			$(".invalid-design").html("El diseño no puede ir vacio")
 			return;
 		}
 
-		/*VALIDAMOS EXPRESION REGULAR DE LA POSICION*/
-		if(position !== ""){
+		/*VALIDAMOS EXPRESION REGULAR DEL PRODUCTO Y DISEÑO*/
+		if(productType !== ""){
 
-			const expPosition = /^[0-9]$/;
+			const expProductType = /^[A-Za-z]+$/;
 
-			if(!expPosition.test(position)){
+			if(!expProductType.test(productType)){
 
-				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no puede ir vacia")
+				$(".invalid-productType").show()
+				$(".invalid-productType").html("El producto debe tener solo texto")
+				return;
+			}
+		}
+		if(design !== ""){
+
+			const expDesign = /^[A-Za-z]+$/;
+
+			if(!expDesign.test(design)){
+
+				$(".invalid-design").show()
+				$(".invalid-design").html("El diseño debe tener solo texto")
 				return;
 			}
 		}
@@ -115,7 +135,7 @@ export default function EditDeleteSlide(){
 		EJECUTAR SERVICIO PUT
 		=============================================*/
 
-		const result = await putData(slide)
+		const result = await putData(picture)
 
 		if(result.status === 400){
 
@@ -127,7 +147,7 @@ export default function EditDeleteSlide(){
 			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/pictures"},3000)
 		}
 	}
 
@@ -142,13 +162,15 @@ export default function EditDeleteSlide(){
 		let data = $(this).attr("data").split(',');
 
 		$('#editId').val(data[0]);
-		$('.previsualizationImg').attr("src", `${apiRoute}/show-slideImg/${data[1]}`);
-		$('#newPosition').val(parseInt(data[2]));
+		$('.previsualizationImg').attr("src", `${apiRoute}/show-pictureImg/${data[1]}`);
+		$('#newProductType').val(data[2]);
+		$('#newDesign').val(data[3]);
 
-		editSlide({
+		editPicture({
 
 			'image': null,
-			'position': parseInt(data[2]),
+			'productType': data[2],
+			'design': data[3],
 			'id': data[0]
 
 		})
@@ -158,7 +180,7 @@ export default function EditDeleteSlide(){
 	Captura data a borrar
 	=============================================*/
 	
-	$(document).on("click",".slideDelete", function(e){
+	$(document).on("click",".pictureDelete", function(e){
 
 		e.preventDefault();
 
@@ -183,7 +205,7 @@ export default function EditDeleteSlide(){
 			  	EJECUTAR SERVICIO DELETE
 			  	=============================================*/
 			  	
-			  	const slideDelete = async ()=>{
+			  	const pictureDelete = async ()=>{
 
 			  		const result = await deleteData(data);
 
@@ -200,7 +222,7 @@ export default function EditDeleteSlide(){
 
 			  				if(result.value){
 
-			  					window.location.href="/slides"
+			  					window.location.href="/pictures"
 			  				}
 
 			  			})
@@ -219,14 +241,14 @@ export default function EditDeleteSlide(){
 
 			  				if(result.value){
 
-			  					window.location.href="/slides"
+			  					window.location.href="/pictures"
 			  				}
 
 			  			})
 			  		}
 			  	}
 
-		    	slideDelete();
+		    	pictureDelete();
 		  	}
 		})
 
@@ -237,12 +259,12 @@ export default function EditDeleteSlide(){
 	=============================================*/
 	return(
 
-		<div className="modal fade" id="editSlide">
+		<div className="modal fade" id="editPicture">
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 
 					<div className="modal-header">
-						<h4 className="modal-title">Edit Slide</h4>
+						<h4 className="modal-title">Edit Picture</h4>
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -268,28 +290,52 @@ export default function EditDeleteSlide(){
 							</div>
 							<div className="form-goup">
 								
-								<label className="small text-secondary" htmlFor="newPosition">*Ingresar un solo numero</label>
+								<label className="small text-secondary" htmlFor="newProductType">*Ingresar solo Texto</label>
 
 								<div className="input-group mb-3">
 										
 									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+										<i className="fas fa-tshirt"></i>
 									</div>
 
 									<input 
-										id="newPosition" 
+										id="newProductType" 
 										type="text" 
 										className="form-control" 
-										name="newPosition" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}" 
+										name="newProductType" 
+										placeholder="Ingrese tipo de producto*"
+										pattern="[A-Za-z]+"
 										required
 									/>
 
 
-									<div className="invalid-feedback invalid-position"></div>
+									<div className="invalid-feedback invalid-productType"></div>
+								</div>
+
+							</div>
+
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="newDesign">*Ingresar solo Texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-font"></i>
+									</div>
+
+									<input 
+										id="newDesign" 
+										type="text" 
+										className="form-control" 
+										name="newDesign" 
+										placeholder="Ingrese el diseño*"
+										pattern="[A-Za-z]+"
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-productType"></div>
 								</div>
 
 							</div>
@@ -315,15 +361,14 @@ PETICION PUT
 
 const putData = data =>{
 
-	const url = `${apiRoute}/edit-slide/${data.id}`
+	const url = `${apiRoute}/edit-picture/${data.id}`
 	const token = localStorage.getItem("ACCESS_TOKEN")
 
 	let formData = new FormData();
 
 	formData.append("file", data.image);
-	formData.append("position", data.position);
-
-	
+	formData.append("productType", data.productType);
+	formData.append("design", data.design);
 
 	const params = {
 
@@ -354,7 +399,7 @@ PETICION DELETE
 
 const deleteData = data =>{
 
-	const url = `${apiRoute}/delete-slide/${data}`
+	const url = `${apiRoute}/delete-picture/${data}`
 
 	const token = localStorage.getItem("ACCESS_TOKEN")
 	const params = {

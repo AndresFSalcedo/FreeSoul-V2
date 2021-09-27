@@ -1,10 +1,10 @@
 // // ESQUEMA PARA EL MODELO CONECTOR A MONGODB
 
- const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
- let Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
- let adminSchema = new Schema({
+let adminSchema = new Schema({
 
  	username: {
 
@@ -21,8 +21,8 @@
  })
 
 /* =============================================
- Evitar devolver password
- =============================================*/
+Evitar devolver password
+=============================================*/
 
 adminSchema.methods.toJSON = function(){
 
@@ -35,4 +35,4 @@ adminSchema.methods.toJSON = function(){
 
 //  Exportar el modelo
 
- module.exports = mongoose.model("admins", adminSchema)
+module.exports = mongoose.model("admins", adminSchema)

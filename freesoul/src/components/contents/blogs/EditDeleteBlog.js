@@ -3,16 +3,18 @@ import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 
-export default function EditDeleteSlide(){
+export default function EditDeleteBlog(){
 
 	/*=============================================
 	HOOK PARA CAPTURAR DATOS
 	=============================================*/
 	
-	const [slide, editSlide] = useState({
+	const [blog, editBlog] = useState({
 
 		image: null,
-		position: "",
+		title: "",
+		intro: "",
+		url: "",
 		id:""
 	})
 
@@ -56,10 +58,12 @@ export default function EditDeleteSlide(){
 					
 					$(".previsualizationImg").attr("src", fileRoute)
 
-					editSlide({
+					editBlog({
 
 						'image': image,
-						'position': $("#newPosition").val(),
+						'title': $("#newTitle").val(),
+						'intro': $("#newIntro").val(),
+						'url': $("#newUrl").val(),
 						'id': $("#editId").val()
 					})
 				})
@@ -67,10 +71,12 @@ export default function EditDeleteSlide(){
 			}
 		}else{
 
-			editSlide({
+			editBlog({
 
 				'image': null,
-				'position': $("#newPosition").val(),
+				'title': $("#newTitle").val(),
+				'intro': $("#newIntro").val(),
+				'url': $("#newUrl").val(),
 				'id': $("#editId").val()
 			})
 
@@ -87,35 +93,68 @@ export default function EditDeleteSlide(){
 
 		e.preventDefault();
 
-		const {position} = slide;
+		const {title, intro, url} = blog;
 
-		/*VALIDAMOS SI NO VIENE LA POSICION*/
-		if(position === ""){
+		/*VALIDAMOS SI NO VIENE EL  TITULO, INTRO Y URL*/
+		if(title === ""){
 
-			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-title").show()
+			$(".invalid-title").html("El titulo del blog no puede ir vacio")
+			return;
+		}
+		if(intro === ""){
+
+			$(".invalid-intro").show()
+			$(".invalid-intro").html("La intro no puede ir vacio")
+			return;
+		}
+		if(url === ""){
+
+			$(".invalid-url").show()
+			$(".invalid-url").html("La url no puede ir vacia")
 			return;
 		}
 
-		/*VALIDAMOS EXPRESION REGULAR DE LA POSICION*/
-		if(position !== ""){
+		/*VALIDAMOS EXPRESION REGULAR DEL  TITULO, INTRO Y URL*/
+		if(title !== ""){
 
-			const expPosition = /^[0-9]$/;
+			const expTitle = /^([0-9a-zA-Z ]).{1,40}$/;
 
-			if(!expPosition.test(position)){
+			if(!expTitle.test(title)){
 
-				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no puede ir vacia")
+				$(".invalid-title").show()
+				$(".invalid-title").html("El titulo debe tener solo texto")
+				return;
+			}
+		}
+		if(intro !== ""){
+
+			const expintro = /^([0-9a-zA-Z ]).{1,100}$/;
+
+			if(!expintro.test(intro)){
+
+				$(".invalid-intro").show()
+				$(".invalid-intro").html("La intro debe tener solo texto")
+				return;
+			}
+		}
+		if(url !== ""){
+
+			const expUrl = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/;
+
+			if(!expUrl.test(url)){
+
+				$(".invalid-url").show()
+				$(".invalid-url").html("La url debe esta en el formato solicitado")
 				return;
 			}
 		}
 
-		
 		/*=============================================
 		EJECUTAR SERVICIO PUT
 		=============================================*/
 
-		const result = await putData(slide)
+		const result = await putData(blog)
 
 		if(result.status === 400){
 
@@ -127,7 +166,7 @@ export default function EditDeleteSlide(){
 			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/blogs"},3000)
 		}
 	}
 
@@ -139,18 +178,21 @@ export default function EditDeleteSlide(){
 
 		e.preventDefault();
 
-		let data = $(this).attr("data").split(',');
+		let data = $(this).attr("data").split('_,');
 
 		$('#editId').val(data[0]);
-		$('.previsualizationImg').attr("src", `${apiRoute}/show-slideImg/${data[1]}`);
-		$('#newPosition').val(parseInt(data[2]));
+		$('.previsualizationImg').attr("src", `${apiRoute}/show-blogImg/${data[1]}`);
+		$("#newTitle").val(data[2]);
+		$("#newIntro").val(data[3]);
+		$("#newUrl").val(data[4]);
 
-		editSlide({
+		editBlog({
 
 			'image': null,
-			'position': parseInt(data[2]),
+			'title': data[2],
+			'intro': data[3],
+			'url': data[4],
 			'id': data[0]
-
 		})
 	})
 
@@ -158,11 +200,12 @@ export default function EditDeleteSlide(){
 	Captura data a borrar
 	=============================================*/
 	
-	$(document).on("click",".slideDelete", function(e){
+	$(document).on("click",".blogDelete", function(e){
 
 		e.preventDefault();
 
-		let data = $(this).attr("data").split(',')[0];
+		let data = $(this).attr("data").split('_,')[0];
+		console.log("data", data);
 
 		/*PREGUNTAR SI ESTA SEGUR@*/
 
@@ -183,7 +226,7 @@ export default function EditDeleteSlide(){
 			  	EJECUTAR SERVICIO DELETE
 			  	=============================================*/
 			  	
-			  	const slideDelete = async ()=>{
+			  	const blogDelete = async ()=>{
 
 			  		const result = await deleteData(data);
 
@@ -200,7 +243,7 @@ export default function EditDeleteSlide(){
 
 			  				if(result.value){
 
-			  					window.location.href="/slides"
+			  					window.location.href="/blogs"
 			  				}
 
 			  			})
@@ -219,17 +262,16 @@ export default function EditDeleteSlide(){
 
 			  				if(result.value){
 
-			  					window.location.href="/slides"
+			  					window.location.href="/blogs"
 			  				}
 
 			  			})
 			  		}
 			  	}
 
-		    	slideDelete();
+		    	blogDelete();
 		  	}
 		})
-
 	})
 
 	/*=============================================
@@ -237,12 +279,12 @@ export default function EditDeleteSlide(){
 	=============================================*/
 	return(
 
-		<div className="modal fade" id="editSlide">
+		<div className="modal fade" id="editBlog">
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 
 					<div className="modal-header">
-						<h4 className="modal-title">Edit Slide</h4>
+						<h4 className="modal-title">Edit Blog</h4>
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -268,28 +310,75 @@ export default function EditDeleteSlide(){
 							</div>
 							<div className="form-goup">
 								
-								<label className="small text-secondary" htmlFor="newPosition">*Ingresar un solo numero</label>
+								<label className="small text-secondary" htmlFor="newTitle">*Ingresar solo texto</label>
 
 								<div className="input-group mb-3">
 										
 									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+										<i className="fas fa-heading"></i>
 									</div>
 
 									<input 
-										id="newPosition" 
+										id="newTitle" 
 										type="text" 
 										className="form-control" 
-										name="newPosition" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}" 
+										name="newTitle" 
+										placeholder="Ingrese el titulo del blog*"
+										pattern="([0-9a-zA-Z ]).{1,}"
 										required
 									/>
 
 
-									<div className="invalid-feedback invalid-position"></div>
+									<div className="invalid-feedback invalid-title"></div>
+								</div>
+
+							</div>
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="newIntro">*Ingresar solo texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-paragraph"></i>
+									</div>
+
+									<input 
+										id="newIntro" 
+										type="text" 
+										className="form-control" 
+										name="newIntro" 
+										placeholder="Ingrese la intro del blog*"
+										pattern="([0-9a-zA-Z ]).{1,}"
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-intro"></div>
+								</div>
+
+							</div>
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="newUrl">*Ingresar solo texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-link"></i>
+									</div>
+
+									<input 
+										id="newUrl" 
+										type="text" 
+										className="form-control" 
+										name="newUrl" 
+										placeholder="Ingrese la url del blog*"
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-url"></div>
 								</div>
 
 							</div>
@@ -315,15 +404,15 @@ PETICION PUT
 
 const putData = data =>{
 
-	const url = `${apiRoute}/edit-slide/${data.id}`
+	const url = `${apiRoute}/edit-blog/${data.id}`
 	const token = localStorage.getItem("ACCESS_TOKEN")
 
 	let formData = new FormData();
 
 	formData.append("file", data.image);
-	formData.append("position", data.position);
-
-	
+	formData.append("title", data.title);
+	formData.append("intro", data.intro);
+	formData.append("url", data.url);
 
 	const params = {
 
@@ -354,7 +443,7 @@ PETICION DELETE
 
 const deleteData = data =>{
 
-	const url = `${apiRoute}/delete-slide/${data}`
+	const url = `${apiRoute}/delete-blog/${data}`
 
 	const token = localStorage.getItem("ACCESS_TOKEN")
 	const params = {

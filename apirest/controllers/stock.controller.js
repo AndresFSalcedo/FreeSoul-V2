@@ -2,9 +2,6 @@
 
 const Stock = require('../models/stock.model')
 
-//Administrados de carpetas y archivos
-const fs = require('fs')
-
 // FUNCION GET
 
 let showStock = (req, res) => {
@@ -117,6 +114,15 @@ let createStock = (req, res) => {
 		})
 	}
 
+	if (!req.body.XL) {
+
+		res.json({
+
+			status: 500,
+			msg: "La talla XL no puede ir vacia"
+		})
+	}
+
 	// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
 	let stock = new Stock({
 
@@ -127,6 +133,7 @@ let createStock = (req, res) => {
 		S: `${body.S}`,
 		M: `${body.M}`,
 		L: `${body.L}`,
+		XL: `${body.XL}`,
 		productCode:`${body.productType}-${body.design}`
 	})
 
@@ -201,6 +208,7 @@ let editStock = (req, res) => {
 					S: body.S,
 					M: body.M,
 					L: body.L,
+					XL: body.XL,
 					productCode:`${body.productType}-${body.design}`
 				}
 
@@ -251,8 +259,6 @@ let editStock = (req, res) => {
 				msg: "Error al editar el stock"
 			})
 		})
-
-
 	})
 }
 

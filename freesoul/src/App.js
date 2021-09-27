@@ -14,9 +14,11 @@ import Footer from './components/footer/Footer';
 
 // Componentes Dinamicos
 import Admins from './components/contents/admins/Admins';
-import Pictures from './components/contents/pictures/Pictures';
-import Slides from './components/contents/slides/Slides';
 import Stocks from './components/contents/stocks/Stocks';
+import Reserves from './components/contents/reserves/Reserves';
+import Slides from './components/contents/slides/Slides';
+import Pictures from './components/contents/pictures/Pictures';
+import Blogs from './components/contents/blogs/Blogs';
 import Users from './components/contents/users/Users';
 import Error404 from './components/contents/404error/Error404';
 
@@ -29,6 +31,8 @@ export default function App() {
     return(
       <Login/>
     );
+  }else{
+    
   }
 
   return (
@@ -42,10 +46,12 @@ export default function App() {
         <BrowserRouter>
 
           <Switch>
-            <Route exact path="/stocks" component={Stocks}/>
             <Route exact path="/admins" component={Admins}/>
-            <Route exact path="/slide" component={Slides}/>
+            <Route exact path="/stocks" component={Stocks}/>
+            <Route exact path="/reserves" component={Reserves}/>
+            <Route exact path="/slides" component={Slides}/>
             <Route exact path="/pictures" component={Pictures}/>
+            <Route exact path="/blogs" component={Blogs}/>
             <Route exact path="/users" component={Users}/>
             <Route component={Error404}/>
 

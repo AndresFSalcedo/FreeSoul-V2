@@ -2,17 +2,18 @@ import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 
-
-export default function CreateSlide(){
+export default function CreateBlog(){
 
 	/*=============================================
 	HOOK PARA CAPTURAR DATOS
 	=============================================*/
 	
-	const [slide, createSlide] = useState({
+	const [blog, createBlog] = useState({
 
 		image: null,
-		position: ""
+		title: "",
+		intro: "",
+		url: ""
 	})
 
 	/*=============================================
@@ -53,13 +54,16 @@ export default function CreateSlide(){
 				
 				$(".previsualizationImg").attr("src", fileRoute)
 
-				$("#position").prop("disabled",false)
+				$("#title").prop("disabled",false)
+				$("#intro").prop("disabled",false)
+				$("#url").prop("disabled",false)
 
-
-				createSlide({
+				createBlog({
 
 					'image': image,
-					'position': $("#position").val()
+					'title': $("#title").val(),
+					'intro': $("#intro").val(),
+					'url': $("#url").val()
 				})
 			})
 
@@ -76,7 +80,7 @@ export default function CreateSlide(){
 
 		e.preventDefault();
 
-		const {image, position} = slide;
+		const {image, title, intro, url} = blog;
 
 		/*VALIDAMOS SI NO VIENE LA IMAGEN*/
 		if(image === null){
@@ -86,23 +90,57 @@ export default function CreateSlide(){
 			return;
 		}
 
-		/*VALIDAMOS SI NO VIENE LA POSICION*/
-		if(position === ""){
+		/*VALIDAMOS SI NO VIENE EL  TITULO, INTRO Y URL*/
+		if(title === ""){
 
-			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-title").show()
+			$(".invalid-title").html("El titulo del blog no puede ir vacio")
+			return;
+		}
+		if(intro === ""){
+
+			$(".invalid-intro").show()
+			$(".invalid-intro").html("La intro no puede ir vacio")
+			return;
+		}
+		if(url === ""){
+
+			$(".invalid-url").show()
+			$(".invalid-url").html("La url no puede ir vacia")
 			return;
 		}
 
-		/*VALIDAMOS EXPRESION REGULAR DE LA POSICION*/
-		if(position !== ""){
+		/*VALIDAMOS EXPRESION REGULAR DEL  TITULO, INTRO Y URL*/
+		if(title !== ""){
 
-			const expPosition = /^[0-9]+$/;
+			const expTitle = /^([0-9a-zA-Z ]).{1,40}$/;
 
-			if(!expPosition.test(position)){
+			if(!expTitle.test(title)){
 
-				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no tiene el debido formato")
+				$(".invalid-title").show()
+				$(".invalid-title").html("El titulo debe tener solo texto")
+				return;
+			}
+		}
+		if(intro !== ""){
+
+			const expintro = /^([0-9a-zA-Z ]).{1,100}$/;
+
+			if(!expintro.test(intro)){
+
+				$(".invalid-intro").show()
+				$(".invalid-intro").html("La intro debe tener solo texto")
+				return;
+			}
+		}
+		if(url !== ""){
+
+			const expUrl = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am|instagr.com)\/(\w+)/;
+
+			if(!expUrl.test(url)){
+
+				$(".invalid-url").show()
+				$(".invalid-url").html("La url debe esta en el formato solicitado")
 				return;
 			}
 		}
@@ -111,7 +149,7 @@ export default function CreateSlide(){
 		EJECUTAR SERVICIO POST
 		=============================================*/
 		
-		const result = await postData(slide)
+		const result = await postData(blog)
 		
 		if(result.status === 400){
 
@@ -123,15 +161,15 @@ export default function CreateSlide(){
 			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/blogs"},3000)
 		}
 
 	}
 
 	$(document).on("click", ".cleanForm", function(){
 
-		$(".modal").find('form')[0].reset();
-		$(".previsualizationImg").attr("src","")
+	 	$(".modal").find('form')[0].reset();
+	 	$(".previsualizationImg").attr("src","")
 	})
 
 	/*=============================================
@@ -140,12 +178,12 @@ export default function CreateSlide(){
 
 	return(
 
-		<div className="modal fade" id="createSlide">
+		<div className="modal fade" id="createBlog">
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 
 					<div className="modal-header">
-						<h4 className="modal-title">Create Slide</h4>
+						<h4 className="modal-title">Create Blog</h4>
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -170,29 +208,78 @@ export default function CreateSlide(){
 							</div>
 							<div className="form-goup">
 								
-								<label className="small text-secondary" htmlFor="position">*Ingresar un solo numero</label>
+								<label className="small text-secondary" htmlFor="title">*Ingresar solo texto</label>
 
 								<div className="input-group mb-3">
 										
 									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+										<i className="fas fa-heading"></i>
 									</div>
 
 									<input 
-										id="position" 
+										id="title" 
 										type="text" 
 										className="form-control" 
-										name="position" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}"
+										name="title" 
+										placeholder="Ingrese el titulo del blog*"
+										pattern="([0-9a-zA-Z ]).{1,}"
 										disabled 
 										required
 									/>
 
 
-									<div className="invalid-feedback invalid-position"></div>
+									<div className="invalid-feedback invalid-title"></div>
+								</div>
+
+							</div>
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="intro">*Ingresar solo texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-paragraph"></i>
+									</div>
+
+									<input 
+										id="intro" 
+										type="text" 
+										className="form-control" 
+										name="intro" 
+										placeholder="Ingrese la intro del blog*"
+										pattern="([0-9a-zA-Z ]).{1,}"
+										disabled 
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-intro"></div>
+								</div>
+
+							</div>
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="url">*Ingresar solo texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-link"></i>
+									</div>
+
+									<input 
+										id="url" 
+										type="text" 
+										className="form-control" 
+										name="url" 
+										placeholder="Ingrese la url del blog*"
+										disabled 
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-url"></div>
 								</div>
 
 							</div>
@@ -218,13 +305,15 @@ PETICION POST
 
 const postData = data =>{
 
-	const url = `${apiRoute}/create-slide`
+	const url = `${apiRoute}/create-blog`
 	const token = localStorage.getItem("ACCESS_TOKEN")
 
 	let formData = new FormData();
 
-	formData.append("picture", data.image);
-	formData.append("position", data.position);
+	formData.append("image", data.image);
+	formData.append("title", data.title);
+	formData.append("intro", data.intro);
+	formData.append("url", data.url);
 
 	const params = {
 

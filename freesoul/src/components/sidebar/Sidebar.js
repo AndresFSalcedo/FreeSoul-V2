@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from './FreeSoulLogoweb-01.png';
+import Logo from './FreeSoulLogo.jpeg';
 import Photo from'./profilepic.png';
 
 export default function Sidebar(){
@@ -10,15 +10,13 @@ export default function Sidebar(){
 
 		<aside className="main-sidebar sidebar-dark-primary elevation-4">
 			
-			<a href="#/" className="brand-link text-decoration-none">
+			<a href="#/" className="brand-link logo-switch text-center">
 				
 				<img 
 					src={Logo}
 					alt="AdminLTE Logo"
-					className="brand-image img-circle elevation-3"
+					className="brand-image-xl elevation-3"
 				/>
-
-				<span className="brand-text font-weight-light">FreeSoul</span>
 
 			</a>
 
@@ -67,14 +65,14 @@ export default function Sidebar(){
 						</li>
 
 						<li className="nav-item">
-							<a href="#/" className="nav-link">
+							<a href="/reserves" className="nav-link">
 								<i className="nav-icon fas fa-cart-arrow-down"></i>
-								<p>Client's Reservs</p>
+								<p>Client's Reserves</p>
 							</a>
 						</li>
 
 						<li className="nav-item">
-							<a href="/slide" className="nav-link">
+							<a href="/slides" className="nav-link">
 								<i className="nav-icon fas fa-sliders-h"></i>
 								<p>Slides Management</p>
 							</a>
@@ -88,7 +86,7 @@ export default function Sidebar(){
 						</li>
 
 						<li className="nav-item">
-							<a href="#/" className="nav-link">
+							<a href="/blogs" className="nav-link">
 								<i className="nav-icon fas fa-file-upload"></i>
 								<p>Blog Content</p>
 							</a>

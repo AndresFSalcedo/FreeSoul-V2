@@ -1,13 +1,11 @@
 //IMPORTAR MODELO
-
 const Blog = require('../models/blog.model')
 
-//Administrados de carpetas y archivos
+//ADMINISTRADORES DE CARPETAS Y ARCHIVOS
 const fs = require('fs')
 const path = require('path')
 
 // FUNCION GET
-
 let showBlogs = (req, res) => {
 
 	Blog.find({})
@@ -23,7 +21,6 @@ let showBlogs = (req, res) => {
 			}
 
 			//CONTAR LA CANTIDAD DE REGISTROS
-
 			Blog.countDocuments({}, (err, total) => {
 
 				if (err) {
@@ -42,19 +39,15 @@ let showBlogs = (req, res) => {
 					data
 				})
 			})
-
-
 		})
 }
 
-
-//Function post
- 
+//FUNCION POST
 let createBlog = (req, res) => {
 
 	let body = req.body
 
-	//SE PREGUNTA SI VIENE UN FILE
+	//Se pregunta si existe un archivo
 
 	if (!req.files) {
 

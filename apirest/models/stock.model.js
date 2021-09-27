@@ -44,6 +44,11 @@ let stockSchema = new Schema({
 		required: [true, "Asignar valor es obligatorio"]
 	},
 
+	XL: {
+		type: Number,
+		required: [true, "Asignar valor es obligatorio"]
+	},
+
 	productCode: {
 
 		type: String,

@@ -18,7 +18,7 @@ let showSlide = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en la peticion"
+					msg: "Request Error: GET Function"
 				})
 			}
 
@@ -31,7 +31,7 @@ let showSlide = (req, res) => {
 					return res.json({
 
 						status: 500,
-						msg: "Error en la peticion",
+						msg: "Request Error: GET Function",
 						err
 					})
 				}
@@ -60,7 +60,7 @@ let createSlide = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La imagen no puede ir vacia"
+			msg: "The image cannot be empty"
 		})
 	}
 
@@ -69,7 +69,7 @@ let createSlide = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La posicion no puede ir vacia"
+			msg: "the position cannot be empty"
 		})
 	}
 
@@ -84,7 +84,7 @@ let createSlide = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser formato JPG o PNG"
+			msg: "The image must be JPG or PNG"
 		})
 	}
 
@@ -93,7 +93,7 @@ let createSlide = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser inferior a 2MB"
+			msg: "The size must be max 2MB"
 		})
 	}
 
@@ -111,7 +111,7 @@ let createSlide = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error al guardar la imagen",
+				msg: "Request Error: POST Function",
 				err
 			})
 		}
@@ -132,7 +132,7 @@ let createSlide = (req, res) => {
 				return res.json({
 
 					status: 400,
-					msg: "Error al almacenar el Slide",
+					msg: "Error storing the slide in the database",
 					err
 				})
 			}
@@ -141,7 +141,7 @@ let createSlide = (req, res) => {
 
 				status: 200,
 				data,
-				msg: "El Slide ha sido creado con exito"
+				msg: "The slide has been created!"
 			})
 		})
 	})
@@ -168,7 +168,7 @@ let editSlide = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: PUT Function",
 				err
 			})
 		}
@@ -178,7 +178,7 @@ let editSlide = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "Slide no existente",
+				msg: "Slide does not exists",
 			})
 		}
 
@@ -201,7 +201,7 @@ let editSlide = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser formato JPG o PNG"
+							msg: "The image must be JPG or PNG"
 						}
 
 						reject(respu)
@@ -212,7 +212,7 @@ let editSlide = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser inferior a 2MB"
+							msg: "The size must be max 2MB"
 						}
 
 						reject(respu)
@@ -235,7 +235,7 @@ let editSlide = (req, res) => {
 							let respu = {
 
 								res: res,
-								msg: "Error al guardar el Slide"
+								msg: "Request Error: PUT Function"
 							}
 
 							reject(respu)
@@ -309,7 +309,7 @@ let editSlide = (req, res) => {
 				respu["res"].json({
 					status: 200,
 					data: respu["data"],
-					msg: "El Slide ha sido actualizado con exito"
+					msg: "The slide has been updated!"
 				})
 
 			}).catch(respu => {
@@ -318,7 +318,7 @@ let editSlide = (req, res) => {
 
 					status: 400,
 					err: respu["err"],
-					msg: "Error al editar el Slide"
+					msg: "Error editing the slide"
 				})
 			})
 		}).catch(respu => {
@@ -350,7 +350,7 @@ let deleteSlide = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: DELETE Function",
 				err
 			})
 		}
@@ -360,7 +360,7 @@ let deleteSlide = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El slide no existe",
+				msg: "Slide does not exists",
 			})
 		}
 
@@ -379,14 +379,14 @@ let deleteSlide = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en el servidor",
+					msg: "Request Error: DELETE Function",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				msg:"El slide ha sido eliminado"
+				msg:"The slide has been deleted!"
 			})
 		})
 	})
@@ -405,7 +405,7 @@ let showSlideImg = (req, res)=>{
 		if(!exists){
 			return res.json({
 				status:400,
-				msg: "La imagen no existe"
+				msg: "The slide does not exists"
 			})
 		}
 

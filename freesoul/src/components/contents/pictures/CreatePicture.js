@@ -2,17 +2,17 @@ import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 
-
-export default function CreateSlide(){
+export default function CreatePicture(){
 
 	/*=============================================
 	HOOK PARA CAPTURAR DATOS
 	=============================================*/
 	
-	const [slide, createSlide] = useState({
+	const [picture, createPicture] = useState({
 
 		image: null,
-		position: ""
+		productType: "",
+		design: ""
 	})
 
 	/*=============================================
@@ -53,13 +53,14 @@ export default function CreateSlide(){
 				
 				$(".previsualizationImg").attr("src", fileRoute)
 
-				$("#position").prop("disabled",false)
+				$("#productType").prop("disabled",false)
+				$("#design").prop("disabled",false)
 
-
-				createSlide({
+				createPicture({
 
 					'image': image,
-					'position': $("#position").val()
+					'productType': $("#productType").val(),
+					'design': $("#design").val()
 				})
 			})
 
@@ -76,7 +77,7 @@ export default function CreateSlide(){
 
 		e.preventDefault();
 
-		const {image, position} = slide;
+		const {image, productType, design} = picture;
 
 		/*VALIDAMOS SI NO VIENE LA IMAGEN*/
 		if(image === null){
@@ -86,23 +87,40 @@ export default function CreateSlide(){
 			return;
 		}
 
-		/*VALIDAMOS SI NO VIENE LA POSICION*/
-		if(position === ""){
+		/*VALIDAMOS SI NO VIENE EL PRODUCTO Y DISEÑO*/
+		if(productType === ""){
 
-			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-productType").show()
+			$(".invalid-productType").html("El tipo de producto no puede ir vacio")
+			return;
+		}
+		if(design === ""){
+
+			$(".invalid-design").show()
+			$(".invalid-design").html("El diseño no puede ir vacio")
 			return;
 		}
 
-		/*VALIDAMOS EXPRESION REGULAR DE LA POSICION*/
-		if(position !== ""){
+		/*VALIDAMOS EXPRESION REGULAR DEL PRODUCTO Y DISEÑO*/
+		if(productType !== ""){
 
-			const expPosition = /^[0-9]+$/;
+			const expProductType = /^[A-Za-z]+$/;
 
-			if(!expPosition.test(position)){
+			if(!expProductType.test(productType)){
 
-				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no tiene el debido formato")
+				$(".invalid-productType").show()
+				$(".invalid-productType").html("El producto debe tener solo texto")
+				return;
+			}
+		}
+		if(design !== ""){
+
+			const expDesign = /^[A-Za-z]+$/;
+
+			if(!expDesign.test(design)){
+
+				$(".invalid-design").show()
+				$(".invalid-design").html("El diseño debe tener solo texto")
 				return;
 			}
 		}
@@ -111,7 +129,7 @@ export default function CreateSlide(){
 		EJECUTAR SERVICIO POST
 		=============================================*/
 		
-		const result = await postData(slide)
+		const result = await postData(picture)
 		
 		if(result.status === 400){
 
@@ -123,15 +141,15 @@ export default function CreateSlide(){
 			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/pictures"},3000)
 		}
 
 	}
 
 	$(document).on("click", ".cleanForm", function(){
 
-		$(".modal").find('form')[0].reset();
-		$(".previsualizationImg").attr("src","")
+	 	$(".modal").find('form')[0].reset();
+	 	$(".previsualizationImg").attr("src","")
 	})
 
 	/*=============================================
@@ -140,12 +158,12 @@ export default function CreateSlide(){
 
 	return(
 
-		<div className="modal fade" id="createSlide">
+		<div className="modal fade" id="createPicture">
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 
 					<div className="modal-header">
-						<h4 className="modal-title">Create Slide</h4>
+						<h4 className="modal-title">Create Picture</h4>
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -170,29 +188,53 @@ export default function CreateSlide(){
 							</div>
 							<div className="form-goup">
 								
-								<label className="small text-secondary" htmlFor="position">*Ingresar un solo numero</label>
+								<label className="small text-secondary" htmlFor="productType">*Ingresar solo texto</label>
 
 								<div className="input-group mb-3">
 										
 									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+										<i className="fas fa-tshirt"></i>
 									</div>
 
 									<input 
-										id="position" 
+										id="productType" 
 										type="text" 
 										className="form-control" 
-										name="position" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}"
+										name="productType" 
+										placeholder="Ingrese el tipo de producto*"
+										pattern="[A-Za-z]+"
 										disabled 
 										required
 									/>
 
 
-									<div className="invalid-feedback invalid-position"></div>
+									<div className="invalid-feedback invalid-productType"></div>
+								</div>
+
+							</div>
+							<div className="form-goup">
+								
+								<label className="small text-secondary" htmlFor="design">*Ingresar solo texto</label>
+
+								<div className="input-group mb-3">
+										
+									<div className="input-group-append input-group-text">
+										<i className="fas fa-font"></i>
+									</div>
+
+									<input 
+										id="design" 
+										type="text" 
+										className="form-control" 
+										name="design" 
+										placeholder="Ingrese el diseño del producto*"
+										pattern="[A-Za-z]+"
+										disabled 
+										required
+									/>
+
+
+									<div className="invalid-feedback invalid-design"></div>
 								</div>
 
 							</div>
@@ -218,13 +260,14 @@ PETICION POST
 
 const postData = data =>{
 
-	const url = `${apiRoute}/create-slide`
+	const url = `${apiRoute}/create-picture`
 	const token = localStorage.getItem("ACCESS_TOKEN")
 
 	let formData = new FormData();
 
-	formData.append("picture", data.image);
-	formData.append("position", data.position);
+	formData.append("image", data.image);
+	formData.append("productType", data.productType);
+	formData.append("design", data.design);
 
 	const params = {
 

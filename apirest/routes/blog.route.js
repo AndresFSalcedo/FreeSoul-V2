@@ -11,7 +11,7 @@ const { verifyToken } = require('../middlewares/autentification')
 
 //CREACION DE RUTA HTTP
 
-app.get('/show-blog', Blog.showBlogs);
+app.get('/show-blogs', Blog.showBlogs);
 
 app.post('/create-blog', verifyToken, Blog.createBlog);
 

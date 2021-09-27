@@ -1,5 +1,4 @@
 // // IMPORTACION DEL MODELO
-
 const Admins = require('../models/admin.model');
 
 // //MODULO DE ENCRIPTACION
@@ -9,7 +8,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // // FUNCION GET
-
 let showAdmins = (req, res) => {
 
 	Admins.find({})
@@ -25,7 +23,6 @@ let showAdmins = (req, res) => {
 			}
 
 			//CONTAR LA CANTIDAD DE REGISTROS
-
 			Admins.countDocuments({}, (err, total) => {
 
 				if (err) {
@@ -39,31 +36,25 @@ let showAdmins = (req, res) => {
 				}
 
 				res.json({
+
 					status: 200,
 					total,
 					data
 				})
 			})
-
-
 		})
-
 }
 
 //FUNCION PUT
-
 let editAdmin = (req, res) => {
 
 	//Capturar el ID del admin
-
 	let id = req.params.id
 
 	// Obtener el cuerpo del formulario
-
 	let body = req.body
 
-	//1. Se valida que el ID exista
-
+	//Se valida que el ID exista
 	Admins.findById(id, (err, data) => {
 
 		if (err) {
@@ -87,8 +78,7 @@ let editAdmin = (req, res) => {
 
 		let pass = data.password
 
-		//VALIDAR CAMBIO DE PASS
-
+		//Validar cambio de contraseña
 		let checkPasswordChange = (body, pass) => {
 
 			return new Promise((resolve, reject) => {
@@ -99,14 +89,12 @@ let editAdmin = (req, res) => {
 				} else {
 
 					pass = bcrypt.hashSync(body.password, 10)
-
 					resolve(pass)
 				}
 			})
 		}
 
-		//ACTUALIZAR REGISTROS
-
+		//Actualizar registros
 		let changeRegistriesDb = (id, body, pass) => {
 
 			return new Promise((resolve, reject) => {
@@ -145,8 +133,7 @@ let editAdmin = (req, res) => {
 			})
 		}
 
-		//SINCRONIZAR PROMESAS
-
+		//Sincronizar promesas
 		checkPasswordChange(body, pass).then(pass => {
 
 			changeRegistriesDb(id, body, pass).then(respuesta => {
@@ -178,13 +165,11 @@ let editAdmin = (req, res) => {
 }
 
 // //FUNCION LOGIN
-
 let login = (req, res) => {
 
 	let body = req.body
 
 	//Busqueda en base de datos
-
 	Admins.findOne({
 		username: body.username
 	}, (err, data) => {
@@ -220,7 +205,7 @@ let login = (req, res) => {
 			})
 		}
 
-		//GENERAR TOKEN DE AUTORIZACION
+		//Generar token de autorizacion
 		let token = jwt.sign({
 
 			data,
@@ -234,7 +219,6 @@ let login = (req, res) => {
 		})
 	})
 }
-
 
 //EXPORTAR FUNCIONES DEL CONTROLADOR
 module.exports = {
