@@ -213,7 +213,6 @@ export default function EditDeleteStock(){
 		e.preventDefault();
 
 		let data = $(this).attr("data").split(',');
-		console.log("data", data);
 
 		$('#editId').val(data[0]);
 		$('#newProductType').val(data[1]);
