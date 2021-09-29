@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
 
 export default function CreatePicture(){
 
@@ -83,7 +84,7 @@ export default function CreatePicture(){
 		if(image === null){
 
 			$(".invalid-image").show()
-			$(".invalid-image").html("La imagen no puede ir vacia")
+			$(".invalid-image").html("The image id required")
 			return;
 		}
 
@@ -91,13 +92,13 @@ export default function CreatePicture(){
 		if(productType === ""){
 
 			$(".invalid-productType").show()
-			$(".invalid-productType").html("El tipo de producto no puede ir vacio")
+			$(".invalid-productType").html("The product type id required")
 			return;
 		}
 		if(design === ""){
 
 			$(".invalid-design").show()
-			$(".invalid-design").html("El diseño no puede ir vacio")
+			$(".invalid-design").html("The design id required")
 			return;
 		}
 
@@ -109,7 +110,7 @@ export default function CreatePicture(){
 			if(!expProductType.test(productType)){
 
 				$(".invalid-productType").show()
-				$(".invalid-productType").html("El producto debe tener solo texto")
+				$(".invalid-productType").html("Incorrect format")
 				return;
 			}
 		}
@@ -120,7 +121,7 @@ export default function CreatePicture(){
 			if(!expDesign.test(design)){
 
 				$(".invalid-design").show()
-				$(".invalid-design").html("El diseño debe tener solo texto")
+				$(".invalid-design").html("Incorrect format")
 				return;
 			}
 		}
@@ -133,15 +134,23 @@ export default function CreatePicture(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/pictures"},3000)
+			setTimeout(()=>{window.location.href = "/pictures"},2000)
 		}
 
 	}
@@ -159,7 +168,7 @@ export default function CreatePicture(){
 	return(
 
 		<div className="modal fade" id="createPicture">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -170,9 +179,9 @@ export default function CreatePicture(){
 					<form onChange={digitForm} onSubmit={submit} encType="multipart/form-data">
 						<div className="modal-body">
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
-								<label className="small text-secondary" htmlFor="image">*La imagen debe ser formato jpg o png | Max 2MB</label>
+								<label className="small text-secondary" htmlFor="image">*Image size max 2MB and .jpg or .png</label>
 
 								<input 
 									id="image"
@@ -186,62 +195,77 @@ export default function CreatePicture(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="productType">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-tshirt"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="productType">Product type:</label>
+									</div>
+									
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-tshirt"></i>
+											</div>
+											<input 
+												id="productType" 
+												type="text" 
+												className="form-control" 
+												name="productType" 
+												placeholder="*"
+												pattern="[A-Za-z]+"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="productType" 
-										type="text" 
-										className="form-control" 
-										name="productType" 
-										placeholder="Ingrese el tipo de producto*"
-										pattern="[A-Za-z]+"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 
 									<div className="invalid-feedback invalid-productType"></div>
 								</div>
-
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="design">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-font"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="design">Design:</label>
+									</div>
+									
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font"></i>
+											</div>
+											<input 
+												id="design" 
+												type="text" 
+												className="form-control" 
+												name="design" 
+												placeholder="*"
+												pattern="[A-Za-z]+"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="design" 
-										type="text" 
-										className="form-control" 
-										name="design" 
-										placeholder="Ingrese el diseño del producto*"
-										pattern="[A-Za-z]+"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 
 									<div className="invalid-feedback invalid-design"></div>
 								</div>
-
 							</div>
+
 
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

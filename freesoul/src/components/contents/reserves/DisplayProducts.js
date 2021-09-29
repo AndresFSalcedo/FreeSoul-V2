@@ -1,5 +1,4 @@
 import React from 'react';
-//import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-bs5';
@@ -11,8 +10,30 @@ export default function DisplayProducts(){
 
 		e.preventDefault();
 
-		let data = $(this).data("foo");
-		console.log(data[0].color)
+		let data = JSON.parse($(this).attr("data"));
+
+		let dataTable = []
+
+		data.forEach((element, index)=>{
+			dataTable[index] = [
+				element.productCode,
+				element.color,
+				element.quantity
+			]
+		})
+		
+		$(document).ready(()=>{
+			$('.tableP').DataTable({
+
+				data: dataTable,
+				columns: [
+							{title:"Type - Product"},
+							{title:"Color"},
+							{title:"Quantity"}
+						 ],
+				destroy: true
+			})
+		})
 
 	})
 
@@ -20,7 +41,7 @@ export default function DisplayProducts(){
 	return(
 
 		<div className="modal fade" id="displayProducts">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-lg modal-dialog modal-dialog-centered">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -28,12 +49,13 @@ export default function DisplayProducts(){
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
-					<div className="modal-body tableProducts">
-						
+					<div className="modal-body">
+						<table className="tableP table-striped dt-responsive text-ju" style={{"width":"100%"}}>
+						</table>
 					</div>
 
 					<div className="modal-footer">
-						
+						<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
 					</div>
 
 				</div>

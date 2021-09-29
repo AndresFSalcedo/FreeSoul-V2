@@ -9,13 +9,13 @@ let userSchema = new Schema({
 	username: {
 
 		type: String,
-		required: [true, "El nombre de usuario es obligatorio"]
+		required: [true, "The username is required"]
 	},
 
 	email: {
 
 		type: String,
-		required: [true, "El email es obligatorio"],
+		required: [true, "The email is required"],
 		unique: true
 	}
 	

@@ -14,7 +14,7 @@ let showStock = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en la peticion"
+					msg: "Request Error: GET Function"
 				})
 			}
 
@@ -27,7 +27,7 @@ let showStock = (req, res) => {
 					return res.json({
 
 						status: 500,
-						msg: "Error en la peticion",
+						msg: "Request Error: GET Function",
 						err
 					})
 				}
@@ -56,7 +56,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "El tipo de producto no puede ir vacio"
+			msg: "The product type cannot be empt"
 		})
 	}
 
@@ -65,7 +65,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "El diseño no puede ir vacio"
+			msg: "The design cannot be empt"
 		})
 	}
 
@@ -74,7 +74,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "El color no puede ir vacio"
+			msg: "The color cannot be empt"
 		})
 	}
 
@@ -83,7 +83,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "El precio no puede ir vacio"
+			msg: "The price cannot be empt"
 		})
 	}
 
@@ -92,7 +92,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La talla S no puede ir vacia"
+			msg: "The S size cannot be empt"
 		})
 	}
 
@@ -101,7 +101,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La talla M no puede ir vacia"
+			msg: "The M size cannot be empt"
 		})
 	}
 
@@ -110,7 +110,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La talla L no puede ir vacia"
+			msg: "The L size cannot be empt"
 		})
 	}
 
@@ -119,7 +119,7 @@ let createStock = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La talla XL no puede ir vacia"
+			msg: "The XL size cannot be empt"
 		})
 	}
 
@@ -146,7 +146,7 @@ let createStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "Error al almacenar el stock",
+				msg: "Error storing the item in the database",
 				err
 			})
 		}
@@ -155,7 +155,7 @@ let createStock = (req, res) => {
 
 			status: 200,
 			data,
-			msg: "El stock ha sido creado con exito"
+			msg: "The item has been created!"
 		})
 	})
 }
@@ -181,7 +181,7 @@ let editStock = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: PUT Function",
 				err
 			})
 		}
@@ -191,7 +191,7 @@ let editStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El objeto no existe",
+				msg: "Item does not exists",
 			})
 		}
 
@@ -247,7 +247,7 @@ let editStock = (req, res) => {
 			response["res"].json({
 				status: 200,
 				data: response["data"],
-				msg: "El stock ha sido actualizado con exito"
+				msg: "The item has been updated!"
 			})
 
 		}).catch(response => {
@@ -256,7 +256,7 @@ let editStock = (req, res) => {
 
 				status: 400,
 				err: response["err"],
-				msg: "Error al editar el stock"
+				msg: "Error editing the item"
 			})
 		})
 	})
@@ -279,7 +279,7 @@ let deleteStock = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: DELETE Function",
 				err
 			})
 		}
@@ -289,7 +289,7 @@ let deleteStock = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El objeto no existe",
+				msg: "Item does not exists",
 			})
 		}
 
@@ -302,14 +302,14 @@ let deleteStock = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en el servidor",
+					msg: "Request Error: DELETE Function",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				msg:"El objeto ha sido eliminado"
+				msg:"The item has been deleted!"
 			})
 		})
 	})

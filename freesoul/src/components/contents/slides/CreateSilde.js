@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
-
+import Swal from 'sweetalert2';
 
 export default function CreateSlide(){
 
@@ -82,7 +82,7 @@ export default function CreateSlide(){
 		if(image === null){
 
 			$(".invalid-image").show()
-			$(".invalid-image").html("La imagen no puede ir vacia")
+			$(".invalid-image").html("The image id required")
 			return;
 		}
 
@@ -90,7 +90,7 @@ export default function CreateSlide(){
 		if(position === ""){
 
 			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-position").html("The position id required")
 			return;
 		}
 
@@ -102,7 +102,7 @@ export default function CreateSlide(){
 			if(!expPosition.test(position)){
 
 				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no tiene el debido formato")
+				$(".invalid-position").html("Incorrect format")
 				return;
 			}
 		}
@@ -115,15 +115,23 @@ export default function CreateSlide(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/slides"},2000)
 		}
 
 	}
@@ -141,7 +149,7 @@ export default function CreateSlide(){
 	return(
 
 		<div className="modal fade" id="createSlide">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -152,7 +160,7 @@ export default function CreateSlide(){
 					<form onChange={digitForm} onSubmit={submit} encType="multipart/form-data">
 						<div className="modal-body">
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
 								<label className="small text-secondary" htmlFor="image">*La imagen debe ser formato jpg o png | Max 2MB</label>
 
@@ -168,38 +176,43 @@ export default function CreateSlide(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
+							
 							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="position">*Ingresar un solo numero</label>
-
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="position">Position:</label>
+									</div>
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="far fa-dot-circle"></i>
+											</div>
+											<input 
+												id="position" 
+												type="text" 
+												className="form-control" 
+												name="position" 
+												placeholder="Ingrese la posicion*"
+												min="1"
+												maxLength="1"
+												pattern="[0-9]{1}"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="position" 
-										type="text" 
-										className="form-control" 
-										name="position" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-3">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 
 									<div className="invalid-feedback invalid-position"></div>
 								</div>
-
 							</div>
 
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

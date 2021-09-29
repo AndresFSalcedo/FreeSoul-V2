@@ -96,13 +96,13 @@ export default function EditDeletePicture(){
 		if(productType === ""){
 
 			$(".invalid-productType").show()
-			$(".invalid-productType").html("El tipo de producto no puede ir vacio")
+			$(".invalid-productType").html("The product type id required")
 			return;
 		}
 		if(design === ""){
 
 			$(".invalid-design").show()
-			$(".invalid-design").html("El diseño no puede ir vacio")
+			$(".invalid-design").html("The design id required")
 			return;
 		}
 
@@ -114,7 +114,7 @@ export default function EditDeletePicture(){
 			if(!expProductType.test(productType)){
 
 				$(".invalid-productType").show()
-				$(".invalid-productType").html("El producto debe tener solo texto")
+				$(".invalid-productType").html("Incorrect format")
 				return;
 			}
 		}
@@ -125,7 +125,7 @@ export default function EditDeletePicture(){
 			if(!expDesign.test(design)){
 
 				$(".invalid-design").show()
-				$(".invalid-design").html("El diseño debe tener solo texto")
+				$(".invalid-design").html("Incorrect format")
 				return;
 			}
 		}
@@ -139,15 +139,23 @@ export default function EditDeletePicture(){
 
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/pictures"},3000)
+			setTimeout(()=>{window.location.href = "/pictures"},2000)
 		}
 	}
 
@@ -260,7 +268,7 @@ export default function EditDeletePicture(){
 	return(
 
 		<div className="modal fade" id="editPicture">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -273,7 +281,7 @@ export default function EditDeletePicture(){
 
 						<input type="hidden" id="editId"/>
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
 								<label className="small text-secondary" htmlFor="editImage">*La imagen debe ser formato jpg o png | Max 2MB</label>
 
@@ -288,57 +296,71 @@ export default function EditDeletePicture(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newProductType">*Ingresar solo Texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-tshirt"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newProductType">Product type:</label>
+									</div>
+									
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-tshirt"></i>
+											</div>
+											<input 
+												id="newProductType" 
+												type="text" 
+												className="form-control" 
+												name="newProductType" 
+												placeholder="Ingrese tipo de producto*"
+												pattern="[A-Za-z]+"
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newProductType" 
-										type="text" 
-										className="form-control" 
-										name="newProductType" 
-										placeholder="Ingrese tipo de producto*"
-										pattern="[A-Za-z]+"
-										required
-									/>
-
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 
 									<div className="invalid-feedback invalid-productType"></div>
 								</div>
-
 							</div>
 
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newDesign">*Ingresar solo Texto</label>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-font"></i>
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newDesign">Design:</label>
+									</div>
+									
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font"></i>
+											</div>
+											<input 
+												id="newDesign" 
+												type="text" 
+												className="form-control" 
+												name="newDesign" 
+												placeholder="Ingrese el diseño*"
+												pattern="[A-Za-z]+"
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newDesign" 
-										type="text" 
-										className="form-control" 
-										name="newDesign" 
-										placeholder="Ingrese el diseño*"
-										pattern="[A-Za-z]+"
-										required
-									/>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 
-
-									<div className="invalid-feedback invalid-productType"></div>
+									<div className="invalid-feedback invalid-design"></div>
 								</div>
-
 							</div>
+
 
 						</div>
 

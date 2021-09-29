@@ -86,8 +86,6 @@ export default function Admins(){
 						  	
 							<div className="card card-info card-outline">
 
-								<div className="card-header">Admin List</div>
-
 							  	<div className="card-body">
 							  		
 						  			<table className="dt-responsive table table-striped" style={{"width":"100%"}}>

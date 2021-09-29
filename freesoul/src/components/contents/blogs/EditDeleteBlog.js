@@ -99,19 +99,19 @@ export default function EditDeleteBlog(){
 		if(title === ""){
 
 			$(".invalid-title").show()
-			$(".invalid-title").html("El titulo del blog no puede ir vacio")
+			$(".invalid-title").html("The title is required")
 			return;
 		}
 		if(intro === ""){
 
 			$(".invalid-intro").show()
-			$(".invalid-intro").html("La intro no puede ir vacio")
+			$(".invalid-intro").html("The intro is required")
 			return;
 		}
 		if(url === ""){
 
 			$(".invalid-url").show()
-			$(".invalid-url").html("La url no puede ir vacia")
+			$(".invalid-url").html("The url is required")
 			return;
 		}
 
@@ -123,7 +123,7 @@ export default function EditDeleteBlog(){
 			if(!expTitle.test(title)){
 
 				$(".invalid-title").show()
-				$(".invalid-title").html("El titulo debe tener solo texto")
+				$(".invalid-title").html("Incorrect format")
 				return;
 			}
 		}
@@ -134,7 +134,7 @@ export default function EditDeleteBlog(){
 			if(!expintro.test(intro)){
 
 				$(".invalid-intro").show()
-				$(".invalid-intro").html("La intro debe tener solo texto")
+				$(".invalid-intro").html("Incorrect format")
 				return;
 			}
 		}
@@ -145,7 +145,7 @@ export default function EditDeleteBlog(){
 			if(!expUrl.test(url)){
 
 				$(".invalid-url").show()
-				$(".invalid-url").html("La url debe esta en el formato solicitado")
+				$(".invalid-url").html("Incorrect format")
 				return;
 			}
 		}
@@ -158,15 +158,23 @@ export default function EditDeleteBlog(){
 
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/blogs"},3000)
+			setTimeout(()=>{window.location.href = "/blogs"},2000)
 		}
 	}
 
@@ -280,7 +288,7 @@ export default function EditDeleteBlog(){
 	return(
 
 		<div className="modal fade" id="editBlog">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -293,9 +301,9 @@ export default function EditDeleteBlog(){
 
 						<input type="hidden" id="editId"/>
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
-								<label className="small text-secondary" htmlFor="editImage">*La imagen debe ser formato jpg o png | Max 2MB</label>
+								<label className="small text-secondary" htmlFor="image">*Image size max 2MB and .jpg or .png</label>
 
 								<input 
 									id="editImage"
@@ -308,84 +316,105 @@ export default function EditDeleteBlog(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newTitle">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-heading"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="newTitle">Title:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-heading"></i>
+											</div>
+											<input 
+												id="newTitle" 
+												type="text" 
+												className="form-control" 
+												name="newTitle" 
+												placeholder="Blog title*"
+												pattern="([0-9a-zA-Z ]).{1,40}"
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newTitle" 
-										type="text" 
-										className="form-control" 
-										name="newTitle" 
-										placeholder="Ingrese el titulo del blog*"
-										pattern="([0-9a-zA-Z ]).{1,}"
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Max 40 characters, letters and numbers</div>
+									</div>
 
 									<div className="invalid-feedback invalid-title"></div>
 								</div>
-
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newIntro">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-paragraph"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="newIntro">Intro:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font"></i>
+											</div>
+											<input 
+												id="newIntro" 
+												type="text" 
+												className="form-control" 
+												name="newIntro" 
+												placeholder="Blog intro*"
+												pattern="([0-9a-zA-Z ]).{1,100}"
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newIntro" 
-										type="text" 
-										className="form-control" 
-										name="newIntro" 
-										placeholder="Ingrese la intro del blog*"
-										pattern="([0-9a-zA-Z ]).{1,}"
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Max 100 characters, letters and numbers</div>
+									</div>
 
 									<div className="invalid-feedback invalid-intro"></div>
 								</div>
-
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newUrl">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-link"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="newUrl">URL:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-link"></i>
+											</div>
+											<input 
+												id="newUrl" 
+												type="text" 
+												className="form-control" 
+												name="newUrl" 
+												placeholder="Ingrese la url del blog*"
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newUrl" 
-										type="text" 
-										className="form-control" 
-										name="newUrl" 
-										placeholder="Ingrese la url del blog*"
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Instagram URL</div>
+									</div>
 
 									<div className="invalid-feedback invalid-url"></div>
 								</div>
-
 							</div>
 
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

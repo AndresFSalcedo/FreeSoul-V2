@@ -93,7 +93,7 @@ export default function EditDeleteSlide(){
 		if(position === ""){
 
 			$(".invalid-position").show()
-			$(".invalid-position").html("La posicion no puede ir vacia")
+			$(".invalid-position").html("The position is required")
 			return;
 		}
 
@@ -105,7 +105,7 @@ export default function EditDeleteSlide(){
 			if(!expPosition.test(position)){
 
 				$(".invalid-position").show()
-				$(".invalid-position").html("La posicion no puede ir vacia")
+				$(".invalid-position").html("Incorrect format")
 				return;
 			}
 		}
@@ -119,15 +119,23 @@ export default function EditDeleteSlide(){
 
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/slides"},3000)
+			setTimeout(()=>{window.location.href = "/slides"},2000)
 		}
 	}
 
@@ -238,7 +246,7 @@ export default function EditDeleteSlide(){
 	return(
 
 		<div className="modal fade" id="editSlide">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -251,7 +259,7 @@ export default function EditDeleteSlide(){
 
 						<input type="hidden" id="editId"/>
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
 								<label className="small text-secondary" htmlFor="editImage">*La imagen debe ser formato jpg o png | Max 2MB</label>
 
@@ -266,37 +274,43 @@ export default function EditDeleteSlide(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="newPosition">*Ingresar un solo numero</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-crosshairs"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newPosition">Position:</label>
+									</div>
+									
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="far fa-dot-circle"></i>
+											</div>
+											<input 
+												id="newPosition" 
+												type="text" 
+												className="form-control" 
+												name="newPosition" 
+												placeholder="*"
+												min="1"
+												maxLength="1"
+												pattern="[0-9]{1}" 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="newPosition" 
-										type="text" 
-										className="form-control" 
-										name="newPosition" 
-										placeholder="Ingrese la posicion*"
-										min="1"
-										maxLength="1"
-										pattern="[0-9]{1}" 
-										required
-									/>
-
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 
 									<div className="invalid-feedback invalid-position"></div>
 								</div>
-
 							</div>
-
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

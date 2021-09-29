@@ -13,7 +13,7 @@ let verifyToken = (req, res, next)=>{
 			return res.json({
 
 				status:401,
-				mensaje:"Token de autorizacion no es valido"
+				mensaje:"Authorization token is not valid"
 			})
 		}
 

@@ -9,19 +9,19 @@ let pictureSchema = new Schema({
 	productType: {
 
 		type: String,
-		required: [true, "El tipo de producto es obligatorio"]
+		required: [true, "The product type is required"]
 	},
 
 	design: {
 
 		type: String,
-		required: [true, "El diseño es obligatorio"]
+		required: [true, "The design is required"]
 	},
 	
 	image: {
 
 		type: String,
-		required: [true, "La imagen es obligatoria"]
+		required: [true, "The image is required"]
 	},
 
 	productCode: {

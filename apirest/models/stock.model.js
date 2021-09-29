@@ -9,44 +9,44 @@ let stockSchema = new Schema({
 	productType: {
 
 		type: String,
-		required: [true, "El tipo de producto es obligatorio"]
+		required: [true, "The product type is required"]
 	},
 
 	design: {
 
 		type: String,
-		required: [true, "El mensaje es obligatorio"]
+		required: [true, "The design is required"]
 	},
 
 	codColor: {
 
 		type: String,
-		required: [true, "El color es obligatorio"]
+		required: [true, "The color is required"]
 	},
 
 	price:{
 		type: Number,
-		required: [true, "El precio es obligatorio"]
+		required: [true, "The price is required"]
 	},
 
 	S: {
 		type: Number,
-		required: [true, "Asignar valor es obligatorio"]
+		required: [true, "The S size is required"]
 	},
 
 	M: {
 		type: Number,
-		required: [true, "Asignar valor es obligatorio"]
+		required: [true, "The M size is required"]
 	},
 
 	L: {
 		type: Number,
-		required: [true, "Asignar valor es obligatorio"]
+		required: [true, "The L size is required"]
 	},
 
 	XL: {
 		type: Number,
-		required: [true, "Asignar valor es obligatorio"]
+		required: [true, "The XL size is required"]
 	},
 
 	productCode: {

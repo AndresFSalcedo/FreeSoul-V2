@@ -335,162 +335,226 @@ export default function EditDeleteStock(){
 					<form onChange={digitForm} onSubmit={submit}>
 						<div className="modal-body">
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newProductType">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-tshirt"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newProductType">Product Type:</label>
 									</div>
-									<input 
-										id="newProductType" 
-										type="text" 
-										className="form-control" 
-										name="productType" 
-										placeholder="Ingrese el tipo de producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-tshirt"></i>
+											</div>
+											<input 
+												id="newProductType" 
+												type="text" 
+												className="form-control" 
+												name="productType" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-newProductType"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newDesign">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-font"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newDesign">Design:</label>
 									</div>
-									<input 
-										id="newDesign" 
-										type="text" 
-										className="form-control" 
-										name="design" 
-										placeholder="Ingrese el diseño del producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="newDesign" 
+												type="text" 
+												className="form-control" 
+												name="design" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-newDesign"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newCodColor">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-paint-brush"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newCodColor">Color:</label>
 									</div>
-									<input 
-										id="newCodColor" 
-										type="text" 
-										className="form-control text-lowercase" 
-										name="codColor" 
-										placeholder="Ingrese el color del producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-paint-brush" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="newCodColor" 
+												type="text" 
+												className="form-control text-lowercase" 
+												name="codColor" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-newCodColor"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newPrice">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-dollar-sign"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newPrice">Price:</label>
 									</div>
-									<input 
-										id="newPrice" 
-										type="text" 
-										className="form-control" 
-										name="price" 
-										placeholder="Ingrese el precio del producto*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8 ">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-dollar-sign" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="newPrice" 
+												type="text" 
+												className="form-control" 
+												name="price" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>	
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-newPrice"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newS">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newS">S size:</label>
 									</div>
-									<input 
-										id="newS" 
-										type="text" 
-										className="form-control" 
-										name="S" 
-										placeholder="Ingrese las unidades de talla S*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>S</i>
+											</div>
+											<input 
+												id="newS" 
+												type="text" 
+												className="form-control" 
+												name="S" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-newS"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newM">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newM">M size:</label>
 									</div>
-									<input 
-										id="newM" 
-										type="text" 
-										className="form-control" 
-										name="M" 
-										placeholder="Ingrese las unidades de talla M*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>M</i>
+											</div>
+											<input 
+												id="newM" 
+												type="text" 
+												className="form-control" 
+												name="M" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-newM"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newL">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newL">L size:</label>
 									</div>
-									<input 
-										id="newL" 
-										type="text" 
-										className="form-control" 
-										name="L" 
-										placeholder="Ingrese las unidades de talla L*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>L</i>
+											</div>
+											<input 
+												id="newL" 
+												type="text" 
+												className="form-control" 
+												name="L" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-newL"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="newXL">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="newXL">XL size:</label>
 									</div>
-									<input 
-										id="newXL" 
-										type="text" 
-										className="form-control" 
-										name="XL" 
-										placeholder="Ingrese las unidades de talla XL*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+									<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>XL</i>
+											</div>
+											<input 
+												id="newXL" 
+												type="text" 
+												className="form-control" 
+												name="XL" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-newXL"></div>
 								</div>
 							</div>

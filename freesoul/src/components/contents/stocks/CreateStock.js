@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
 
 export default function CreateStock(){
 
@@ -49,7 +50,7 @@ export default function CreateStock(){
 		if(productType === ""){
 
 			$(".invalid-productType").show();
-			$(".invalid-productType").html("Completa este campo");
+			$(".invalid-productType").html("The product type is required");
 			return;
 		}
 
@@ -58,7 +59,7 @@ export default function CreateStock(){
 		if(!expProductType.test(productType)){
 
 			$(".invalid-productType").show();
-			$(".invalid-productType").html("Utiliza el formato solicitado");
+			$(".invalid-productType").html("Incorrect format");
 			return;
 		}
 
@@ -66,7 +67,7 @@ export default function CreateStock(){
 		if(design === ""){
 
 			$(".invalid-design").show();
-			$(".invalid-design").html("Completa este campo");
+			$(".invalid-design").html("The design is required");
 			return;
 		}
 
@@ -75,7 +76,7 @@ export default function CreateStock(){
 		if(!expDesign.test(design)){
 
 			$(".invalid-design").show();
-			$(".invalid-design").html("Utiliza el formato solicitado");
+			$(".invalid-design").html("Incorrect format");
 			return;
 		}
 
@@ -83,7 +84,7 @@ export default function CreateStock(){
 		if(codColor === ""){
 
 			$(".invalid-codColor").show();
-			$(".invalid-codColor").html("Completa este campo");
+			$(".invalid-codColor").html("The color is required");
 			return;
 		}
 
@@ -92,7 +93,7 @@ export default function CreateStock(){
 		if(!expCodColor.test(codColor)){
 
 			$(".invalid-codColor").show();
-			$(".invalid-codColor").html("Utiliza el formato solicitado");
+			$(".invalid-codColor").html("Incorrect format");
 			return;
 		}
 
@@ -100,7 +101,7 @@ export default function CreateStock(){
 		if(price === ""){
 
 			$(".invalid-price").show();
-			$(".invalid-price").html("Completa este campo");
+			$(".invalid-price").html("The price is required");
 			return;
 		}
 
@@ -109,7 +110,7 @@ export default function CreateStock(){
 		if(!expPrice.test(price)){
 
 			$(".invalid-price").show();
-			$(".invalid-price").html("Utiliza el formato solicitado");
+			$(".invalid-price").html("Incorrect format");
 			return;
 		}
 
@@ -117,7 +118,7 @@ export default function CreateStock(){
 		if(S === ""){
 
 			$(".invalid-S").show();
-			$(".invalid-S").html("Completa este campo");
+			$(".invalid-S").html("The S size is required");
 			return;
 		}
 
@@ -126,7 +127,7 @@ export default function CreateStock(){
 		if(!expS.test(S)){
 
 			$(".invalid-S").show();
-			$(".invalid-S").html("Utiliza el formato solicitado");
+			$(".invalid-S").html("Incorrect format");
 			return;
 		}
 
@@ -134,7 +135,7 @@ export default function CreateStock(){
 		if(M === ""){
 
 			$(".invalid-M").show();
-			$(".invalid-M").html("Completa este campo");
+			$(".invalid-M").html("The M size is required");
 			return;
 		}
 
@@ -143,7 +144,7 @@ export default function CreateStock(){
 		if(!expM.test(M)){
 
 			$(".invalid-M").show();
-			$(".invalid-M").html("Utiliza el formato solicitado");
+			$(".invalid-M").html("Incorrect format");
 			return;
 		}
 			
@@ -151,7 +152,7 @@ export default function CreateStock(){
 		if(L === ""){
 
 			$(".invalid-L").show();
-			$(".invalid-L").html("Completa este campo");
+			$(".invalid-L").html("The L size is required");
 			return;
 		}
 
@@ -160,7 +161,7 @@ export default function CreateStock(){
 		if(!expL.test(L)){
 
 			$(".invalid-L").show();
-			$(".invalid-L").html("Utiliza el formato solicitado");
+			$(".invalid-L").html("Incorrect format");
 			return;
 		}
 
@@ -168,7 +169,7 @@ export default function CreateStock(){
 		if(XL === ""){
 
 			$(".invalid-XL").show();
-			$(".invalid-XL").html("Completa este campo");
+			$(".invalid-XL").html("The XL size is required");
 			return;
 		}
 
@@ -177,7 +178,7 @@ export default function CreateStock(){
 		if(!expXL.test(XL)){
 
 			$(".invalid-XL").show();
-			$(".invalid-XL").html("Utiliza el formato solicitado");
+			$(".invalid-XL").html("Incorrect format");
 			return;
 		}
 
@@ -189,12 +190,20 @@ export default function CreateStock(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danger">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
 			setTimeout(()=>{window.location.href = "/stocks"},3000)
@@ -213,7 +222,6 @@ export default function CreateStock(){
 
 	return(
 
-
 		<div className="modal fade" id="createStock">
 			<div className="modal-dialog modal-dialog-centered">
 				<div className="modal-content">
@@ -225,170 +233,233 @@ export default function CreateStock(){
 
 					<form onChange={digitForm} onSubmit={submit}>
 						<div className="modal-body">
-
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="productType">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-tshirt"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="productType">Product Type:</label>
 									</div>
-									<input 
-										id="productType" 
-										type="text" 
-										className="form-control" 
-										name="productType" 
-										placeholder="Ingrese el tipo de producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-tshirt"></i>
+											</div>
+											<input 
+												id="productType" 
+												type="text" 
+												className="form-control" 
+												name="productType" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-productType"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="design">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-font"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="design">Design:</label>
 									</div>
-									<input 
-										id="design" 
-										type="text" 
-										className="form-control" 
-										name="design" 
-										placeholder="Ingrese el diseño del producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="design" 
+												type="text" 
+												className="form-control" 
+												name="design" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-design"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="codColor">*Ingresar solo texto</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-paint-brush"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="codColor">Color:</label>
 									</div>
-									<input 
-										id="codColor" 
-										type="text" 
-										className="form-control text-lowercase" 
-										name="codColor" 
-										placeholder="Ingrese el color del producto*"
-										pattern="[A-Za-z]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-paint-brush" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="codColor" 
+												type="text" 
+												className="form-control text-lowercase" 
+												name="codColor" 
+												placeholder="*"
+												pattern="[A-Za-z]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Letters only</div>
+									</div>
 									<div className="invalid-feedback invalid-codColor"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="price">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-dollar-sign"></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="price">Price:</label>
 									</div>
-									<input 
-										id="price" 
-										type="text" 
-										className="form-control" 
-										name="price" 
-										placeholder="Ingrese el precio del producto*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8 ">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-dollar-sign" style={{"width":"20px"}}></i>
+											</div>
+											<input 
+												id="price" 
+												type="text" 
+												className="form-control" 
+												name="price" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>	
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-price"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="S">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="S">S size:</label>
 									</div>
-									<input 
-										id="S" 
-										type="text" 
-										className="form-control" 
-										name="S" 
-										placeholder="Ingrese las unidades de talla S*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>S</i>
+											</div>
+											<input 
+												id="S" 
+												type="text" 
+												className="form-control" 
+												name="S" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-S"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="M">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="M">M size:</label>
 									</div>
-									<input 
-										id="M" 
-										type="text" 
-										className="form-control" 
-										name="M" 
-										placeholder="Ingrese las unidades de talla M*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>M</i>
+											</div>
+											<input 
+												id="M" 
+												type="text" 
+												className="form-control" 
+												name="M" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-M"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="L">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="L">L size:</label>
 									</div>
-									<input 
-										id="L" 
-										type="text" 
-										className="form-control" 
-										name="L" 
-										placeholder="Ingrese las unidades de talla L*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>L</i>
+											</div>
+											<input 
+												id="L" 
+												type="text" 
+												className="form-control" 
+												name="L" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-L"></div>
 								</div>
 							</div>
 
-
-							<div className="form-goup">
-								<label className="small text-secondary" htmlFor="XL">*Ingresar solo numeros</label>
-								<div className="input-group mb-3">
-									<div className="input-group-append input-group-text">
-										<i></i>
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="XL">XL size:</label>
 									</div>
-									<input 
-										id="XL" 
-										type="text" 
-										className="form-control" 
-										name="XL" 
-										placeholder="Ingrese las unidades de talla XL*"
-										pattern="[0-9]+" 
-										required
-									/>
+									<div className="col-lg-8">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i style={{"width":"20px"}}>XL</i>
+											</div>
+											<input 
+												id="XL" 
+												type="text" 
+												className="form-control" 
+												name="XL" 
+												placeholder="*"
+												pattern="[0-9]+" 
+												required
+											/>
+										</div>
+									</div>
+									<div className="col-lg-2">
+										<div className="small text-secondary">*Numbers only</div>
+									</div>
 									<div className="invalid-feedback invalid-XL"></div>
 								</div>
 							</div>
 
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import $ from 'jquery';
-//import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 import {apiRoute} from '../../../config/Config';
 
@@ -50,8 +50,15 @@ export default function AdminEdit(){
 		
 		if(username === ""){
 
-			$(".invalid-usuario").show()
-			$(".invalid-usuario").html("Completa este campo")
+			$(".invalid-username").show()
+			$(".invalid-username").html("Username required")
+			return;
+		}
+
+		if(password === ""){
+
+			$(".invalid-password").show()
+			$(".invalid-password").html("Password required")
 			return;
 		}
 		
@@ -59,12 +66,12 @@ export default function AdminEdit(){
 		Expresion regular usuario
 		=============================================*/
 		
-		const expUsername = /^(?=.*[A-Za-z]).{2,6}$/;
+		const expUsername = /^(?=.*[A-Za-z]).{5,}$/;
 
 		if(!expUsername.test(username)){
 
-			$(".invalid-usuario").show()
-			$(".invalid-usuario").html("Utiliza un formato que coincida con lo solicitado")
+			$(".invalid-username").show()
+			$(".invalid-username").html("Use the required format")
 			return;
 		}
 
@@ -78,8 +85,8 @@ export default function AdminEdit(){
 			const expPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
 
 			if(!expPassword.test(password)){
-				$(".invalid-usuario").show()
-				$(".invalid-usuario").html("Utiliza un formato que coincida con lo solicitado")
+				$(".invalid-password").show()
+				$(".invalid-password").html("Use the required format")
 				return;
 			}
 		}
@@ -92,15 +99,23 @@ export default function AdminEdit(){
 
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/admins"},3000)
+			setTimeout(()=>{window.location.href = "/admins"},2000)
 		}
 	}
 
@@ -133,8 +148,8 @@ export default function AdminEdit(){
 	
 	return(
 
-		<div className="modal" id="editAdmin">
-			<div className="modal-dialog modal-dialog-centered">
+		<div className="modal fade" id="editAdmin">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -146,61 +161,76 @@ export default function AdminEdit(){
 						<div className="modal-body">
 
 							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="username">*Minimo 2 caracteres, maximo 6, sin numeros</label>
+								<div className="row g-3 align-items-center mb-3">
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="username">Admin name:</label>
+									</div>
+									
+									<div className="col-lg-6">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-user" style={{"width":"16px"}}></i>
+											</div>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="far fa-user"></i>
+											<input 
+												id="username" 
+												type="text" 
+												className="form-control text-lowercase" 
+												name="username" 
+												placeholder="Ingrese el usuario*"
+												minLength="5"
+												pattern="(?=.*[A-Za-z]).{5,}" 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="username" 
-										type="text" 
-										className="form-control text-lowercase" 
-										name="username" 
-										placeholder="Ingrese el usuario*"
-										minLength="2"
-										maxLength="6"
-										pattern="(?=.*[A-Za-z]).{2,6}" 
-										required
-									/>
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Min 5 characters</div>
+									</div>
 
-
-									<div className="invalid-feedback invalid-picture"></div>
+									<div className="invalid-feedback invalid-username"></div>
 								</div>
-
 							</div>
+
 							<div className="form-goup">
 								
-								<label className="small text-secondary" htmlFor="password">*Minimo 8 caracteres, letras en mayuscula, en minuscula y numeros</label>
+								<div className="row g-3 align-items-center mb-3">
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-key"></i>
+									<div className="col-lg-2">
+										<label className="col-form-label" htmlFor="password">Password:</label>
 									</div>
 
-									<input 
-										id="password" 
-										type="password" 
-										className="form-control" 
-										name="password" 
-										placeholder="Ingrese la contraseña*"
-										minLength="8"
-										pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}" 
-									/>
+									<div className="col-lg-6">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-key"></i>
+											</div>
+											<input 
+												id="password" 
+												type="password" 
+												className="form-control" 
+												name="password" 
+												placeholder="Ingrese la contraseña*"
+												minLength="8"
+												pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}"
+												required
+											/>
+										</div>
+									</div>
 
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Min 8 characters, uppercase, lowercase and numbers</div>
+									</div>
 
-									<div className="invalid-feedback invalid-picture"></div>
+									<div className="invalid-feedback invalid-password"></div>
 								</div>
 
 							</div>
 
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

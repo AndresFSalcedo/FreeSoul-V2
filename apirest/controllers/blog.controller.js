@@ -16,7 +16,7 @@ let showBlogs = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en la peticion"
+					msg: "Request Error: GET Function"
 				})
 			}
 
@@ -28,7 +28,7 @@ let showBlogs = (req, res) => {
 					return res.json({
 
 						status: 500,
-						msg: "Error en la peticion",
+						msg: "Request Error: GET Function",
 						err
 					})
 				}
@@ -54,7 +54,7 @@ let createBlog = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La imagen no puede ir vacia"
+			msg: "The image cannot be empty"
 		})
 	}
 
@@ -69,7 +69,7 @@ let createBlog = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser formato JPG o PNG"
+			msg: "The image must be JPG or PNG"
 		})
 	}
 
@@ -78,7 +78,7 @@ let createBlog = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser inferior a 2MB"
+			msg: "The size must be max 2MB"
 		})
 	}
 
@@ -118,7 +118,7 @@ let createBlog = (req, res) => {
 				return res.json({
 
 					status: 400,
-					msg: "Error al almacenar el blog",
+					msg: "Error storing the image in the database",
 					err
 				})
 			}
@@ -127,7 +127,7 @@ let createBlog = (req, res) => {
 
 				status: 200,
 				data,
-				msg: "El blog ha sido agregado con exito"
+				msg: "The blog has been created!"
 			})
 		})
 	})
@@ -154,7 +154,7 @@ let editBlog = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: PUT Function",
 				err
 			})
 		}
@@ -164,7 +164,7 @@ let editBlog = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El blog no existente",
+				msg: "The blog does not exists",
 			})
 		}
 
@@ -187,7 +187,7 @@ let editBlog = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser formato JPG o PNG"
+							msg: "The image must be JPG or PNG"
 						}
 
 						reject(respu)
@@ -198,7 +198,7 @@ let editBlog = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser inferior a 2MB"
+							msg: "The size must be max 2MB"
 						}
 
 						reject(respu)
@@ -221,7 +221,7 @@ let editBlog = (req, res) => {
 							let respu = {
 
 								res: res,
-								msg: "Error al guardar imagen"
+								msg: "Request Error: PUT Function"
 							}
 
 							reject(respu)
@@ -298,7 +298,7 @@ let editBlog = (req, res) => {
 				respu["res"].json({
 					status: 200,
 					data: respu["data"],
-					msg: "El articulo ha sido actualizado con exito"
+					msg: "The blog has been updated!"
 				})
 
 			}).catch(respu => {
@@ -307,7 +307,7 @@ let editBlog = (req, res) => {
 
 					status: 400,
 					err: respu["err"],
-					msg: "Error al editar el articulo"
+					msg: "Error editing the blog"
 				})
 			})
 		}).catch(respu => {
@@ -337,7 +337,7 @@ let deleteBlog = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: DELETE Function",
 				err
 			})
 		}
@@ -347,7 +347,7 @@ let deleteBlog = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El objeto no existente",
+				msg: "The blog does not exists",
 			})
 		}
 
@@ -366,14 +366,14 @@ let deleteBlog = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en el servidor",
+					msg: "Request Error: DELETE Function",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				msg:"El articulo se ha eliminado"
+				msg:"The blog has been deleted!"
 			})
 		})
 	})
@@ -390,7 +390,7 @@ let showBlogImg = (req,res)=>{
 		if(!exists){
 			return res.json({
 				status:400,
-				msg: "La imagen no existe"
+				msg: "The image does not exists"
 			})
 		}
 

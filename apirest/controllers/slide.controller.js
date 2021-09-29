@@ -1,3 +1,4 @@
+
 //IMPORTAR MODELO
 
 const Slide = require('../models/slide.model')

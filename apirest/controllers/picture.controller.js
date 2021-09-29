@@ -18,7 +18,7 @@ let showPictures = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en la peticion"
+					msg: "Request Error: GET Function"
 				})
 			}
 
@@ -31,7 +31,7 @@ let showPictures = (req, res) => {
 					return res.json({
 
 						status: 500,
-						msg: "Error en la peticion",
+						msg: "Request Error: GET Function",
 						err
 					})
 				}
@@ -61,7 +61,7 @@ let createPicture = (req, res) => {
 		res.json({
 
 			status: 500,
-			msg: "La imagen no puede ir vacia"
+			msg: "The image cannot be empty"
 		})
 	}
 
@@ -76,7 +76,7 @@ let createPicture = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser formato JPG o PNG"
+			msg: "The image must be JPG or PNG"
 		})
 	}
 
@@ -85,7 +85,7 @@ let createPicture = (req, res) => {
 		return res.json({
 
 			status: 400,
-			msg: "La imagen debe ser inferior a 2MB"
+			msg: "The size must be max 2MB"
 		})
 	}
 
@@ -103,7 +103,7 @@ let createPicture = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error al guardar la imagen",
+				msg: "Request Error: POST Function",
 				err
 			})
 		}
@@ -125,7 +125,7 @@ let createPicture = (req, res) => {
 				return res.json({
 
 					status: 400,
-					msg: "Error al almacenar la imagen",
+					msg: "Error storing the picture in the database",
 					err
 				})
 			}
@@ -134,7 +134,7 @@ let createPicture = (req, res) => {
 
 				status: 200,
 				data,
-				msg: "La imagen ha sido agregada con exito"
+				msg: "The picture has been created!"
 			})
 		})
 	})
@@ -161,7 +161,7 @@ let editPicture = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: PUT Function",
 				err
 			})
 		}
@@ -171,7 +171,7 @@ let editPicture = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "Imagen no existente",
+				msg: "The item does not exists",
 			})
 		}
 
@@ -194,7 +194,7 @@ let editPicture = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser formato JPG o PNG"
+							msg: "The image must be JPG or PNG"
 						}
 
 						reject(respu)
@@ -205,7 +205,7 @@ let editPicture = (req, res) => {
 						let respu = {
 
 							res: res,
-							msg: "La imagen debe ser inferior a 2MB"
+							msg: "The size must be max 2MB"
 						}
 
 						reject(respu)
@@ -228,7 +228,7 @@ let editPicture = (req, res) => {
 							let respu = {
 
 								res: res,
-								msg: "Error al guardar imagen"
+								msg: "Request Error: PUT Function"
 							}
 
 							reject(respu)
@@ -304,7 +304,7 @@ let editPicture = (req, res) => {
 				respu["res"].json({
 					status: 200,
 					data: respu["data"],
-					msg: "La Imagen ha sido actualizada con exito"
+					msg: "The item has been updated!"
 				})
 
 			}).catch(respu => {
@@ -313,7 +313,7 @@ let editPicture = (req, res) => {
 
 					status: 400,
 					err: respu["err"],
-					msg: "Error al editar la Imagen"
+					msg: "Error editing the item"
 				})
 			})
 		}).catch(respu => {
@@ -343,7 +343,7 @@ let deletePicture = (req, res) => {
 			return res.json({
 
 				status: 500,
-				msg: "Error en el servidor",
+				msg: "Request Error: DELETE Function",
 				err
 			})
 		}
@@ -353,7 +353,7 @@ let deletePicture = (req, res) => {
 			return res.json({
 
 				status: 400,
-				msg: "El objeto no existente",
+				msg: "Item does not exists",
 			})
 		}
 
@@ -372,14 +372,14 @@ let deletePicture = (req, res) => {
 				return res.json({
 
 					status: 500,
-					msg: "Error en el servidor",
+					msg: "Request Error: DELETE Function",
 					err
 				})
 			}
 
 			res.json({
 				status:200,
-				msg:"El objeto se ha eliminado"
+				msg:"The item has been deleted!"
 			})
 		})
 	})
@@ -396,7 +396,7 @@ let showPictureImg = (req,res)=>{
 		if(!exists){
 			return res.json({
 				status:400,
-				msg: "La imagen no existe"
+				msg: "The image does not exists"
 			})
 		}
 

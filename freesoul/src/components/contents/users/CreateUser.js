@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
 
 export default function CreateUser(){
 
@@ -84,12 +85,20 @@ export default function CreateUser(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danger">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
 			setTimeout(()=>{window.location.href = "/users"},3000)

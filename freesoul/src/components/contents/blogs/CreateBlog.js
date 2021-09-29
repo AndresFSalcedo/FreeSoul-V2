@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
+import Swal from 'sweetalert2';
 
 export default function CreateBlog(){
 
@@ -31,7 +32,11 @@ export default function CreateBlog(){
 			$("#image").val("");
 			$(".previsualizationImg").attr("src", "")
 
-			//put alert
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'File must be .jpg or .png'
+			})
 
 			return;
 
@@ -40,7 +45,11 @@ export default function CreateBlog(){
 			$("#image").val("");
 			$(".previsualizationImg").attr("src", "")
 
-			//put alert
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Size over 2MB'
+			})
 			
 			return;
 		}else{
@@ -86,7 +95,7 @@ export default function CreateBlog(){
 		if(image === null){
 
 			$(".invalid-image").show()
-			$(".invalid-image").html("La imagen no puede ir vacia")
+			$(".invalid-image").html("The image is required")
 			return;
 		}
 
@@ -94,19 +103,19 @@ export default function CreateBlog(){
 		if(title === ""){
 
 			$(".invalid-title").show()
-			$(".invalid-title").html("El titulo del blog no puede ir vacio")
+			$(".invalid-title").html("The title is required")
 			return;
 		}
 		if(intro === ""){
 
 			$(".invalid-intro").show()
-			$(".invalid-intro").html("La intro no puede ir vacio")
+			$(".invalid-intro").html("The intro is required")
 			return;
 		}
 		if(url === ""){
 
 			$(".invalid-url").show()
-			$(".invalid-url").html("La url no puede ir vacia")
+			$(".invalid-url").html("The instagram url is required")
 			return;
 		}
 
@@ -118,7 +127,7 @@ export default function CreateBlog(){
 			if(!expTitle.test(title)){
 
 				$(".invalid-title").show()
-				$(".invalid-title").html("El titulo debe tener solo texto")
+				$(".invalid-title").html("The title is not in the correct format")
 				return;
 			}
 		}
@@ -129,7 +138,7 @@ export default function CreateBlog(){
 			if(!expintro.test(intro)){
 
 				$(".invalid-intro").show()
-				$(".invalid-intro").html("La intro debe tener solo texto")
+				$(".invalid-intro").html("The intro is not in the correct format")
 				return;
 			}
 		}
@@ -140,7 +149,7 @@ export default function CreateBlog(){
 			if(!expUrl.test(url)){
 
 				$(".invalid-url").show()
-				$(".invalid-url").html("La url debe esta en el formato solicitado")
+				$(".invalid-url").html("The instagram url is not in the correct format")
 				return;
 			}
 		}
@@ -153,15 +162,23 @@ export default function CreateBlog(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/blogs"},3000)
+			setTimeout(()=>{window.location.href = "/blogs"},2000)
 		}
 
 	}
@@ -179,7 +196,7 @@ export default function CreateBlog(){
 	return(
 
 		<div className="modal fade" id="createBlog">
-			<div className="modal-dialog modal-dialog-centered">
+			<div className="modal-dialog modal-dialog-centered modal-lg">
 				<div className="modal-content">
 
 					<div className="modal-header">
@@ -190,9 +207,9 @@ export default function CreateBlog(){
 					<form onChange={digitForm} onSubmit={submit} encType="multipart/form-data">
 						<div className="modal-body">
 
-							<div className="form-goup">
+							<div className="form-goup mb-3">
 								
-								<label className="small text-secondary" htmlFor="image">*La imagen debe ser formato jpg o png | Max 2MB</label>
+								<label className="small text-secondary" htmlFor="image">*Image size max 2MB and .jpg or .png</label>
 
 								<input 
 									id="image"
@@ -206,87 +223,109 @@ export default function CreateBlog(){
 								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
 
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="title">*Ingresar solo texto</label>
+							
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-heading"></i>
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="title">Title:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-heading"></i>
+											</div>
+											<input 
+												id="title" 
+												type="text" 
+												className="form-control" 
+												name="title" 
+												placeholder="*"
+												pattern="([0-9a-zA-Z ]).{1,40}"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="title" 
-										type="text" 
-										className="form-control" 
-										name="title" 
-										placeholder="Ingrese el titulo del blog*"
-										pattern="([0-9a-zA-Z ]).{1,}"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Max 40 characters, letters and numbers</div>
+									</div>
 
 									<div className="invalid-feedback invalid-title"></div>
 								</div>
-
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="intro">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-paragraph"></i>
+
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="intro">Intro:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-font"></i>
+											</div>
+											<input 
+												id="intro" 
+												type="text" 
+												className="form-control" 
+												name="intro" 
+												placeholder="*"
+												pattern="([0-9a-zA-Z ]).{1,100}"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="intro" 
-										type="text" 
-										className="form-control" 
-										name="intro" 
-										placeholder="Ingrese la intro del blog*"
-										pattern="([0-9a-zA-Z ]).{1,}"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Max 100 characters, letters and numbers</div>
+									</div>
 
 									<div className="invalid-feedback invalid-intro"></div>
 								</div>
-
 							</div>
-							<div className="form-goup">
-								
-								<label className="small text-secondary" htmlFor="url">*Ingresar solo texto</label>
 
-								<div className="input-group mb-3">
-										
-									<div className="input-group-append input-group-text">
-										<i className="fas fa-link"></i>
+
+							<div className="form-goup ">
+								<div className="row g-3 align-items-center mb-3">
+
+									<div className="col-lg-1">
+										<label className="col-form-label" htmlFor="url">URL:</label>
+									</div>
+									
+									<div className="col-lg-7">
+										<div className="input-group">
+											<div className="input-group-append input-group-text">
+												<i className="fas fa-link"></i>
+											</div>
+											<input 
+												id="url" 
+												type="text" 
+												className="form-control" 
+												name="url" 
+												placeholder="*"
+												disabled 
+												required
+											/>
+										</div>
 									</div>
 
-									<input 
-										id="url" 
-										type="text" 
-										className="form-control" 
-										name="url" 
-										placeholder="Ingrese la url del blog*"
-										disabled 
-										required
-									/>
-
+									<div className="col-lg-4">
+										<div className="small text-secondary">*Instagram URL format</div>
+									</div>
 
 									<div className="invalid-feedback invalid-url"></div>
 								</div>
-
 							</div>
-
 						</div>
 
-						<div className="modal-footer">
+						<div className="modal-footer col-lg-12">
 							<button type="button" className="btn btn-outline-danger" data-dismiss="modal">Close</button>
 							<button type="submit" className="btn btn-outline-primary">Save changes</button>
 						</div>

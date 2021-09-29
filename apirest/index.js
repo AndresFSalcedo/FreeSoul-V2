@@ -5,7 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-	const cors = require('cors')
+const cors = require('cors')
 
 // CREAMOS VARIABLE PARA TENER TODAS LAS FUNCIONALIDADES DE EXPRESS
 const app = express();

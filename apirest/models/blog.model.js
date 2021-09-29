@@ -9,24 +9,24 @@ let blogSchema = new Schema({
 	image: {
 
 		type: String,
-		required: [true, "La imagen es obligatoria"]
+		required: [true, "The image is required"]
 	},
 
 	url: {
 
 		type: String,
-		required: [true, "La url es obligatoria"]
+		required: [true, "The url is required"]
 	},
 
 	title: {
 
 		type: String,
-		required: [true, "El titulo es obligatorio"]
+		required: [true, "The title is required"]
 	},
 
 	intro:{
 		type: String,
-		required: [true, "La introduccion es obligatoria"]
+		required: [true, "The intro is required"]
 	}
 	
 })

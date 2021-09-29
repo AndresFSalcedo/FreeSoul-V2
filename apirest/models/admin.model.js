@@ -9,14 +9,14 @@ let adminSchema = new Schema({
  	username: {
 
  		type: String,
- 		required: [true, "El usuario es obligatorio"],
+ 		required: [true, "The username is required"],
 		unique: true
  	},
 
 	password: {
 
  		type: String,
- 		required: [true, "La contraseña es obligatoria"]
+ 		required: [true, "The password is required"]
  	}
  })
 
