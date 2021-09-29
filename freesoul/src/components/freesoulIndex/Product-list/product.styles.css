@@ -1,0 +1,37 @@
+@font-face{
+  font-family: MyriadPro-It;
+  color: #000;
+  src: url("../../../FreesoulDocs/tipografias/MyriadPro-It.otf") format("opentype");
+}
+
+.product-container {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* background-color: #95dada; */
+  /* border: 1px solid grey; */
+  border-radius: 5px;
+  /* padding: 3rem; */
+  cursor: pointer;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  transition: transform 0.25s ease-out;
+  text-align: center;
+  /* width: 70%; */
+}
+
+.product-container:hover {
+  transform: scale(1.05);
+}
+
+.fuente {
+  margin-top: 1rem;
+  font-weight: normal;
+  font-size: 2rem;
+  color: #000;
+  font-family: MyriadPro-It;
+}
+
+ p.fuente{
+  margin-top: 0px;
+}

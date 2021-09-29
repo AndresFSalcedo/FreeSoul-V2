@@ -1,0 +1,61 @@
+@font-face{
+    font-family: Mermaid;
+    src: url("../../../FreesoulDocs/tipografias/Mermaid1001.ttf") format("opentype");
+}
+
+.tabcss{
+    background-color: #bae0e3;
+}
+
+.nav-link {
+    color: #4d6ab2;
+    font-size: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: Mermaid;
+}
+
+.active{
+    color: #4d6ab2;
+    text-decoration: none;
+}
+
+.topBar{
+    background-color: #32b4ae;
+    color: #ffffff;
+    height: 30px;
+    margin-bottom: 0%;
+}
+
+.topLink{
+    color: #ffffff;
+    text-decoration: none;
+    float: right;
+    margin-left: 30px;
+}
+
+.logo{
+    padding: 0%;
+    margin-top: 0%;
+    margin-left: 32%;
+    margin-right: 32%;
+    width: 36%;
+    height: auto;
+}
+
+.icon1{
+    position: absolute;
+    bottom: 80%;
+    left: 83%;
+    height: 55px;
+    cursor: pointer;
+}
+
+.icon2{
+    position: absolute;
+    bottom: 80%;
+    left: 90%;
+    height: 50px;
+    cursor: pointer;
+}
+

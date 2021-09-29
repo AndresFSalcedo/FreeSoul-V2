@@ -21,7 +21,6 @@ import Pictures from './components/contents/pictures/Pictures';
 import Blogs from './components/contents/blogs/Blogs';
 import Users from './components/contents/users/Users';
 import Error404 from './components/contents/404error/Error404';
-import mainApp from './components/mainApp/main.component';
 
 export default function App() {
 
@@ -45,7 +44,6 @@ export default function App() {
         <BrowserRouter>
 
           <Switch>
-            <Route exact path="/" component={mainApp}/>
             <Route exact path="/admins" component={Admins}/>
             <Route exact path="/stocks" component={Stocks}/>
             <Route exact path="/reserves" component={Reserves}/>
