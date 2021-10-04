@@ -12,13 +12,12 @@ import MainPage from './MainPage';
 ReactDOM.render(
   
   <BrowserRouter>
-  <Switch>
+    <Switch>
+      <Route exact path="/admins" component={App}/>
+      <Route exact path="/" component={MainPage}/>
 
-  <Route exact path="/admins" component={App}/>
-  <Route exact path="/" component={MainPage}/>
-
-  </Switch>
-</BrowserRouter>,
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

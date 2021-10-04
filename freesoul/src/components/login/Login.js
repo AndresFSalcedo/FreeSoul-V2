@@ -3,7 +3,7 @@ import {apiRoute} from '../../config/Config';
 import $ from "jquery";
 
 export default function Login(){
-
+	console.log('Holaaaaaaaaaa')
 	/*=============================================
 	HOOK PARA INICIAR SESION
 	=============================================*/

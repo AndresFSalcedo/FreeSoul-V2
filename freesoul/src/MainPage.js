@@ -13,20 +13,23 @@ import Footer from './components/MainPage/Footer/Footer';
 import "../src/scripts/jdSlider.css";
 import Carousel from './components/MainPage/Carousel/Carousel.component';
 
-function MainPage() {
+export default function MainPage() {
+  
   const [selected, setSelected] = useState("Inicio");
-  const [products, setProducts] = useState([]);
+  //const [products, setProducts] = useState([]);
 
 
-  useEffect(() => {
+  /*useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
     .then(response => response.json()
     .then(users => setProducts(users)))
-  })
+  })*/
 
   const currentSelected = (Tab) => {
     setSelected(Tab);
   }
+
+  
 
   return (
     <div>
@@ -40,14 +43,14 @@ function MainPage() {
 
         <Tab isSelected={selected === 'Camisetas'}>
           <h1 className="titleMsg mt-5">Camisetas</h1>
-        <ProductList products={products} />  
+        {/*<ProductList products={products} />*/}  
         </Tab>
         <Tab isSelected={selected === 'Blog'}>
         <p>Blog</p>
       </Tab>
       <Tab isSelected={selected === 'Buzos'}>
         <h1 className="titleMsg mt-5">Buzos</h1>
-        <ProductList products={products} />
+        {/*<ProductList products={products} />*/}
       </Tab>
       <Tab isSelected={selected === 'Nosotras'}>
         <h1 className="titleMsg mt-5">Nosotras</h1>
@@ -130,4 +133,3 @@ function MainPage() {
   )
 }
 
-export default MainPage
