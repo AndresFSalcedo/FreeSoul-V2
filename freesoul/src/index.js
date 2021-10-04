@@ -5,9 +5,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import MainPage from './MainPage';
+
+
 ReactDOM.render(
   
-  <App/>,
+  <BrowserRouter>
+  <Switch>
+
+  <Route exact path="/admins" component={App}/>
+  <Route exact path="/" component={MainPage}/>
+
+  </Switch>
+</BrowserRouter>,
   document.getElementById('root')
 );
 
