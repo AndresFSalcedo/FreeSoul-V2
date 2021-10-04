@@ -37,11 +37,11 @@ export default function Header(){
 				
 				<li className="nav-item">
 					
-					<a 	href="/"
+					<a 	href="#/"
 						onClick={()=>{logOut()}}
 						className="nav-link">
 
-							<i className="fas fa-sign-out-alt"></i>
+						<i className="fas fa-sign-out-alt"></i>
 
 					</a>
 

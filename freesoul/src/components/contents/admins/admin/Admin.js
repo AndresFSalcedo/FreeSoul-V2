@@ -1,18 +1,19 @@
 import React from 'react';
-import {apiRoute} from '../../../config/Config';
+import {apiRoute} from '../../../../config/Config';
 import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-bs5';
 import 'datatables.net-responsive';
 
-import AdminEdit from './AdminEdit'
+import AdminEdit from './AdminEdit';
 
-export default function Admins(){
+export default function Admins() {
 
+	//DATA TABLE FOR ADMIN
 	const dataAdmins = async()=>{
 
 
-		const getAdmins = await getData();
+		const getAdmins = await getDataAdmin();
 		
 		
 		const dataSet = [];
@@ -31,7 +32,7 @@ export default function Admins(){
 		=============================================*/
 		$(document).ready(function() {
 			
-			$('.table').DataTable({
+			$('table.admins').DataTable({
 
 				data: dataSet,
 				columns: [
@@ -55,12 +56,9 @@ export default function Admins(){
 	}
 
 	dataAdmins();
-	
 
 	return(
-
-		<div className="content-wrapper" style={{minHeight: "494px"}}>
-			
+		<div>
 			<div className="content-header">
 				
 				<div className="container-fluid">
@@ -88,7 +86,7 @@ export default function Admins(){
 
 							  	<div className="card-body">
 							  		
-						  			<table className="dt-responsive table table-striped" style={{"width":"100%"}}>
+						  			<table className="dt-responsive admins table table-striped" style={{"width":"100%"}}>
 						  			  
 						  			</table>
 							  		
@@ -107,17 +105,15 @@ export default function Admins(){
 			{/* VENTANA MODAL PARA EDIT ADMIN*/}
 
 			<AdminEdit/>
-
 		</div>
 	);
-
 }
 
 /*=============================================
 PETICION GET ADMIN
 =============================================*/
 
-const getData = ()=>{
+const getDataAdmin = ()=>{
 
 	const url = `${apiRoute}/show-admins`;
 	const token = localStorage.getItem("ACCESS_TOKEN");

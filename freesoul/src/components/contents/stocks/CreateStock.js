@@ -206,10 +206,24 @@ export default function CreateStock(){
 			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/stocks"},3000)
+			setTimeout(()=>{window.location.href = "/stocks"},2000)
 		}
 
 	}
+
+	//Drop Down menu for products
+	const productList = async ()=> {
+
+		const product = await getDataProduct();
+
+		let list = document.getElementById("productType")
+
+		for (let i = 0; i < product.data.length; i++) {
+
+			list.innerHTML += `<option value="${product.data[i].product}">${product.data[i].product}</option>`
+		}
+	}
+	productList();
 
 	$(document).on("click", ".cleanForm", function(){
 
@@ -243,15 +257,9 @@ export default function CreateStock(){
 											<div className="input-group-append input-group-text">
 												<i className="fas fa-tshirt"></i>
 											</div>
-											<input 
-												id="productType" 
-												type="text" 
-												className="form-control" 
-												name="productType" 
-												placeholder="*"
-												pattern="[A-Za-z]+" 
-												required
-											/>
+											<select className="custom-select" id="productType">
+												
+											</select>
 										</div>
 									</div>
 									<div className="col-lg-2">
@@ -502,4 +510,31 @@ const postData = data =>{
 
 		return err
 	})
+}
+
+const getDataProduct = ()=>{
+
+	const url = `${apiRoute}/show-products`;
+	const token = localStorage.getItem("ACCESS_TOKEN");
+	const params = {
+
+		method:"GET",
+		headers: {
+
+			"Authorization": token,
+			"Content-Type":"application/json"
+		}
+	}
+
+	return fetch(url, params).then(response =>{
+
+		return response.json();
+	}).then(result =>{
+
+		return result
+	}).catch(err =>{
+
+		return err
+	})
+
 }

@@ -23,7 +23,7 @@ export default function DisplayProducts(){
 		})
 		
 		$(document).ready(()=>{
-			$('.tableP').DataTable({
+			$('.details').DataTable({
 
 				data: dataTable,
 				columns: [
@@ -50,7 +50,7 @@ export default function DisplayProducts(){
 					</div>
 
 					<div className="modal-body">
-						<table className="tableP table-striped dt-responsive text-ju" style={{"width":"100%"}}>
+						<table className="table details table-striped dt-responsive" style={{"width":"100%"}}>
 						</table>
 					</div>
 

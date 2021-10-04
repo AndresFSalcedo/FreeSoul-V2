@@ -13,7 +13,7 @@ import Footer from './components/footer/Footer';
 
 
 // Componentes Dinamicos
-import Admins from './components/contents/admins/Admins';
+import AdminsProducts from './components/contents/admins/Admins.Products';
 import Stocks from './components/contents/stocks/Stocks';
 import Reserves from './components/contents/reserves/Reserves';
 import Slides from './components/contents/slides/Slides';
@@ -44,7 +44,7 @@ export default function App() {
         <BrowserRouter>
 
           <Switch>
-            <Route exact path="/admins" component={Admins}/>
+            <Route exact path="/admins&products" component={AdminsProducts}/>
             <Route exact path="/stocks" component={Stocks}/>
             <Route exact path="/reserves" component={Reserves}/>
             <Route exact path="/slides" component={Slides}/>
@@ -54,7 +54,6 @@ export default function App() {
             <Route component={Error404}/>
 
           </Switch>
-
         </BrowserRouter>
 
         <Footer/>

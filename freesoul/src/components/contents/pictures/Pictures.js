@@ -47,7 +47,7 @@ export default function Pictures(){
 
 						render: function(data){
 
-							return `<img alt="img" src="${apiRoute}/show-pictureImg/${data}" style="width:320px">`
+							return `<img alt="img" src="${apiRoute}/show-pictureImg/${data}" style="width:150px">`
 						}
 					},
 					{title:"Product Type"},
@@ -111,7 +111,7 @@ export default function Pictures(){
 									
 									<h5 className="m-0">
 										
-										<button className="btn btn-primary cleanForm" data-toggle="modal" data-target="#createPicture">Crear Nueva Imagen</button>
+										<button className="btn btn-primary cleanForm" data-toggle="modal" data-target="#createPicture">New Picture(s)</button>
 
 									</h5>
 

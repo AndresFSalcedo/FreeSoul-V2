@@ -95,7 +95,7 @@ export default function Users(){
 
 									<h5 className="m-0">
 										
-										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createUser">Crear Nuevo Usuario</button>
+										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createUser">New User</button>
 
 									</h5>
 

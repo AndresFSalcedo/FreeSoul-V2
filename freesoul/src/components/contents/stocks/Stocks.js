@@ -120,7 +120,7 @@ export default function Stocks(){
 									
 									<h5 className="m-0">
 										
-										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createStock">Crear Nuevo Item</button>
+										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createStock">New Item</button>
 
 									</h5>
 

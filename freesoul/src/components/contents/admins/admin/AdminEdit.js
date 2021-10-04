@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 
-import {apiRoute} from '../../../config/Config';
+import {apiRoute} from '../../../../config/Config';
 
 export default function AdminEdit(){
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {apiRoute} from '../../../config/Config';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
@@ -9,62 +9,75 @@ export default function CreatePicture(){
 	HOOK PARA CAPTURAR DATOS
 	=============================================*/
 	
-	const [picture, createPicture] = useState({
+	let picture = {
 
 		image: null,
 		productType: "",
 		design: ""
-	})
+	}
 
 	/*=============================================
 	OnChange
 	=============================================*/
-	
-	const digitForm = e =>{
+	const enterPictures = e =>{
 
-		let image = $("#image").get(0).files[0]
+		let images = $("#image").get(0).files
+		
+		for (let i = 0; i < images.length; i++) {
 
-		//VALIDAR LA EXTENSION DEL ARCHIVO
+			//VALIDAR LA EXTENSION DEL ARCHIVO
 
-		if (image["type"] !== "image/jpeg" && image["type"] !== "image/png") {
+			if (images[i]["type"] !== "image/jpeg" && images[i]["type"] !== "image/png") {
 
-			$("#image").val("");
-			$(".previsualizationImg").attr("src", "")
+				$("#image").val("");
+				$(".viewImages").html("")
 
-			//put alert
+				Swal.fire({
 
-			return;
-
-		}else if(image["size"] > 2000000){
-
-			$("#image").val("");
-			$(".previsualizationImg").attr("src", "")
-
-			//put alert
-			
-			return;
-		}else{
-
-			let fileData = new FileReader();
-
-			fileData.readAsDataURL(image);
-			$(fileData).on("load", function(event){
-
-				let fileRoute = event.target.result;
-				
-				$(".previsualizationImg").attr("src", fileRoute)
-
-				$("#productType").prop("disabled",false)
-				$("#design").prop("disabled",false)
-
-				createPicture({
-
-					'image': image,
-					'productType': $("#productType").val(),
-					'design': $("#design").val()
+					icon: 'error',
+					title: 'The files must be .jpg or .png'
 				})
-			})
 
+				return;
+
+			}else if(images[i]["size"] > 2100000){
+
+				$("#image").val("");
+				$(".viewImages").html("")
+
+				Swal.fire({
+
+					icon: 'error',
+					title: 'Size per image must be less than 2MB'
+				})
+				
+				return;
+			}else{
+
+				let fileData = new FileReader();
+
+				fileData.readAsDataURL(images[i]);
+				$(fileData).on("load", function(event){
+
+					let fileRoute = event.target.result;
+					
+					$(".viewImages").append(`
+
+						<div class="col-6 pt-2">
+							<img src="${fileRoute}" class="img-fluid">
+						</div>
+
+					`)
+
+					$("#productType").prop("disabled",false)
+					$("#design").prop("disabled",false)
+
+					picture.image = images
+					
+
+				})
+
+			}
 		}
 	}
 
@@ -78,15 +91,22 @@ export default function CreatePicture(){
 
 		e.preventDefault();
 
+		picture.productType = $("#productType").val()
+		picture.design = $("#design").val()
+		
 		const {image, productType, design} = picture;
+		
+		for (let i = 0; i < picture.image.length; i++) {
+			
+			/*VALIDAMOS SI NO VIENE LA IMAGEN*/
+			if(image[i] === null){
 
-		/*VALIDAMOS SI NO VIENE LA IMAGEN*/
-		if(image === null){
-
-			$(".invalid-image").show()
-			$(".invalid-image").html("The image id required")
-			return;
+				$(".invalid-image").show()
+				$(".invalid-image").html("The image id required")
+				return;
+			}
 		}
+		
 
 		/*VALIDAMOS SI NO VIENE EL PRODUCTO Y DISEÑO*/
 		if(productType === ""){
@@ -127,38 +147,61 @@ export default function CreatePicture(){
 		}
 
 		/*=============================================
-		EJECUTAR SERVICIO POST
+		EJECUTAR SERVICIO POST PARA VARIAS FOTOS
 		=============================================*/
 		
-		const result = await postData(picture)
-		
-		if(result.status === 400){
+		for (let i = 0; i < picture.image.length; i++) {
 
-			Swal.fire({
-				icon: 'error',
-				title: 'Oops...',
-				text: `${result.msg}`
-			})
-		}
+			let sendData = {
+				image: picture.image[i],
+				productType: picture.productType,
+				design: picture.design
+			}
 
-		if(result.status === 200){
+			const result = await postData(sendData)
+			
+			if(result.status === 400){
 
-			Swal.fire({
-				icon: 'success',
-				title: 'Success',
-				text: `${result.msg}`
-			})
-			$('button[type="submit"]').remove();
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: `${result.msg}`
+				})
+			}
 
-			setTimeout(()=>{window.location.href = "/pictures"},2000)
+			if(result.status === 200){
+
+				Swal.fire({
+					icon: 'success',
+					title: 'Success',
+					text: `${result.msg}`
+				})
+				$('button[type="submit"]').remove();
+
+				setTimeout(()=>{window.location.href = "/pictures"},2000)
+			}
 		}
 
 	}
 
+	//Drop Down menu for products
+	const productList = async ()=> {
+
+		const product = await getDataProduct();
+
+		let list = document.getElementById("productType")
+
+		for (let i = 0; i < product.data.length; i++) {
+
+			list.innerHTML += `<option value="${product.data[i].product}">${product.data[i].product}</option>`
+		}
+	}
+	productList();
+
 	$(document).on("click", ".cleanForm", function(){
 
 	 	$(".modal").find('form')[0].reset();
-	 	$(".previsualizationImg").attr("src","")
+	 	$(".viewImages").html("")
 	})
 
 	/*=============================================
@@ -176,7 +219,7 @@ export default function CreatePicture(){
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
-					<form onChange={digitForm} onSubmit={submit} encType="multipart/form-data">
+					<form onSubmit={submit} encType="multipart/form-data">
 						<div className="modal-body">
 
 							<div className="form-goup mb-3">
@@ -187,12 +230,15 @@ export default function CreatePicture(){
 									id="image"
 									type="file" 
 									className="form-control-file border" 
-									name="image" 
+									name="image"
+									onChange={enterPictures}
+									multiple 
 									required
 								/>
 
 								<div className="invalid-feedback invalid-image"></div>
-								<img alt="" className="mt-2 previsualizationImg img-fluid"/>
+
+								<div className="viewImages row"></div>
 
 							</div>
 
@@ -208,16 +254,9 @@ export default function CreatePicture(){
 											<div className="input-group-append input-group-text">
 												<i className="fas fa-tshirt"></i>
 											</div>
-											<input 
-												id="productType" 
-												type="text" 
-												className="form-control" 
-												name="productType" 
-												placeholder="*"
-												pattern="[A-Za-z]+"
-												disabled 
-												required
-											/>
+											<select className="custom-select" id="productType" disabled>
+												
+											</select>
 										</div>
 									</div>
 
@@ -314,4 +353,31 @@ const postData = data =>{
 
 		return err
 	})
+}
+
+const getDataProduct = ()=>{
+
+	const url = `${apiRoute}/show-products`;
+	const token = localStorage.getItem("ACCESS_TOKEN");
+	const params = {
+
+		method:"GET",
+		headers: {
+
+			"Authorization": token,
+			"Content-Type":"application/json"
+		}
+	}
+
+	return fetch(url, params).then(response =>{
+
+		return response.json();
+	}).then(result =>{
+
+		return result
+	}).catch(err =>{
+
+		return err
+	})
+
 }

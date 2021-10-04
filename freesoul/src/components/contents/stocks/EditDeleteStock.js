@@ -580,8 +580,6 @@ PETICION PUT
 
 const putData = data =>{
 
-	console.log(data)
-
 	const url = `${apiRoute}/edit-stock/${data.id}`
 	const token = localStorage.getItem("ACCESS_TOKEN")
 	const params = {

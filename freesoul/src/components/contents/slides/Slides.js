@@ -106,7 +106,7 @@ export default function Slides(){
 									
 									<h5 className="m-0">
 										
-										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createSlide">Crear Nuevo Slide</button>
+										<button className="cleanForm btn btn-primary" data-toggle="modal" data-target="#createSlide">New Slide</button>
 
 									</h5>
 

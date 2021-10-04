@@ -52,7 +52,7 @@ export default function Reservs(){
 
 		$(document).ready(function() {
 
-			$('.table').DataTable({
+			$('.client').DataTable({
 
 				data: dataSet,
 				columns: [
@@ -138,7 +138,7 @@ export default function Reservs(){
 
 							  	<div className="card-body">
 							  		
-						  			<table className="table table-striped dt-responsive" style={{"width":"100%"}}>
+						  			<table className="table client table-striped dt-responsive" style={{"width":"100%"}}>
 						  			</table>
 							  		
 							  	</div>

@@ -114,7 +114,7 @@ export default function Blogs(){
 									
 									<h5 className="m-0">
 										
-										<button className="btn btn-primary cleanForm" data-toggle="modal" data-target="#createBlog">Crear Nuevo Blog</button>
+										<button className="btn btn-primary cleanForm" data-toggle="modal" data-target="#createBlog">New Blog</button>
 
 									</h5>
 

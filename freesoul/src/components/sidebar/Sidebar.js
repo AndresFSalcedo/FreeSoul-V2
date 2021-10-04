@@ -51,9 +51,9 @@ export default function Sidebar(){
 						data-accordion="false">
 
 						<li className="nav-item">
-							<a href="/admins" className="nav-link">
+							<a href="/admins&products" className="nav-link">
 								<i className="nav-icon fas fa-user-cog"></i>
-								<p>Admin</p>
+								<p>Admin & Products</p>
 							</a>
 						</li>
 
