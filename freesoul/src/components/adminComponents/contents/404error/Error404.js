@@ -4,19 +4,19 @@ export default function Error404(){
 
 	return(
 
-		<div class="content-wrapper" style={{minHeight: "1589.56px"}}>
+		<div className="content-wrapper" style={{minHeight: "1589.56px"}}>
 
-			<section class="content">
+			<section className="content">
 
-				<div class="error-page">
+				<div className="error-page">
 
-					<h2 class="headline text-warning"> 404</h2>					
+					<h2 className="headline text-warning"> 404</h2>					
 
-					<div class="error-content pt-5">
+					<div className="error-content pt-5">
 
 						<h3>
 
-							<i class="fas fa-exclamation-triangle text-warning"></i>{" "}
+							<i className="fas fa-exclamation-triangle text-warning"></i>{" "}
 
 							Oops! Page not found.
 

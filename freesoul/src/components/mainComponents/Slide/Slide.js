@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+//import $ from 'jquery';
 
 import img1 from './slide01.jpg';
 import img2 from './slide02.jpg';

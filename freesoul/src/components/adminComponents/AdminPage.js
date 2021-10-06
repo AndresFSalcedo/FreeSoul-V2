@@ -6,6 +6,9 @@ import "../App.css";
 // Componente Login
 import Login from "./login/Login";
 
+// Componente MainPage
+import MainPage from "../mainComponents/MainPage";
+
 // Componentes Fijos
 import Header from "./header/Header";
 import Sidebar from "./sidebar/Sidebar";
@@ -21,11 +24,20 @@ import Blogs from "./contents/blogs/Blogs";
 import Users from "./contents/users/Users";
 import Error404 from "./contents/404error/Error404";
 
-export default function App() {
+export default function AdminPage() {
   const auth = getAccessToken();
 
   if (!auth) {
-    return <Login />;
+
+    return (
+
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/" component={MainPage} />
+        </Switch>
+      </BrowserRouter>
+    )
   }
 
   return (
@@ -46,6 +58,7 @@ export default function App() {
             <Route component={Error404} />
           </Switch>
         </BrowserRouter>
+    
 
         <Footer />
       </div>

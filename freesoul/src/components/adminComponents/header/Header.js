@@ -10,6 +10,8 @@ export default function Header(){
 		localStorage.removeItem("ACCESS_TOKEN");
 		localStorage.removeItem("ID");
 		localStorage.removeItem("USERNAME");
+
+		window.location.href = "/";
 	}
 	
 
