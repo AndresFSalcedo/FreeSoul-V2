@@ -11,9 +11,9 @@ export default function Footer(){
             <div className="fContainer">
                 <div className="container mt-3">
                     <div className="row">
-                        <div className="col-4 column">
-                            <h2>Nosotras</h2>
-                            <p className="text-justify"> Lorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla bla</p>
+                        <div className="col-lg-4">
+                            <h2 className="h2Footer">Nosotras</h2>
+                            <p className="text-justify pFooter"> Lorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla bla</p>
                             <p className="bold">Leer más</p>
                             <IconContext.Provider value={{style: {margin:'10px', width:'50px', height:'auto', color:"#4d6ab2"}}}>
                                 <FaInstagram/>
@@ -22,8 +22,8 @@ export default function Footer(){
                             </IconContext.Provider>
 
                         </div>
-                        <div className="col-4 column text-left">
-                            <h2>Ayuda</h2>
+                        <div className="col-lg-4 text-left">
+                            <h2 className="h2Footer">Ayuda</h2>
                             <ul>
                                 <button className="btnPopUp" >Buscar</button><br/>
                                 <button className="btnPopUp" >Contáctanos</button><br/>
@@ -32,10 +32,10 @@ export default function Footer(){
                                 <button className="btnPopUp" >Políticas de Privacidad</button>
                             </ul>
                         </div>
-                        <div className="col-4 column">
-                            <h2>Newsletter</h2>
-                            <p>¿Te gustaría conocer las promos que manejamos según la temporada? Sorteos y más cosas, deja tu correo electrónico</p>
-                            <input id="email" type="email" placeholder="  Correo Electrónico"></input>
+                        <div className="col-lg-4">
+                            <h2 className="h2Footer">Newsletter</h2>
+                            <p className="pFooter">¿Te gustaría conocer las promos que manejamos según la temporada? Sorteos y más cosas, deja tu correo electrónico</p>
+                            <input className="inputFooter" id="email" type="email" placeholder="  Correo Electrónico"></input>
                             <div className="btnSpace">
                                 <button className="btnSend">Enviar</button>
                             </div>

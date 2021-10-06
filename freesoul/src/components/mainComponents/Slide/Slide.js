@@ -1,54 +1,76 @@
-import React from 'react';
-//import $ from 'jquery';
+import React, {useState} from 'react'
+import "./Slide.css";
+import BtnSlider from './BtnSlider'
+import dataSlider from './dataSlider'
+import {apiRoute} from '../../../config/Config';
 
-import img1 from './slide01.jpg';
-import img2 from './slide02.jpg';
-import img3 from './slide03.jpg';
+export default function Slider() {
 
-export default function Slide(){
+    const [slideIndex, setSlideIndex] = useState(1)
 
-	/*$('.example').jdSlider({
-	wrap:'.slide-inner',
-	isAuto:true,
-	isUse:true,
-	isLoop:true,
-	interval: 3000
+    const nextSlide = () => {
+        if(slideIndex !== dataSlider.length){
+            setSlideIndex(slideIndex + 1)
+        } 
+        else if (slideIndex === dataSlider.length){
+            setSlideIndex(1)
+        }
+    }
 
-	});*/
+    const prevSlide = () => {
+        if(slideIndex !== 1){
+            setSlideIndex(slideIndex - 1)
+        }
+        else if (slideIndex === 1){
+            setSlideIndex(dataSlider.length)
+        }
+    }
 
-	return(
+    const moveDot = index => {
+        setSlideIndex(index)
+    }
 
-		<div className="container p-0">
+    
 
-			<section className="jd-slider example">
-				<div className="slide-inner">
-					<ul className="slide-area">
-						<li>
-							<img alt="" src={img1}/>
-						</li>
-						<li>
-							<img alt="" src={img2}/>
-						</li>
-						<li>
-							<img alt="" src={img3}/>
-						</li>
-					</ul>
-				</div>
-				<a className="prev" href="#/">
-					<i className="fas fa-angle-left fa-2x text-white pl-5"></i>
-				</a>
-				<a className="next" href="#/">
-					<i className="fas fa-angle-right fa-2x text-white pr-5"></i>
-				</a>
-				<div className="controller">
-					<a href="#/" className="auto d-none">
-						<i className="fas fa-play fa-xs"></i>
-						<i className="fas fa-pause fa-xs"></i>
-					</a>
-					<div className="indicate-area d-none d-lg-block"></div>
-				</div>
-			</section>
+    dataSlider.sort( (first, second) =>{
+        
+        if (first.position < second.position){
+            return -1
+        }if (first.position > second.position){
+            return 1
+        }
+        return 0
+    })
+   
+    return (
+        <div className="container-fluid">
+            <div className="img-fluid container-slider mt-2"> 
+                {dataSlider.map((obj, index) => {
+                    return (
+                        <div
+                        key={dataSlider[index]._id}
+                        className={slideIndex === index + 1 ? "slide active-anim" : "slide"}
+                        >
+                            <img 
+                            src={`${apiRoute}/show-slideImg/${dataSlider[index].picture}`}
+                            alt={`img${index + 1}`}
+                            />
+                        </div>
+                    )
+                })}
+                <BtnSlider moveSlide={nextSlide} direction={"next"} />
+                <BtnSlider moveSlide={prevSlide} direction={"prev"}/>
 
-		</div>
-	)
+                <div className="container-dots">
+                    {Array.from({length: `${dataSlider.length}`}).map((item, index) => (
+                        <div
+                        key={`${dataSlider[index]._id}`}
+                        onClick={() => moveDot(index + 1)}
+                        className={slideIndex === index + 1 ? "dot active" : "dot"}
+                        ></div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
 }

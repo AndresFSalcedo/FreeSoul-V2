@@ -1,9 +1,13 @@
 .bChurrusco{
-    background-image: url("../../../assets/ChurruscoHome.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    overflow-wrap: normal;
+
+    background: url("../../../assets/ChurruscoHome.png") no-repeat center;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   height: 100%;
+   width: 100% ;
+   text-align: center;
 }
 
 .picHome{
@@ -12,7 +16,6 @@
     margin-right: 26%;
     margin-top: 1em;
     margin-bottom: 1em;
-
 }
 
 .picHome img{

@@ -120,6 +120,7 @@ export default function Pictures(){
 							  	<div className="card-body">
 							  		
 						  			<table className="dt-responsive table table-striped" style={{"width":"100%"}}>
+
 						  			</table>
 							  		
 							  	</div>
