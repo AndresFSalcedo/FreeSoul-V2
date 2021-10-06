@@ -7,13 +7,13 @@ import {FaWhatsapp} from 'react-icons/fa';
 import {FaTruck} from 'react-icons/fa';
 import {BiShoppingBag} from 'react-icons/bi'
 import {RiMailSendLine} from 'react-icons/ri';
-import "./TabNav.css";
+import "./TabNav.scss";
 
 class TabNav extends React.Component {
 
     render(){
         return(
-            <>
+            <div className="container-tabnav-react">
                 <div className="top-bar topBar">
                     <div className="container">
                         <div className="col-12">
@@ -54,7 +54,7 @@ class TabNav extends React.Component {
                     </ul>
                     {this.props.children}
                 </div>
-            </>
+            </div>
         )
     }
 }
