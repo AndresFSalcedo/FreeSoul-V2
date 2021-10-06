@@ -2,16 +2,21 @@ import React from "react";
 
 
 import "./product.styles.css";
+import {apiRoute} from "../../../config/Config";
 
 function Product(props) {
+  // console.log(props.product.image);
+  const design=(props.product.design).split(/(?=[A-Z])/).join(" ")
+  console.log(design);
   return (
     <div className="product-container">
       <img
         className= "imagen"
         alt="Product"
-        src={process.env.PUBLIC_URL + `Imgs/rsz_img_9818.jpg`}
+        src={`${apiRoute}/show-pictureImg/${props.product.image}`}
+        style={{"width":"280px", "height":"390px"}}
       ></img>
-      <h2 key={props.product.id} className="fuente">Mi cuerpo, mi decisión</h2>
+      <h2 key={props.product.id} className="fuente">{design}</h2>
       <p className="fuente">$76.000</p>
     </div>
   );

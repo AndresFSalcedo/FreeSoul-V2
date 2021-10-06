@@ -10,6 +10,7 @@ import AboutUs from "./About/AboutUs";
 import PictureNosotras from "./About/PicturesNosotras";
 import Footer from "./Footer/Footer";
 import Slide from "./Slide/Slide";
+import ProductList from "./Product-list/Product-list";
 
 export default function MainPage() {
   const [selected, setSelected] = useState("Inicio");
@@ -36,6 +37,7 @@ export default function MainPage() {
 
         <Tab isSelected={selected === "Camisetas"}>
           <h1 className="titleMsg mt-5">Camisetas</h1>
+          <ProductList />
         </Tab>
         <Tab isSelected={selected === "Blog"}>
           <p>Blog</p>
