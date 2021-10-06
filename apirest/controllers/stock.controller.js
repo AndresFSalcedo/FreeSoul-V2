@@ -205,6 +205,7 @@ let editStock = (req, res) => {
 					productType: body.productType,
 					design:body.design,
 					price: body.price,
+					codColor: body.codColor,
 					S: body.S,
 					M: body.M,
 					L: body.L,

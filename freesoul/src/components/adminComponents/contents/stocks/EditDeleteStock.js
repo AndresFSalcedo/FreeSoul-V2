@@ -23,6 +23,19 @@ export default function EditDeleteStock(){
 	})
 
 	/*=============================================
+	OnChange
+	=============================================*/
+	
+	const digitForm = e =>{
+
+		editStock({
+
+			...stock,
+			[e.target.name] : e.target.value
+		})
+	}
+
+	/*=============================================
 	OnSubmit
 	=============================================*/
 
@@ -31,18 +44,6 @@ export default function EditDeleteStock(){
 		$('.alert').remove();
 
 		e.preventDefault();
-
-		let stock = {
-
-			productType: $("#newProductType").val(),
-			design: $("#newDesign").val(),
-			codColor: $("#newCodColor").val(),
-			price: $("#newPrice").val(),
-			S: $("#newS").val(),
-			M: $("#newM").val(),
-			L: $("#newL").val(),
-			XL: $("#newXL").val()
-		}
 
 		const {productType, design, codColor, price, S, M, L, XL} = stock;
 
@@ -223,7 +224,7 @@ export default function EditDeleteStock(){
 		$('#newL').val(parseInt(data[7]));
 		$('#newXL').val(parseInt(data[8]));
 
-		let stock = {
+		editStock({
 
 			productType: data[1],
 			design: data[2],
@@ -234,7 +235,7 @@ export default function EditDeleteStock(){
 			L: data[7],
 			XL: data[8],
 			id: data[0]
-		}
+		})
 	})
 
 	/*=============================================
@@ -331,7 +332,7 @@ export default function EditDeleteStock(){
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
-					<form onSubmit={submit}>
+					<form onChange={digitForm} onSubmit={submit}>
 						<div className="modal-body">
 
 							<div className="form-goup ">
