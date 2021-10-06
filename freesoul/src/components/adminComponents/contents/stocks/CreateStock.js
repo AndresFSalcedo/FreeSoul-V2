@@ -1,38 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {apiRoute} from '../../../../config/Config';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 
 export default function CreateStock(){
-
-	/*=============================================
-	HOOK PARA CAPTURAR DATOS
-	=============================================*/
-	
-	const [stock, createStock] = useState({
-
-		productType: "",
-		design: "",
-		codColor: "",
-		price: "",
-		S: "",
-		M: "",
-		L: "",
-		XL: ""
-	})
-
-	/*=============================================
-	OnChange
-	=============================================*/
-	
-	const digitForm = e =>{
-
-		createStock({
-
-			...stock,
-			[e.target.name] : e.target.value
-		})
-	}
 
 	/*=============================================
 	OnSubmit
@@ -43,6 +14,18 @@ export default function CreateStock(){
 		$('.alert').remove();
 
 		e.preventDefault();
+
+		const stock = {
+
+			productType: $("#productType").val(),
+			design: $("#design").val(),
+			codColor: $("#codColor").val(),
+			price: $("#price").val(),
+			S: $("#S").val(),
+			M: $("#M").val(),
+			L: $("#L").val(),
+			XL: $("#XL").val()
+		}
 
 		const {productType, design, codColor, price, S, M, L, XL} = stock;
 
@@ -245,7 +228,7 @@ export default function CreateStock(){
 						<button type="button" className="close" data-dismiss="modal">&times;</button>
 					</div>
 
-					<form onChange={digitForm} onSubmit={submit}>
+					<form onSubmit={submit}>
 						<div className="modal-body">
 							<div className="form-goup ">
 								<div className="row g-3 align-items-center mb-3">

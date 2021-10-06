@@ -39,12 +39,12 @@ mongoose.connect('mongodb+srv://Andres:Colombia1819@cluster0.zwotq.mongodb.net/f
 	useUnifiedTopology: true
 }, (err, res) => {
 	if (err) throw err;
-	console.log("Conectado a la BD")
+	console.log("Data Base: Connected!")
 });
 
 
 // SALIDA PUERTO HTTP
 app.listen(process.env.PORT, () => {
 
-	console.log(`Habilitado puerto ${process.env.PORT}`)
+	console.log(`Port used: ${process.env.PORT}!`)
 })
