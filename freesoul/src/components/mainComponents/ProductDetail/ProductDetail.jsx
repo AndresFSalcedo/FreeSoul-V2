@@ -1,10 +1,6 @@
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
-
 import "react-image-gallery/styles/scss/image-gallery.scss";
-
-
-//import "./style.css";
 import Image from './IMG_8836.jpg';
 
 export default function ProductDetail() {
