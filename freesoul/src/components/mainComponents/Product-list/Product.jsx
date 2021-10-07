@@ -7,7 +7,6 @@ import {apiRoute} from "../../../config/Config";
 function Product(props) {
   // console.log(props.product.image);
   const design=(props.product.design).split(/(?=[A-Z])/).join(" ")
-  console.log(design);
   return (
     <div className="product-container">
       <img
