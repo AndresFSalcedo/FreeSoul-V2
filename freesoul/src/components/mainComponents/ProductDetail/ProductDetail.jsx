@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import $ from 'jquery';
-import Image from './IMG_8836.jpg';
+import {apiRoute} from "../../../config/Config";
 
 export default function ProductDetail() {
 
@@ -34,8 +34,8 @@ export default function ProductDetail() {
     for (let i=0; i < data[0].images.length; i++){
 
       imgsObj.push({
-        original: data[0].images[i],
-        thumbnail: data[0].images[i]
+        original: `${apiRoute}/show-pictureImg/${data[0].images[i]}`,
+        thumbnail: `${apiRoute}/show-pictureImg/${data[0].images[i]}`
       })
     }
 

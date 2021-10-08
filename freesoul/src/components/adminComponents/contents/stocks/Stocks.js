@@ -1,9 +1,9 @@
 import React from 'react';
 import {apiRoute} from '../../../../config/Config';
 import $ from 'jquery';
-import 'datatables.net';
-import 'datatables.net-bs5';
-import 'datatables.net-responsive';
+//import 'datatables.net';
+//import 'datatables.net-bs5';
+//import 'datatables.net-responsive';
 
 import CreateStock from './CreateStock';
 import EditDeleteStock from './EditDeleteStock';
