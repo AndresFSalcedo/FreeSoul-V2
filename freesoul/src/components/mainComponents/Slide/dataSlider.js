@@ -39,7 +39,3 @@ dataSlide()
 let dataSlider = JSON.parse(localStorage.getItem("ArrayPictures"));
  
 export default dataSlider;
-
-
-
-

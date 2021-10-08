@@ -130,3 +130,20 @@ body {
   font-size: 20px;
   color: #666666;
 }
+
+/* ------ Modal Products -------- */
+
+.modalTitle{
+  color: #4d6ab2;
+  font-family: Mermaid;
+}
+
+.modalText{
+  color: #4d6ab2;
+  font-family: MyriadPro-Regular;
+}
+
+.modalPrice{
+  font-family: MyriadPro-It;
+  font-size: 25px;
+}

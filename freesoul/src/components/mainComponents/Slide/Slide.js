@@ -30,8 +30,6 @@ export default function Slider() {
         setSlideIndex(index)
     }
 
-    
-
     dataSlider.sort( (first, second) =>{
         
         if (first.position < second.position){

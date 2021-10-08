@@ -13,22 +13,20 @@ import Slide from "./Slide/Slide";
 import ProductList from "./Product-list/Product-list";
 import { apiRoute } from "../../config/Config";
 
-
-
 export default function MainPage() {
 
   //Hook used to get the tabs ordered
   const [selected, setSelected] = useState("Inicio");
 
   //Hook used for setting up the images
-  const[galery, setGalery] = useState([]);
+  const[galery, setGalery] = useState([""]);
   
   //Use effect used for getting the images of the front pages of
   // camisas and buzos
 
   useEffect(() => {
     productsGalery();
-  },[])
+  },[]);
 
   //Function that brings the product galery
   const productsGalery = async () => {
@@ -58,7 +56,7 @@ export default function MainPage() {
       });
   };
 
-// Method in charge of holdig the state of the tab section
+  // Method in charge of holdig the state of the tab section
   const currentSelected = (Tab) => {
     setSelected(Tab);
   };
@@ -78,6 +76,7 @@ export default function MainPage() {
     )
   }
 
+  
   return (
     <div>
       <TabNav
