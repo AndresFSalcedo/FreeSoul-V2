@@ -1,0 +1,13 @@
+.colorButton{
+
+	width: 30%;
+	height: 30px;
+	border-radius: 10px;
+	border-width: 2px;
+	border-color: #4d6ab2;
+	border-style: solid;
+}
+
+.colorButton:hover, .colorButton:active:focus{
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
