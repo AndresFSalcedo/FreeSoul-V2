@@ -5,7 +5,7 @@ import $ from "jquery";
 import { apiRoute } from "../../../config/Config";
 import './Modal.css';
 
-export default function ProductDetail() {
+export default function ProductDetail(props) {
   const [images, setImages] = useState([
     {
       original: "",
@@ -13,32 +13,38 @@ export default function ProductDetail() {
     },
   ]);
 
-  const [colorStock, setColorStock] = useState([]);
+  const [stock, setStock] = useState({
+    
+    design: '',
+    price: '',
+    stock:[],
+    images:[]
+
+  });
+
+
 
   useEffect(() => {
     $(document).on("click", ".product-container", function (e) {
       e.preventDefault();
 
       let data = JSON.parse($(this).attr("data"));
-      console.log(data);
-      const title = data[0].design.split(/(?=[A-Z])/).join(" ");
 
       const colombianCOP = Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
       });
 
-      $(".modalTitle").text(title.toUpperCase());
-      $(".modalPrice").text(colombianCOP.format(`${data[0].price}`));
-
-      let imgsObj = [];
+      let imgsArray = [];
 
       for (let i = 0; i < data[0].images.length; i++) {
-        imgsObj.push({
+        imgsArray.push({
           original: `${apiRoute}/show-pictureImg/${data[0].images[i]}`,
           thumbnail: `${apiRoute}/show-pictureImg/${data[0].images[i]}`,
         });
       }
+
+      setImages(imgsArray)
 
       let colorStock = [];
 
@@ -52,18 +58,36 @@ export default function ProductDetail() {
         ]);
       }
 
-      setImages(imgsObj);
-      setColorStock(colorStock);
+      setStock({
+
+        design: (data[0].design.split(/(?=[A-Z])/).join(" ")).toUpperCase(),
+        price: colombianCOP.format(`${data[0].price}`),
+        stock: colorStock,
+        images: imgsArray
+      });
 
     });
   }, []);
 
+  console.log(stock)
+
+
   function setColor(){
     let html = document.getElementById('color');
     let result = '';
-    colorStock.forEach((color, index)=>{
+    stock.stock.forEach(color=>{
 
-      result += `<button class="mr-3 colorButton" style="background-color:${color[0]}"></button>`;
+      result += `<button class="mr-3 colorButton" id="${color[0]}" style="background-color:${color[0]}"></button>`;
+
+      $(document).on("click", `#${color[0]}`, function (color){
+
+        for (let i = 0; i < stock.stock.length;i++){
+          stock.stock[0][0]
+        }
+        
+
+      })
+
     })
     if(result !== ''){
 
@@ -72,6 +96,13 @@ export default function ProductDetail() {
     
   }
 
+  function sizeToQuantity(){
+
+    console.log('SFDGH')
+
+  }
+
+ //Se ejecutan las funciones
   setColor()
 
  // VISTA DEL COMPONENTE
@@ -96,14 +127,14 @@ export default function ProductDetail() {
 
                 <div className="col-lg-5">
                   <div className="mb-4">
-                    <h1 className="modalTitle">.</h1>
+                    <h1 className="modalTitle">{stock.design}</h1>
                   </div>
                   <div className="mb-4">
-                    <h5 className="modalPrice">.</h5>
+                    <h5 className="modalPrice">{stock.price}</h5>
                   </div>
                   <div className="mb-4">
                     <h4 className="modalText text-left mb-2">Color</h4>
-                    <div className="text-center" id="color"></div>
+                    <div className="text-center" id="color" ></div>
                   </div>
                   <div className="mb-4">
                     <h4 className="modalText text-left mb-2">Talla</h4>
@@ -111,6 +142,7 @@ export default function ProductDetail() {
                       <button
                         type="button"
                         className="btn btn-outline-primary mr-3"
+                        id="sizeS"
                         disabled
                       >
                         S
@@ -118,6 +150,7 @@ export default function ProductDetail() {
                       <button
                         type="button"
                         className="btn btn-outline-primary mr-3"
+                        id="sizeM"
                         disabled
                       >
                         M
@@ -125,6 +158,7 @@ export default function ProductDetail() {
                       <button
                         type="button"
                         className="btn btn-outline-primary mr-3"
+                        id="sizeL"
                         disabled
                       >
                         L
@@ -132,6 +166,7 @@ export default function ProductDetail() {
                       <button
                         type="button"
                         className="btn btn-outline-primary mr-3"
+                        id="sizeXL"
                         disabled
                       >
                         XL
