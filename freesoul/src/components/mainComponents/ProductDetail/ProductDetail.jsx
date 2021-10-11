@@ -6,6 +6,7 @@ import { apiRoute } from "../../../config/Config";
 import './Modal.css';
 
 export default function ProductDetail(props) {
+
   const [images, setImages] = useState([
     {
       original: "",
@@ -22,14 +23,26 @@ export default function ProductDetail(props) {
 
   });
 
+  const [maxQuantity, setMaxQuantity] = useState(0);
 
+  let reserve = new Reserve
 
   useEffect(() => {
     $(document).on("click", ".product-container", function (e) {
       e.preventDefault();
 
-      let data = JSON.parse($(this).attr("data"));
+      $('#sizeS').prop("disabled", true)
+      $('#sizeM').prop("disabled", true)
+      $('#sizeL').prop("disabled", true)
+      $('#sizeXL').prop("disabled", true)
 
+      let data = JSON.parse($(this).attr("data"));
+      
+      reserve.design = data[0].design
+      reserve.price = data[0].price
+      reserve.productCode = data[0].productCode
+      reserve.image = data[0].images[0]
+      
       const colombianCOP = Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
@@ -66,29 +79,80 @@ export default function ProductDetail(props) {
         images: imgsArray
       });
 
+      $('#quantity').text('0')
+
     });
   }, []);
-
-  console.log(stock)
-
 
   function setColor(){
     let html = document.getElementById('color');
     let result = '';
     stock.stock.forEach(color=>{
 
-      result += `<button class="mr-3 colorButton" id="${color[0]}" style="background-color:${color[0]}"></button>`;
+      const id = color[0]
 
-      $(document).on("click", `#${color[0]}`, function (color){
+      result += `<button class="mr-3 colorButton" id="${id}" style="background-color:${color[0]}"></button>`;
+
+      $(document).on("click", `#${id}`, function (color){
+
+        reserve.color = id
+
+        let indexQuantity = '';
+
+        $('#sizeS').prop("disabled", true)
+        $('#sizeM').prop("disabled", true)
+        $('#sizeL').prop("disabled", true)
+        $('#sizeXL').prop("disabled", true)
 
         for (let i = 0; i < stock.stock.length;i++){
-          stock.stock[0][0]
+          if(stock.stock[i][0] === id){
+
+            if(stock.stock[i][1] > 0){
+              $('#sizeS').prop("disabled", false)
+              indexQuantity = i;
+            }
+
+            if(stock.stock[i][2] > 0){
+              $('#sizeM').prop("disabled", false)
+              indexQuantity = i;
+            }
+
+            if(stock.stock[i][3] > 0){
+              $('#sizeL').prop("disabled", false)
+              indexQuantity = i;
+            }
+
+            if(stock.stock[i][4] > 0){
+              $('#sizeXL').prop("disabled", false)
+              indexQuantity = i;
+            }
+
+          }
         }
-        
 
+        $(document).on("click", "#sizeS", function (){
+          $('#quantity').text('0')
+          setMaxQuantity(stock.stock[indexQuantity][1])
+          reserve.size = 'S'
+        })
+        $(document).on("click", "#sizeM", function (){
+          $('#quantity').text('0')
+          setMaxQuantity(stock.stock[indexQuantity][2])
+          reserve.size = 'M'
+        })
+        $(document).on("click", "#sizeL", function (){
+          $('#quantity').text('0')
+          setMaxQuantity(stock.stock[indexQuantity][3])
+          reserve.size = 'L'
+        })
+        $(document).on("click", "#sizeXL", function (){
+          $('#quantity').text('0')
+          setMaxQuantity(stock.stock[indexQuantity][4])
+          reserve.size = 'XL'
+        })
       })
-
     })
+
     if(result !== ''){
 
       html.innerHTML = result
@@ -96,14 +160,9 @@ export default function ProductDetail(props) {
     
   }
 
-  function sizeToQuantity(){
-
-    console.log('SFDGH')
-
-  }
-
  //Se ejecutan las funciones
   setColor()
+  console.log(reserve)
 
  // VISTA DEL COMPONENTE
   return (
@@ -143,7 +202,6 @@ export default function ProductDetail(props) {
                         type="button"
                         className="btn btn-outline-primary mr-3"
                         id="sizeS"
-                        disabled
                       >
                         S
                       </button>
@@ -151,7 +209,6 @@ export default function ProductDetail(props) {
                         type="button"
                         className="btn btn-outline-primary mr-3"
                         id="sizeM"
-                        disabled
                       >
                         M
                       </button>
@@ -159,7 +216,6 @@ export default function ProductDetail(props) {
                         type="button"
                         className="btn btn-outline-primary mr-3"
                         id="sizeL"
-                        disabled
                       >
                         L
                       </button>
@@ -167,7 +223,6 @@ export default function ProductDetail(props) {
                         type="button"
                         className="btn btn-outline-primary mr-3"
                         id="sizeXL"
-                        disabled
                       >
                         XL
                       </button>
@@ -185,11 +240,11 @@ export default function ProductDetail(props) {
                         }
                         return
                       }}>-</button>
-                      <button type="button" className="btn btn-primary px-3" id="quantity" disabled>0</button>
+                      <button type="button" className="btn btn-primary px-3" id="quantity" disabled></button>
                       <button type="button" className="btn btn-primary" onClick={()=>{
 
                         let quantity = parseInt(document.getElementById("quantity").textContent)
-                        if(quantity < 10){
+                        if(quantity < maxQuantity){
                           quantity += 1
                           $('#quantity').text(quantity)
                         }
@@ -200,6 +255,10 @@ export default function ProductDetail(props) {
                     <button
                       type="button"
                       className="btn btn-success btn-lg btn-block"
+                      onClick={()=>{
+                        reserve.quantity = ($('#quantity').val())
+                        console.log(reserve)
+                      }}
                     >
                       Agregar a tu bolsa
                     </button>
@@ -208,6 +267,10 @@ export default function ProductDetail(props) {
                     <button
                       type="button"
                       className="btn btn-primary btn-lg btn-block"
+                      onClick={()=>{
+                        reserve.quantity = ($('#quantity').val())
+                        console.log(reserve)
+                      }}
                     >
                       Reservar ahora
                     </button>

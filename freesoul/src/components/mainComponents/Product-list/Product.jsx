@@ -77,7 +77,8 @@ export default function Product(props) {
           "L": stocks[i].L,
           "XL": stocks[i].XL,
           "price": stocks[i].price,
-          "images": onlyImages,
+          "productCode": stocks[i].productCode,
+          "images": onlyImages
 
         })
       }
