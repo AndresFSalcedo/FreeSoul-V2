@@ -6,12 +6,12 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
   if (existingCartItem) {
     return cartItems.map((cartItem) =>
       cartItem.productCode === cartItemToAdd.productCode
-        ? { ...cartItem, quantity: cartItem.quantity}
+        ? { ...cartItem, quantity: parseInt(cartItem.quantity)}
         : cartItem
     );
   }
 
-  return [...cartItems, { ...cartItemToAdd, quantity: cartItemToAdd.quantity }];
+  return [...cartItems, { ...cartItemToAdd, quantity: parseInt(cartItemToAdd.quantity) }];
 };
 
 export const removeItemFromCart = (cartItems, cartItemToRemove) => {

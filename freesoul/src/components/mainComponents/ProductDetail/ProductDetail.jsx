@@ -45,7 +45,7 @@ import {connect} from 'react-redux';
     image: '', 
     color: '',
     size: '',
-    quantity: ''
+    quantity: 0
   })
 
   const [maxQuantity, setMaxQuantity] = useState(0);
