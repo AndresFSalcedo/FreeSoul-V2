@@ -16,9 +16,9 @@ export default function Footer(){
                             <p className="text-justify pFooter"> Lorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla blaLorem bla bla bla</p>
                             <p className="bold">Leer más</p>
                             <IconContext.Provider value={{style: {margin:'10px', width:'50px', height:'auto', color:"#4d6ab2"}}}>
-                                <FaInstagram/>
-                                <AiOutlineFacebook/>
-                                <FaWhatsapp/>
+                                <a href="https://www.instagram.com/freesoul.tshirts/"><FaInstagram/></a>
+                                <a href="https://www.facebook.com/freesoultshirt/"><AiOutlineFacebook/></a>
+                                <a href=""><FaWhatsapp/></a>
                             </IconContext.Provider>
 
                         </div>

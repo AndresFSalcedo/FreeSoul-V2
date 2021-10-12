@@ -33,7 +33,7 @@ app.use(require('./routes/client.reserve.route'))
 app.use(require('./routes/user.route'))
 app.use(require('./routes/product.route'))
 
-// CONEXION A LA BASE DE DATOS
+// DATA BASE CONNECTION
 mongoose.connect('mongodb+srv://Andres:Colombia1819@cluster0.zwotq.mongodb.net/freesoul', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true

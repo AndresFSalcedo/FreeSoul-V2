@@ -11,6 +11,7 @@ import PictureNosotras from "./About/PicturesNosotras";
 import Footer from "./Footer/Footer";
 import Slide from "./Slide/Slide";
 import ProductList from "./Product-list/Product-list";
+import Blog from "./Blog/Blog"
 import { apiRoute } from "../../config/Config";
 
 export default function MainPage() {
@@ -98,7 +99,9 @@ export default function MainPage() {
           <ProductList products={camisetasFilter()}/>          
         </Tab>
         <Tab isSelected={selected === "Blog"}>
-          <p>Blog</p>
+          <h1 className="titleMsg mt-5">Blog</h1>
+          <p className="mt-3 container text-center">Querida Free Soul, aquí podrás estar informada sobre cosas claves del mundo del feminismo y amor propio</p>
+          <Blog />
         </Tab>
         <Tab isSelected={selected === "Buzos"}>
           <h1 className="titleMsg mt-5">Buzos</h1>

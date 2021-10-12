@@ -4,34 +4,16 @@ function AboutUs(props) {
   return (
     <div className="about-container">
       <p className="about-info">
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset
-      sheets containing Lorem Ipsum passages, and more recently with desktop
-      publishing software like Aldus PageMaker including versions of Lorem
-      Ipsum. Why do we use it? It is a long established fact that a reader will
-      be distracted by the readable content of a page when looking at its
-      layout. The point of using Lorem Ipsum is that it has a more-or-less
-      normal distribution of letters, as opposed to using 'Content here, content
-      here', making it look like readable English. Many desktop publishing
-      packages and web page editors now use Lorem Ipsum as their default model
-      text, and a search for 'lorem ipsum' will uncover many web sites still in
-      their infancy. Various versions have evolved over the years, sometimes by
-      accident, sometimes on purpose (injected humour and the like). Where does
-      it come from? Contrary to popular belief, Lorem Ipsum is not simply random
-      text. It has roots in a piece of classical Latin literature from 45 BC,
-      making it over 2000 years old. Richard McClintock, a Latin professor at
-      Hampden-Sydney College in Virginia, looked up one of the more obscure
-      Latin words, consectetur, from a Lorem Ipsum passage, and going through
-      the cites of the word in classical literature, discovered the undoubtable
-      source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-      Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in
-      45 BC. This book is a treatise on the theory of ethics, very popular
-      during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor
-      sit amet..", comes from a line in section 1.10.32.
+      Quienes somos y por que estamos aquí…
+      <br/><br/>
+      La razón de ser de Free Soul empezó desde nuestro deseo de recordarles a todas las mujeres TODOS LOS DIAS, lo valiosas, fuertes y hermosas que son por fuera y por dentro. Somos tres mujeres colombianas con historias de vida diferentes pero con muchos valores en común, que un día se sentaron y dijeron “Vamos a crear una comunidad de poderosas” de mujeres que sientan que son las capitanas de su propia vida y que no acepten que nadie les haga sentir lo contrario.
+      <br/><br/>
+      Por eso nuestro nombre, que en español significa “Alma libre” Las mujeres Free Soul se ríen hasta que les duela el estomago, lloran cuando sienten, bailan dándolo todo, cantan a grito herido, empoderan y se apoyan unas a otras. Somos mujeres reales con el deseo en común de ser cada día más libres.
+      <br/><br/>
+      Empezamos en el 2020 en plena pandemia con el simple deseo de empoderarlas, inspirarlas, motivarlas y recordarles que son perfectas tal y como son!
+      <br/><br/>
+      Estamos muy felices de que hoy estés aquí formando parte de esta comunidad, Bienvenida!
+
       </p>
     </div>
 

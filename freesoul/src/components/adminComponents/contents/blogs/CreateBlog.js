@@ -122,7 +122,7 @@ export default function CreateBlog(){
 		/*VALIDAMOS EXPRESION REGULAR DEL  TITULO, INTRO Y URL*/
 		if(title !== ""){
 
-			const expTitle = /^([0-9a-zA-Z ]).{1,40}$/;
+			const expTitle = /^([0-9a-zA-Z ]).{1,100}$/;
 
 			if(!expTitle.test(title)){
 
@@ -133,7 +133,7 @@ export default function CreateBlog(){
 		}
 		if(intro !== ""){
 
-			const expintro = /^([0-9a-zA-Z ]).{1,100}$/;
+			const expintro = /^([0-9a-zA-Z ]).{1,600}$/;
 
 			if(!expintro.test(intro)){
 
@@ -242,7 +242,7 @@ export default function CreateBlog(){
 												className="form-control" 
 												name="title" 
 												placeholder="*"
-												pattern="([0-9a-zA-Z ]).{1,40}"
+												pattern="([0-9a-zA-Z ]).{1,100}"
 												disabled 
 												required
 											/>
@@ -276,7 +276,7 @@ export default function CreateBlog(){
 												className="form-control" 
 												name="intro" 
 												placeholder="*"
-												pattern="([0-9a-zA-Z ]).{1,100}"
+												pattern="([0-9a-zA-Z ]).{1,600}"
 												disabled 
 												required
 											/>

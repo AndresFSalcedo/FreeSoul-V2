@@ -118,7 +118,7 @@ export default function EditDeleteBlog(){
 		/*VALIDAMOS EXPRESION REGULAR DEL  TITULO, INTRO Y URL*/
 		if(title !== ""){
 
-			const expTitle = /^([0-9a-zA-Z ]).{1,40}$/;
+			const expTitle = /^([0-9a-zA-Z ]).{1,100}$/;
 
 			if(!expTitle.test(title)){
 
@@ -129,7 +129,7 @@ export default function EditDeleteBlog(){
 		}
 		if(intro !== ""){
 
-			const expintro = /^([0-9a-zA-Z ]).{1,100}$/;
+			const expintro = /^([0-9a-zA-Z ]).{1,600}$/;
 
 			if(!expintro.test(intro)){
 
@@ -335,7 +335,7 @@ export default function EditDeleteBlog(){
 												className="form-control" 
 												name="newTitle" 
 												placeholder="Blog title*"
-												pattern="([0-9a-zA-Z ]).{1,40}"
+												pattern="([0-9a-zA-Z ]).{1,100}"
 												required
 											/>
 										</div>
@@ -367,7 +367,7 @@ export default function EditDeleteBlog(){
 												className="form-control" 
 												name="newIntro" 
 												placeholder="Blog intro*"
-												pattern="([0-9a-zA-Z ]).{1,100}"
+												pattern="([0-9a-zA-Z ]).{1,600}"
 												required
 											/>
 										</div>

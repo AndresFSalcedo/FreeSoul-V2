@@ -64,9 +64,11 @@ body {
   background-color: #ffffff;
   max-width: 100%;
   padding: 70px 50px;
-  
 }
 
+.img-nosotras{
+  width: 22.25rem;
+}
 /* ------ Footer -------- */
 .fContainer{
   background-color: #bae0e3;

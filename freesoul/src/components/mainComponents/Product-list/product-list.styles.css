@@ -1,14 +1,11 @@
 .product-list {
-  /* align-items: center; */
-  /* justify-self: center; */
-  /* position: relative; */
+  
   text-align: center;
   width: 85vw;
   margin: 4rem auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%,25rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%,20rem), 1fr));
   grid-gap: 1.75rem;
-  /* grid-auto-rows: 30rem; */
 }
 
 .imagen {
