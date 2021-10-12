@@ -42,9 +42,11 @@ const TabNav = (props) => (
             >
                 <span className="icon1">
                     <CartIcon />
+                    {props.hidden ? null : <CartDropdown />}
                 </span>
+                
             </IconContext.Provider>
-            {props.hidden ? null : <CartDropdown />}
+            
             <IconContext.Provider
                 value={{ style: { color: "#4d6ab2", width: "60px", height: "auto" } }}
             >
@@ -52,7 +54,9 @@ const TabNav = (props) => (
                     <RiMailSendLine />
                 </span>
             </IconContext.Provider>
+
         </div>
+        
 
         <div>
             <ul className="nav nav-tabs justify-content-center tabcss pt-2">
