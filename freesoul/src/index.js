@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import { Provider } from 'react-redux';
+
+import  store  from "../src/components/redux/store";
 
 import AdminPage from "./components/adminComponents/AdminPage";
 
 ReactDOM.render(
-  <AdminPage/>,
+  <Provider store={store}>
+  <AdminPage/>
+  </Provider>,
   document.getElementById("root")
 );
 
