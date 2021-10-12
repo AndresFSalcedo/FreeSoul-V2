@@ -5,8 +5,10 @@ import $ from "jquery";
 import { apiRoute } from "../../../config/Config";
 import './Modal.css';
 import Swal from 'sweetalert2';
+import {addItem} from '../../redux/cart/cart.actions';
+import {connect} from 'react-redux';
 
-export default function ProductDetail(props) {
+ const ProductDetail = ({addItem}) => {
 
   const [images, setImages] = useState([
     {
@@ -40,7 +42,7 @@ export default function ProductDetail(props) {
     design: '',
     price: '',
     productCode: '',
-    image: '',
+    image: '', 
     color: '',
     size: '',
     quantity: ''
@@ -312,7 +314,8 @@ export default function ProductDetail(props) {
                       id="addToBag"
                       onClick={()=>{
                         if(($('#quantity').text()) !== '0'){
-                          setReserve()
+                          setReserve() //importante
+                          addItem(alldata);
                         }else{
                           Swal.fire({
                             icon: 'error',
@@ -354,3 +357,10 @@ export default function ProductDetail(props) {
     </div>
   );
 }
+
+const mapDispatchToProps = dispatch => ({
+  addItem: alldata=> dispatch(addItem(alldata))
+});
+
+
+export default connect(null,mapDispatchToProps) (ProductDetail);
