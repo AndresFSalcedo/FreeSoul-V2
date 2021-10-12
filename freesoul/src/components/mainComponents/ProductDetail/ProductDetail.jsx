@@ -4,6 +4,7 @@ import "react-image-gallery/styles/scss/image-gallery.scss";
 import $ from "jquery";
 import { apiRoute } from "../../../config/Config";
 import './Modal.css';
+import Swal from 'sweetalert2';
 
 export default function ProductDetail(props) {
 
@@ -23,9 +24,29 @@ export default function ProductDetail(props) {
 
   });
 
-  const [maxQuantity, setMaxQuantity] = useState(0);
+  const [data1, setData1] = useState({
+    design: '',
+    price: '',
+    productCode: '',
+    image: ''
+  })
 
-  let reserve = new Reserve
+  const [data2, setData2] = useState({
+    color: '',
+    size: ''
+  })
+
+  const [alldata, setAllData] = useState({
+    design: '',
+    price: '',
+    productCode: '',
+    image: '',
+    color: '',
+    size: '',
+    quantity: ''
+  })
+
+  const [maxQuantity, setMaxQuantity] = useState(0);
 
   useEffect(() => {
     $(document).on("click", ".product-container", function (e) {
@@ -38,10 +59,14 @@ export default function ProductDetail(props) {
 
       let data = JSON.parse($(this).attr("data"));
       
-      reserve.design = data[0].design
-      reserve.price = data[0].price
-      reserve.productCode = data[0].productCode
-      reserve.image = data[0].images[0]
+      setData1({
+
+        design: data[0].design,
+        price: data[0].price,
+        productCode: data[0].productCode,
+        image: data[0].images[0]
+      });
+      
       
       const colombianCOP = Intl.NumberFormat("es-CO", {
         style: "currency",
@@ -82,6 +107,8 @@ export default function ProductDetail(props) {
       $('#quantity').text('0')
 
     });
+
+
   }, []);
 
   function setColor(){
@@ -94,8 +121,6 @@ export default function ProductDetail(props) {
       result += `<button class="mr-3 colorButton" id="${id}" style="background-color:${color[0]}"></button>`;
 
       $(document).on("click", `#${id}`, function (color){
-
-        reserve.color = id
 
         let indexQuantity = '';
 
@@ -133,22 +158,38 @@ export default function ProductDetail(props) {
         $(document).on("click", "#sizeS", function (){
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][1])
-          reserve.size = 'S'
+
+          setData2({
+            color: id,
+            size: 'S'
+          })
         })
         $(document).on("click", "#sizeM", function (){
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][2])
-          reserve.size = 'M'
+          
+          setData2({
+            color: id,
+            size: 'M'
+          })
         })
         $(document).on("click", "#sizeL", function (){
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][3])
-          reserve.size = 'L'
+          
+          setData2({
+            color: id,
+            size: 'L'
+          })
         })
         $(document).on("click", "#sizeXL", function (){
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][4])
-          reserve.size = 'XL'
+          
+          setData2({
+            color: id,
+            size: 'XL'
+          })
         })
       })
     })
@@ -160,9 +201,22 @@ export default function ProductDetail(props) {
     
   }
 
- //Se ejecutan las funciones
+  function setReserve(){
+
+    setAllData({
+      design: data1.design,
+      price: data1.price,
+      productCode: data1.productCode,
+      image: data1.image,
+      color: data2.color,
+      size: data2.size,
+      quantity: ($('#quantity').text())
+    })
+
+    console.log(alldata)
+  }
+  //Se ejecutan las funciones
   setColor()
-  console.log(reserve)
 
  // VISTA DEL COMPONENTE
   return (
@@ -255,9 +309,17 @@ export default function ProductDetail(props) {
                     <button
                       type="button"
                       className="btn btn-success btn-lg btn-block"
+                      id="addToBag"
                       onClick={()=>{
-                        reserve.quantity = ($('#quantity').val())
-                        console.log(reserve)
+                        if(($('#quantity').text()) !== '0'){
+                          setReserve()
+                        }else{
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `La cantidad debe ser mayor a 0`
+                          })
+                        }
                       }}
                     >
                       Agregar a tu bolsa
@@ -267,9 +329,17 @@ export default function ProductDetail(props) {
                     <button
                       type="button"
                       className="btn btn-primary btn-lg btn-block"
+                      id="reserveNow"
                       onClick={()=>{
-                        reserve.quantity = ($('#quantity').val())
-                        console.log(reserve)
+                        if(($('#quantity').text()) !== '0'){
+                          setReserve()
+                        }else{
+                          Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: `La cantidad debe ser mayor a 0`
+                          })
+                        }
                       }}
                     >
                       Reservar ahora
