@@ -1,11 +1,11 @@
 import React from "react";
 import Laura from './6054.jpg';
 import  Sandra from './4066.jpg';
-//import Alexandra from '';
+import Alexandra from './Alexa.jpg';
 
 function PictureNosotras() {
   return (
-    <div className="product-list text-center">
+    <div className="product-list">
       <div className="imagen">
         <img
           className= "img-thumbnail"
@@ -26,7 +26,7 @@ function PictureNosotras() {
         <img
           className= "img-thumbnail"
           alt="Alexandra"
-          src={process.env.PUBLIC_URL + `Imgs/rsz_img_9818.jpg`}
+          src={Alexandra}
         />
         <h2 className="modalPrice">Alexandra Jimenez</h2>
       </div>

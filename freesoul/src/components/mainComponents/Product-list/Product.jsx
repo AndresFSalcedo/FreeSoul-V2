@@ -97,7 +97,7 @@ export default function Product(props) {
           src={`${apiRoute}/show-pictureImg/${props.product.image}`}
           style={{"width":"280px", "height":"390px"}}
         ></img>
-        <h2 key={props.product.id} className="fuente">{design}</h2>
+        <h3 key={props.product.id} className="fuente">{design}</h3>
       </a>
 
       <ProductDetail/>

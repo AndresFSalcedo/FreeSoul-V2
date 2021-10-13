@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+
 import "../App.css";
 
 import TabNav from "./NavBar/TabNav";
@@ -12,8 +13,8 @@ import ProductList from "./Product-list/Product-list";
 import Blog from "./Blog/Blog";
 import FreeSoul from "./MisionVision/FreeSoul"
 import { apiRoute } from "../../config/Config";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import CheckoutPage from "./checkout/checkout.component";
+import CheckoutPage from './checkout/checkout.component'
+
 
 
 export default function MainPage() {
@@ -79,6 +80,10 @@ export default function MainPage() {
     )
   }
 
+  function swapTap(tab) {
+    setSelected(tab);
+    window.scrollTo(0, 0)
+  }
 
   return (
     <div>
@@ -89,12 +94,7 @@ export default function MainPage() {
       >
         <Tab isSelected={selected === "Inicio"}>
           <Slide />
-          <HomeBody />
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/checkout" component={CheckoutPage} />
-            </Switch>
-          </BrowserRouter>
+          <HomeBody swapTap={swapTap}/>
         </Tab>
         <Tab isSelected={selected === "Camisetas"}>
           <h1 className="titleMsg mt-5">Camisetas</h1>
@@ -108,16 +108,16 @@ export default function MainPage() {
           <ProductList products={buzosFilter()} />
         </Tab>
         <Tab isSelected={selected === "Nosotras"}>
-          <AboutUs />
+          <AboutUs/>
           <PictureNosotras />
         </Tab>
         <Tab isSelected={selected === "FreeSoul"}>
           <FreeSoul />
         </Tab>
         <Tab isSelected={selected === "Tu Reserva"}>
-          
+          <CheckoutPage/>
         </Tab>
-        <Footer />
+        <Footer swapTap={swapTap}/>
       </TabNav>
     </div>
   );

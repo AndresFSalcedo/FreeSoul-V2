@@ -5,10 +5,9 @@ import React from 'react';
 import './cart-dropdown.styles.scss';
 import CartItem from '../cart-item/cart-item.component';
 import { connect } from 'react-redux';
-import {withRouter, Link} from 'react-router-dom';
-import CustomButton from '../CustomButton/CustomButton.component';
+import {withRouter} from 'react-router-dom';
 
-const CartDropdown = ({ cartItems, history }) => (
+const CartDropdown = ({ cartItems, setSelected }) => (
   <div className='cart-dropdown'>
     <div className='cart-items'>
       {
@@ -18,13 +17,13 @@ const CartDropdown = ({ cartItems, history }) => (
         <span className='empty-message'>Tu carrito está vacío</span>
         )}
     </div>
-    <Link to="/checkout" className="btn btn-primary">ir a reserva</Link>
+    <button className="btn btn-primary" onClick={()=>setSelected('Tu Reserva')}>IR A RESERVA</button>
   </div>
 );
 
 
 const mapStateToProps = ({ cart: { cartItems } }) => ({
   cartItems
-})
+});
 
 export default withRouter(connect(mapStateToProps)(CartDropdown));

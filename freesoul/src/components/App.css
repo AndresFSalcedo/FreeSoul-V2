@@ -69,7 +69,6 @@ body {
 
 /* ------ Nosotras / product */
 .about-container {
-  border: solid 1px black;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,6 +94,7 @@ body {
 
 .bold{
   font-family: MyriadPro-BoldIt;
+  cursor: pointer;
 }
 
 .btnPopUp{

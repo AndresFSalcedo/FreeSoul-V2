@@ -12,6 +12,8 @@ import "./TabNav.scss";
 
 import { connect } from "react-redux"; //traer
 
+import Mailto from "../ButtonMailto/ButtonMailto.component";
+
 const TabNav = (props) => (
     <div className="container-tabnav-react">
         <div className="top-bar topBar">
@@ -19,7 +21,7 @@ const TabNav = (props) => (
                 <div className="col-12">
                     <p className="text-white my-0 hide">
                         Envíos a toda Colombia
-                        <a className="topLink" id="whatsApp" href="https://l.instagram.com/?u=http%3A%2F%2Fbit.ly%2FFreeSoulwa&e=ATNmdqRm14cMO_wKDppsLIMWDl_ZjX_ge5KNI6diCIXbkuPtOvz17Llk0hREO-ZBeRjhpi2KTvXjSuMg8LVZum3srNwQWUyCV4ZoZQ&s=1">
+                        <a className="topLink" id="whatsApp" href="http://bit.ly/FreeSoulwa">
                             <FaWhatsapp /> Contáctanos
                         </a>
                         <a
@@ -42,21 +44,23 @@ const TabNav = (props) => (
             >
                 <span className="icon1">
                     <CartIcon />
-                    {props.hidden ? null : <CartDropdown />}
+                    {props.hidden ? null : <CartDropdown setSelected={props.setSelected}/>}
                 </span>
-                
+
             </IconContext.Provider>
-            
+
             <IconContext.Provider
                 value={{ style: { color: "#4d6ab2", width: "60px", height: "auto" } }}
             >
                 <span className="icon2">
-                    <RiMailSendLine />
+                    <Mailto email="freesoulshirts@gmail.com" subject="Retroalimentación servicio" body="Hola Freesoul">
+                        <RiMailSendLine/>
+                    </Mailto>
                 </span>
             </IconContext.Provider>
 
         </div>
-        
+
 
         <div>
             <ul className="nav nav-tabs justify-content-center tabcss pt-2">
