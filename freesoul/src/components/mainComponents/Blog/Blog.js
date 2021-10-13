@@ -47,9 +47,13 @@ export default function Blog () {
 
 	//Return
 	return(
+		<>
+		<h1 className="titleMsg mt-5">Blog</h1>
+         <p className="mt-3 container text-center" style={{"fontSize":"20px"}}>Querida Free Soul, aquí podrás estar informada sobre cosas claves del mundo del feminismo y amor propio</p>
 		<div className="mt-5 container" id="blogData">
 			
 		</div>
+		</>
 	)
 }
 

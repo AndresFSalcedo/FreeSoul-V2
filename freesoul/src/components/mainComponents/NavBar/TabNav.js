@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Logo from "../../../assets/FreeSoulLogoweb-01.png";
@@ -18,13 +17,14 @@ const TabNav = (props) => (
         <div className="top-bar topBar">
             <div className="container">
                 <div className="col-12">
-                    <p className="text-white my-0">
+                    <p className="text-white my-0 hide">
                         Envíos a toda Colombia
-                        <a className="topLink" href="https://l.instagram.com/?u=http%3A%2F%2Fbit.ly%2FFreeSoulwa&e=ATNmdqRm14cMO_wKDppsLIMWDl_ZjX_ge5KNI6diCIXbkuPtOvz17Llk0hREO-ZBeRjhpi2KTvXjSuMg8LVZum3srNwQWUyCV4ZoZQ&s=1">
+                        <a className="topLink" id="whatsApp" href="https://l.instagram.com/?u=http%3A%2F%2Fbit.ly%2FFreeSoulwa&e=ATNmdqRm14cMO_wKDppsLIMWDl_ZjX_ge5KNI6diCIXbkuPtOvz17Llk0hREO-ZBeRjhpi2KTvXjSuMg8LVZum3srNwQWUyCV4ZoZQ&s=1">
                             <FaWhatsapp /> Contáctanos
                         </a>
                         <a
                             className="topLink"
+                            id="envia"
                             href="https://envia.co/"
                             target="_blank"
                             rel="noreferrer"

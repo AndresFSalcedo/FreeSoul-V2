@@ -70,6 +70,10 @@ export default function Slider() {
     });
 
     return (
+        <>
+        <h1 className="titleMsg mt-5">
+            ¡Siéntete poderosa con nuestras prendas!
+        </h1>
         <div className="container-fluid">
             <div className="img-fluid container-slider mt-2">
                 {dataSlider.map((obj, index) => {
@@ -109,5 +113,6 @@ export default function Slider() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

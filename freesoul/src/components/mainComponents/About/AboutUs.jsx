@@ -2,6 +2,8 @@ import React from "react";
 
 function AboutUs(props) {
   return (
+    <>
+    <h1 className="titleMsg mt-5">Nosotras</h1>
     <div className="about-container">
       <p className="about-info">
       Quienes somos y por que estamos aquí…
@@ -16,7 +18,7 @@ function AboutUs(props) {
 
       </p>
     </div>
-
+    </>
   );
 }
 export default AboutUs;
