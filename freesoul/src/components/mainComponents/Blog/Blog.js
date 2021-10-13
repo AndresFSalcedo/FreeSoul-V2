@@ -28,21 +28,20 @@ export default function Blog () {
 
 			
 			result += `
-					<div class="row mb-4">
+					<div class="row my-5">
 						<div class="col-lg-4">
-							<img class="img-fluid" alt="Blog-Pic" src=${apiRoute}/show-blogImg/${dataSet[i][0]}/>
+							<img class="img-fluid text-center" alt="Blog-Pic" src=${apiRoute}/show-blogImg/${dataSet[i][0]}/>
 						</div>
 						<div class="col-lg-8">
-							<h3>${dataSet[i][1]}</h3>
-							<p>${dataSet[i][2]}</p>
-							<a href=${dataSet[i][3]}>Leer Mas</a>
+							<h1 class="h3Title">${dataSet[i][1]}</h1>
+							<p class="pBlog">${dataSet[i][2]}</p>
+							<a href=${dataSet[i][3]} class="aBlog">Leer Mas</a>
 						</div>
 					</div>`;
 
 			
 		}
 		html.innerHTML = result
-		console.log(dataSet[0][0])
 	}
 	dataBlog()
 

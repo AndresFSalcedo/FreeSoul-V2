@@ -49,6 +49,23 @@ body {
   margin: auto 25% auto 25%;
 }
 
+.h3Title{
+  text-align: left;
+  color: #ec667f;
+  font-family: Mermaid;
+}
+
+.pBlog{
+  text-align: justify;
+  color: #808080;
+  font-family: MyriadPro-Regular;
+  font-size: 20px;
+}
+
+.aBlog{
+  font-family: MyriadPro-BoldIt;
+  color: black;
+}
 
 /* ------ Nosotras / product */
 .about-container {
@@ -148,4 +165,9 @@ body {
 .modalPrice{
   font-family: MyriadPro-It;
   font-size: 25px;
+}
+
+/*   NEW NAVTAB     */
+.bg-myGreen{
+  background-color: #bae0e3;
 }

@@ -6,12 +6,12 @@ import { IconContext } from "react-icons";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaTruck } from "react-icons/fa";
 import { RiMailSendLine } from "react-icons/ri";
-import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component"; //traer
 
-import CartIcon from "../cart-icon/cart-icon.component";
+import CartIcon from "../cart-icon/cart-icon.component"; //traer
 import "./TabNav.scss";
 
-import { connect } from "react-redux";
+import { connect } from "react-redux"; //traer
 
 const TabNav = (props) => (
     <div className="container-tabnav-react">
@@ -20,7 +20,7 @@ const TabNav = (props) => (
                 <div className="col-12">
                     <p className="text-white my-0">
                         Envíos a toda Colombia
-                        <a className="topLink" href="">
+                        <a className="topLink" href="https://l.instagram.com/?u=http%3A%2F%2Fbit.ly%2FFreeSoulwa&e=ATNmdqRm14cMO_wKDppsLIMWDl_ZjX_ge5KNI6diCIXbkuPtOvz17Llk0hREO-ZBeRjhpi2KTvXjSuMg8LVZum3srNwQWUyCV4ZoZQ&s=1">
                             <FaWhatsapp /> Contáctanos
                         </a>
                         <a

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
-
 import "../App.css";
+
+//import {Nav,Navbar} from 'react-bootstrap';
+//import Logo from "../../assets/FreeSoulLogoweb-01.png";
 
 import TabNav from "./NavBar/TabNav";
 import Tab from "./NavBar/Tab";
@@ -80,6 +82,30 @@ export default function MainPage() {
   
   return (
     <div>
+
+      {/*<Navbar 
+        bg="myGreen" 
+        variant="light"
+        sticky="top"
+        expand="md"
+        collapseOnSelect
+      >
+        <Navbar.Toggle />
+          
+        <Navbar.Collapse >
+          <Nav>
+            <Nav.Link className="nav-link" href="#inicio">Inicio</Nav.Link>
+            <Nav.Link className="nav-link" href="#camisetas">Camisetas</Nav.Link>
+            <Nav.Link className="nav-link" href="#buzos">Buzos</Nav.Link>
+            <Nav.Link className="nav-link" href="#blog">Blog</Nav.Link>
+            <Nav.Link className="nav-link" href="#nosotras">Nosotras</Nav.Link>
+            <Nav.Link className="nav-link" href="#freesoul">FreeSoul</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        
+      </Navbar>*/}
+
+
       <TabNav
         tabs={["Inicio", "Camisetas", "Buzos", "Blog", "Nosotras", "FreeSoul"]}
         selected={selected}
@@ -93,14 +119,13 @@ export default function MainPage() {
           <h1 className="titleMsg mt-5">Nuestros Productos</h1>
           <HomeBody />
         </Tab>
-
         <Tab isSelected={selected === "Camisetas"}>
           <h1 className="titleMsg mt-5">Camisetas</h1>
           <ProductList products={camisetasFilter()}/>          
         </Tab>
         <Tab isSelected={selected === "Blog"}>
           <h1 className="titleMsg mt-5">Blog</h1>
-          <p className="mt-3 container text-center">Querida Free Soul, aquí podrás estar informada sobre cosas claves del mundo del feminismo y amor propio</p>
+          <p className="mt-3 container text-center" style={{"fontSize":"20px"}}>Querida Free Soul, aquí podrás estar informada sobre cosas claves del mundo del feminismo y amor propio</p>
           <Blog />
         </Tab>
         <Tab isSelected={selected === "Buzos"}>
@@ -133,25 +158,7 @@ export default function MainPage() {
               a reader will be distracted by the readable content of a page when
               looking at its layout. The point of using Lorem Ipsum is that it
               has a more-or-less normal distribution of letters, as opposed to
-              using 'Content here, content here', making it look like readable
-              English. Many desktop publishing packages and web page editors now
-              use Lorem Ipsum as their default model text, and a search for
-              'lorem ipsum' will uncover many web sites still in their infancy.
-              Various versions have evolved over the years, sometimes by
-              accident, sometimes on purpose (injected humour and the like).
-              Where does it come from? Contrary to popular belief, Lorem Ipsum
-              is not simply random text. It has roots in a piece of classical
-              Latin literature from 45 BC, making it over 2000 years old.
-              Richard McClintock, a Latin professor at Hampden-Sydney College in
-              Virginia, looked up one of the more obscure Latin words,
-              consectetur, from a Lorem Ipsum passage, and going through the
-              cites of the word in classical literature, discovered the
-              undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-              1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good
-              and Evil) by Cicero, written in 45 BC. This book is a treatise on
-              the theory of ethics, very popular during the Renaissance. The
-              first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes
-              from a line in section 1.10.32.
+              using 
             </p>
             <h3>Visión</h3>
             <p className="about-info">
@@ -169,25 +176,7 @@ export default function MainPage() {
               a reader will be distracted by the readable content of a page when
               looking at its layout. The point of using Lorem Ipsum is that it
               has a more-or-less normal distribution of letters, as opposed to
-              using 'Content here, content here', making it look like readable
-              English. Many desktop publishing packages and web page editors now
-              use Lorem Ipsum as their default model text, and a search for
-              'lorem ipsum' will uncover many web sites still in their infancy.
-              Various versions have evolved over the years, sometimes by
-              accident, sometimes on purpose (injected humour and the like).
-              Where does it come from? Contrary to popular belief, Lorem Ipsum
-              is not simply random text. It has roots in a piece of classical
-              Latin literature from 45 BC, making it over 2000 years old.
-              Richard McClintock, a Latin professor at Hampden-Sydney College in
-              Virginia, looked up one of the more obscure Latin words,
-              consectetur, from a Lorem Ipsum passage, and going through the
-              cites of the word in classical literature, discovered the
-              undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-              1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good
-              and Evil) by Cicero, written in 45 BC. This book is a treatise on
-              the theory of ethics, very popular during the Renaissance. The
-              first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes
-              from a line in section 1.10.32.
+              using 
             </p>
           </center>
         </Tab>
@@ -195,6 +184,4 @@ export default function MainPage() {
       </TabNav>
     </div>
   );
-
-
 }
