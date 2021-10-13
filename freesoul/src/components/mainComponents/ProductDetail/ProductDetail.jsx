@@ -7,6 +7,7 @@ import './Modal.css';
 import Swal from 'sweetalert2';
 import {addItem} from '../../redux/cart/cart.actions';
 import {connect} from 'react-redux';
+import { GetColorName } from 'hex-color-to-color-name';
 
  const ProductDetail = ({addItem}) => {
 
@@ -118,8 +119,14 @@ import {connect} from 'react-redux';
     let result = '';
     stock.stock.forEach(color=>{
 
-      const id = color[0]
-
+      const first = color[0];
+      let id = '';
+      if(first.charAt(0) === '#'){
+        id = (GetColorName(first)).toLowerCase();
+      }else{
+        id = first
+      }
+      
       result += `<button class="mr-3 colorButton" id="${id}" style="background-color:${color[0]}"></button>`;
 
       $(document).on("click", `#${id}`, function (color){
@@ -131,8 +138,10 @@ import {connect} from 'react-redux';
         $('#sizeL').prop("disabled", true)
         $('#sizeXL').prop("disabled", true)
 
+        console.log(stock.stock[0][3])
+
         for (let i = 0; i < stock.stock.length;i++){
-          if(stock.stock[i][0] === id){
+          if(stock.stock[i][0] === first){
 
             if(stock.stock[i][1] > 0){
               $('#sizeS').prop("disabled", false)
@@ -143,7 +152,6 @@ import {connect} from 'react-redux';
               $('#sizeM').prop("disabled", false)
               indexQuantity = i;
             }
-
             if(stock.stock[i][3] > 0){
               $('#sizeL').prop("disabled", false)
               indexQuantity = i;
@@ -215,7 +223,6 @@ import {connect} from 'react-redux';
       quantity: ($('#quantity').text())
     })
 
-    console.log(alldata)
   }
   //Se ejecutan las funciones
   setColor()
