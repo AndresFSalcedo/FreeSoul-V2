@@ -315,7 +315,14 @@ import {connect} from 'react-redux';
                       onClick={()=>{
                         if(($('#quantity').text()) !== '0'){
                           setReserve() //importante
-                          addItem(alldata);
+                          if(alldata.design !== ''){
+                           addItem(alldata);
+                           Swal.fire({
+                            icon: 'success',
+                            title: 'Maravilloso!',
+                            text: `El producto ha sido agregado`
+                          }
+                          )}
                         }else{
                           Swal.fire({
                             icon: 'error',

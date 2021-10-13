@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 import React, {useEffect, useState} from "react";
+=======
+import React, { useEffect, useState } from "react";
+
+>>>>>>> Stashed changes
 import "../App.css";
 
 //import {Nav,Navbar} from 'react-bootstrap';
@@ -15,6 +20,9 @@ import Slide from "./Slide/Slide";
 import ProductList from "./Product-list/Product-list";
 import Blog from "./Blog/Blog"
 import { apiRoute } from "../../config/Config";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import CheckoutPage from "./checkout/checkout.component";
+
 
 export default function MainPage() {
 
@@ -22,18 +30,18 @@ export default function MainPage() {
   const [selected, setSelected] = useState("Inicio");
 
   //Hook used for setting up the images
-  const[galery, setGalery] = useState([""]);
-  
+  const [galery, setGalery] = useState([""]);
+
   //Use effect used for getting the images of the front pages of
   // camisas and buzos
 
   useEffect(() => {
     productsGalery();
-  },[]);
+  }, []);
 
   //Function that brings the product galery
   const productsGalery = async () => {
-    const res  = await getPictures()
+    const res = await getPictures()
     setGalery(res.data);
   };
 
@@ -46,7 +54,7 @@ export default function MainPage() {
         "Content-Type": "application/json",
       },
     };
-  
+
     return fetch(url, params)
       .then((response) => {
         return response.json();
@@ -66,20 +74,20 @@ export default function MainPage() {
 
   // Function in charge of filtering the camisetas 
 
-  function camisetasFilter () {
-    return galery.filter(gal => 
+  function camisetasFilter() {
+    return galery.filter(gal =>
       gal.productType === "Camiseta"
-      )
+    )
 
   }
 
-  function buzosFilter () {
-    return galery.filter(gal => 
-      gal.productType === "Buzo" 
+  function buzosFilter() {
+    return galery.filter(gal =>
+      gal.productType === "Buzo"
     )
   }
 
-  
+
   return (
     <div>
 
@@ -115,13 +123,18 @@ export default function MainPage() {
           <h1 className="titleMsg mt-5">
             ¡Siéntete poderosa con nuestras prendas!
           </h1>
-          <Slide/>
+          <Slide />
           <h1 className="titleMsg mt-5">Nuestros Productos</h1>
           <HomeBody />
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/checkout" component={CheckoutPage} />
+            </Switch>
+          </BrowserRouter>
         </Tab>
         <Tab isSelected={selected === "Camisetas"}>
           <h1 className="titleMsg mt-5">Camisetas</h1>
-          <ProductList products={camisetasFilter()}/>          
+          <ProductList products={camisetasFilter()} />
         </Tab>
         <Tab isSelected={selected === "Blog"}>
           <h1 className="titleMsg mt-5">Blog</h1>
@@ -130,7 +143,7 @@ export default function MainPage() {
         </Tab>
         <Tab isSelected={selected === "Buzos"}>
           <h1 className="titleMsg mt-5">Buzos</h1>
-          <ProductList products={buzosFilter()}/>
+          <ProductList products={buzosFilter()} />
         </Tab>
         <Tab isSelected={selected === "Nosotras"}>
           <h1 className="titleMsg mt-5">Nosotras</h1>
