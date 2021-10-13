@@ -10,13 +10,17 @@ import {
 import "./checkout.styles.scss";
 import "../../../";
 import CheckoutItem from "../../mainComponents/checkout-item/checkout-item.component";
+import ReservationForm from "../ReservationForm/ReservationForm.component";
+
 
 const CheckoutPage = ({ cartItems, total }) => (
+
   <div className="container">
     <div className="row">
       <div className="col-lg-6">
         
         
+
       </div>
       <div className="col-lg-6">
         <div className="checkout-page">
@@ -47,7 +51,11 @@ const CheckoutPage = ({ cartItems, total }) => (
         </div>
       </div>
     </div>
+    <ReservationForm/>
   </div>
+
+  
+
 );
 
 const mapStateToProps = createStructuredSelector({
