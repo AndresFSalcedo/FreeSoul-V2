@@ -77,6 +77,11 @@ let reserveClientSchema = new Schema({
 			required:[true, "The color is required"]
 		},
 
+		size: {
+			type:String,
+			required:[true, "The size is required"]
+		},
+
 		quantity: {
 			type:Number,
 			required:[true, "The number is required"]

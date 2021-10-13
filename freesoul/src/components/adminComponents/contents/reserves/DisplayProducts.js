@@ -18,6 +18,7 @@ export default function DisplayProducts(){
 			dataTable[index] = [
 				element.productCode,
 				element.color,
+				element.size,
 				element.quantity
 			]
 		})
@@ -29,6 +30,7 @@ export default function DisplayProducts(){
 				columns: [
 							{title:"Type - Product"},
 							{title:"Color"},
+							{title:"Size"},
 							{title:"Quantity"}
 						 ],
 				destroy: true
