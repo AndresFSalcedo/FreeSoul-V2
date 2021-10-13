@@ -89,15 +89,6 @@ export default function EditDeleteStock(){
 			return;
 		}
 
-		const expCodColor = /^[A-Za-z]+$/
-
-		if(!expCodColor.test(codColor)){
-
-			$(".invalid-codColor").show();
-			$(".invalid-codColor").html("Utiliza el formato solicitado");
-			return;
-		}
-
 		//VALIDAR PRICE
 		if(price === ""){
 
@@ -191,15 +182,23 @@ export default function EditDeleteStock(){
 		
 		if(result.status === 400){
 
-			$(".modal-footer").before(`<div class="alert alert-danged">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: `${result.msg}`
+			})
 		}
 
 		if(result.status === 200){
 
-			$(".modal-footer").before(`<div class="alert alert-success">${result.msg}</div>`);
+			Swal.fire({
+				icon: 'success',
+				title: 'Success',
+				text: `${result.msg}`
+			})
 			$('button[type="submit"]').remove();
 
-			setTimeout(()=>{window.location.href = "/stocks"},3000)
+			setTimeout(()=>{window.location.href = "/stocks"},2000)
 		}
 
 	}
@@ -407,7 +406,6 @@ export default function EditDeleteStock(){
 												className="form-control text-lowercase" 
 												name="codColor" 
 												placeholder="*"
-												pattern="[A-Za-z]+" 
 												required
 											/>
 										</div>

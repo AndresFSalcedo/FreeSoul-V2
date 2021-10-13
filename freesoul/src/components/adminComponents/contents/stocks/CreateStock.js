@@ -71,15 +71,6 @@ export default function CreateStock(){
 			return;
 		}
 
-		const expCodColor = /^[A-Za-z]+$/
-
-		if(!expCodColor.test(codColor)){
-
-			$(".invalid-codColor").show();
-			$(".invalid-codColor").html("Incorrect format");
-			return;
-		}
-
 		//VALIDAR PRICE
 		if(price === ""){
 
@@ -296,7 +287,6 @@ export default function CreateStock(){
 												className="form-control text-lowercase" 
 												name="codColor" 
 												placeholder="*"
-												pattern="[A-Za-z]+" 
 												required
 											/>
 										</div>

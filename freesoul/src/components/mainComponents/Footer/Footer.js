@@ -5,6 +5,7 @@ import {IconContext} from "react-icons";
 import {FaWhatsapp} from 'react-icons/fa';
 import {FaInstagram} from 'react-icons/fa';
 import {AiOutlineFacebook} from 'react-icons/ai';
+import CreateUser from './CreateUser';
 
 export default function Footer(props){
 
@@ -38,11 +39,11 @@ export default function Footer(props){
                         </div>
                         <div className="col-lg-4 mt-4">
                             <h2 className="h2Footer">Newsletter</h2>
-                            <p className="pFooter">¿Te gustaría conocer las promos que manejamos según la temporada? Sorteos y más cosas, deja tu correo electrónico</p>
-                            <input className="inputFooter mb-2" id="name" type="text" placeholder="  Nombre"></input>
-                            <input className="inputFooter" id="email" type="email" placeholder="  Correo Electrónico"></input>
+                            <p className="pFooter">¿Te gustaría conocer las promos que manejamos según la temporada? Sorteos y más cosas, deja tu nombre y correo electrónico</p>
+                            
                             <div className="btnSpace">
-                                <button className="btnSend">Enviar</button>
+                                {/*<button className="btnSend">Enviar</button>*/}
+                                <button className="cleanForm btnSend" data-toggle="modal" data-target="#createUser">Claro que si!</button>
                             </div>
                         </div>  
                     </div>
@@ -55,6 +56,11 @@ export default function Footer(props){
                     </div>
                 </div>
             </div>
+            {/*=============================================
+            VENTANA MODAL PARA CREACION DE USUARIO
+            =============================================*/}
+            
+            <CreateUser/>
         </>
     )
 }

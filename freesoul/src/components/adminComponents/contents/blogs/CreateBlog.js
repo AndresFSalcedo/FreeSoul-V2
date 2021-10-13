@@ -250,7 +250,7 @@ export default function CreateBlog(){
 									</div>
 
 									<div className="col-lg-4">
-										<div className="small text-secondary">*Max 40 characters, letters and numbers</div>
+										<div className="small text-secondary">*Max 100 characters, letters and numbers</div>
 									</div>
 
 									<div className="invalid-feedback invalid-title"></div>
@@ -284,7 +284,7 @@ export default function CreateBlog(){
 									</div>
 
 									<div className="col-lg-4">
-										<div className="small text-secondary">*Max 100 characters, letters and numbers</div>
+										<div className="small text-secondary">*Max 600 characters, letters and numbers</div>
 									</div>
 
 									<div className="invalid-feedback invalid-intro"></div>
