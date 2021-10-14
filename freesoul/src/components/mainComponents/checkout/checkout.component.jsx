@@ -71,7 +71,7 @@ const CheckoutPage = ({ cartItems, total }) => {
         text: `Tu reserva ha sido creada con exito`
       })
 
-      setTimeout(()=>{window.location.href = "/"},3000)
+      setTimeout(()=>{window.location.href = "/"},4000)
 
       //Envio de correos
     }
@@ -99,13 +99,13 @@ const CheckoutPage = ({ cartItems, total }) => {
             <Row className="mb-4">
               <Form.Group as={Col} >
                 <Form.Label>Cecula de Ciudadania</Form.Label>
-                <Form.Control type="text" placeholder="Ingresa el numero de cedula" value={cc} onChange={(e)=>{setCC(e.target.value)}} required/>
+                <Form.Control type="number" placeholder="Ingresa el numero de cedula" value={cc} onChange={(e)=>{setCC(e.target.value)}} required/>
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
 
               <Form.Group as={Col} >
                 <Form.Label>Telefono</Form.Label>
-                <Form.Control type="text" placeholder="Ingresa numero de contacto" value={phone} onChange={(e)=>{setPhone(e.target.value)}} required/>
+                <Form.Control type="number" placeholder="Ingresa numero de contacto" value={phone} onChange={(e)=>{setPhone(e.target.value)}} required/>
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
             </Row>

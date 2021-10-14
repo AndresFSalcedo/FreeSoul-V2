@@ -161,7 +161,7 @@ export default function Stocks(){
 }
 
 /*=============================================
-PETICION GET PICTURES
+PETICION GET STOCKS
 =============================================*/
 
 const getData = ()=>{

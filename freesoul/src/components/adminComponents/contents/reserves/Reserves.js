@@ -5,8 +5,9 @@ import 'datatables.net';
 import 'datatables.net-bs5';
 import 'datatables.net-responsive';
 
-import AceptDeleteReserve from './AceptDeleteReserve';
+import DeleteReserve from './DeleteReserve';
 import DisplayProducts from './DisplayProducts';
+//import AcceptReserve from './AcceptReserve'
 
 export default function Reservs(){
 
@@ -29,7 +30,7 @@ export default function Reservs(){
 								reserve.city,
 								reserve.address,
 								reserve.totalCost,
-								reserve.status,
+								//reserve.status,
 								reserve.products = JSON.stringify(reserve.products),
 								[reserve._id,
 								reserve.date,
@@ -42,7 +43,7 @@ export default function Reservs(){
 								reserve.address,
 								reserve.totalCost,
 								reserve.status,
-								reserve.products,
+								reserve.products = JSON.stringify(reserve.products),
 								]];
 		})
 
@@ -66,7 +67,7 @@ export default function Reservs(){
 					{title:"City"},
 					{title:"Address"},
 					{title:"Total Cost"},
-					{title:"Status"},
+					//{title:"Status"},
 					{title:"Products",
 
 						render: function (products){
@@ -75,8 +76,7 @@ export default function Reservs(){
 								<a class="displayProducts" data-toggle="modal" data-target="#displayProducts" data='${products}'>
 									
 									<svg style="color:white; background:#24b4ad; border-radius:100%; width:35px; line-height:35px; text-align:center; padding:10px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
-								</a>
-							`
+								</a>`
 						}
 
 					},
@@ -85,10 +85,7 @@ export default function Reservs(){
 						render: function(data){
 
 							return `
-								<a href="" class="editData" data-toggle="modal" data-target="#editStock" data="${data}">
-									
-									<svg style="color:white; background:#00a135; border-radius:100%; width:35px; line-height:35px; text-align:center; padding:10px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
-								</a>
+								
 								<a href="" class="reserveDelete" data="${data}">
 									<svg style="color:white; background:#dc3543; border-radius:100%; width:35px; line-height:35px; text-align:center; padding:10px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="trash-alt" class="svg-inline--fa fa-trash-alt fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"></path></svg>
 								</a>
@@ -101,6 +98,10 @@ export default function Reservs(){
 		})
 	}
 
+	//<a class="acceptReserve" data='${products}'>
+									
+									//<svg style="color:white; background:#00a135; border-radius:100%; width:35px; line-height:35px; text-align:center; padding:10px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
+								//</a>
 	dataReserves();
 
 	/*=============================================
@@ -159,8 +160,8 @@ export default function Reservs(){
 			{/*=============================================
 			VENTANA MODAL PARA ACEPT DELETE DE RESERVA
 			=============================================*/}
-			
-			<AceptDeleteReserve/>
+			{/*<AcceptReserve/>*/}
+			<DeleteReserve/>
 
 		</div>
 	);

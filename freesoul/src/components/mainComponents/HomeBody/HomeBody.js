@@ -22,7 +22,7 @@ export default function HomeBody(props) {
                     <div className="col-lg-6">
                         <div onClick={() => props.swapTap('Camisetas')} className="picHome" id="fotoRight">
                             <img src={Right} alt="" />
-                            <div className="picText back-purple">Buzos</div>
+                            <div className="picText back-purple">Camisetas</div>
                         </div>
                     </div>
                 </div>

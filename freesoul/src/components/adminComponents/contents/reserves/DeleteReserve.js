@@ -3,7 +3,7 @@ import {apiRoute} from '../../../../config/Config';
 import $ from 'jquery';
 import Swal from 'sweetalert2';
 
-export default function AceptDeleteReserve(){
+export default function DeleteReserve(){
 
 	/*=============================================
 	Captura data a borrar

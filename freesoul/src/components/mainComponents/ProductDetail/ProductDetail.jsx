@@ -64,7 +64,8 @@ import { GetColorName } from 'hex-color-to-color-name';
       
       setData1({
 
-        design: data[0].design,
+        design: 
+        [0].design,
         price: data[0].price,
         productCode: data[0].productCode,
         image: data[0].images[0]
