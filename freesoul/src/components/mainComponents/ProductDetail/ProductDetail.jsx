@@ -5,11 +5,11 @@ import $ from "jquery";
 import { apiRoute } from "../../../config/Config";
 import './Modal.css';
 import Swal from 'sweetalert2';
-import {addItem} from '../../redux/cart/cart.actions';
-import {connect} from 'react-redux';
+import { addItem } from '../../redux/cart/cart.actions';
+import { connect } from 'react-redux';
 import { GetColorName } from 'hex-color-to-color-name';
 
- const ProductDetail = ({addItem}) => {
+const ProductDetail = ({ addItem }) => {
 
   const [images, setImages] = useState([
     {
@@ -19,11 +19,11 @@ import { GetColorName } from 'hex-color-to-color-name';
   ]);
 
   const [stock, setStock] = useState({
-    
+
     design: '',
     price: '',
-    stock:[],
-    images:[]
+    stock: [],
+    images: []
 
   });
 
@@ -43,7 +43,7 @@ import { GetColorName } from 'hex-color-to-color-name';
     design: '',
     price: '',
     productCode: '',
-    image: '', 
+    image: '',
     color: '',
     size: '',
     quantity: 0
@@ -61,17 +61,17 @@ import { GetColorName } from 'hex-color-to-color-name';
       $('#sizeXL').prop("disabled", true)
 
       let data = JSON.parse($(this).attr("data"));
-      
+
       setData1({
 
-        design: 
-        [0].design,
+        design:
+          data[0].design,
         price: data[0].price,
         productCode: data[0].productCode,
         image: data[0].images[0]
       });
-      
-      
+
+
       const colombianCOP = Intl.NumberFormat("es-CO", {
         style: "currency",
         currency: "COP",
@@ -115,22 +115,22 @@ import { GetColorName } from 'hex-color-to-color-name';
 
   }, []);
 
-  function setColor(){
+  function setColor() {
     let html = document.getElementById('color');
     let result = '';
-    stock.stock.forEach(color=>{
+    stock.stock.forEach(color => {
 
       const first = color[0];
       let id = '';
-      if(first.charAt(0) === '#'){
+      if (first.charAt(0) === '#') {
         id = (GetColorName(first)).toLowerCase();
-      }else{
+      } else {
         id = first
       }
-      
+
       result += `<button class="mr-3 colorButton" id="${id}" style="background-color:${color[0]}"></button>`;
 
-      $(document).on("click", `#${id}`, function (color){
+      $(document).on("click", `#${id}`, function (color) {
 
         let indexQuantity = '';
 
@@ -141,24 +141,24 @@ import { GetColorName } from 'hex-color-to-color-name';
 
         console.log(stock.stock[0][3])
 
-        for (let i = 0; i < stock.stock.length;i++){
-          if(stock.stock[i][0] === first){
+        for (let i = 0; i < stock.stock.length; i++) {
+          if (stock.stock[i][0] === first) {
 
-            if(stock.stock[i][1] > 0){
+            if (stock.stock[i][1] > 0) {
               $('#sizeS').prop("disabled", false)
               indexQuantity = i;
             }
 
-            if(stock.stock[i][2] > 0){
+            if (stock.stock[i][2] > 0) {
               $('#sizeM').prop("disabled", false)
               indexQuantity = i;
             }
-            if(stock.stock[i][3] > 0){
+            if (stock.stock[i][3] > 0) {
               $('#sizeL').prop("disabled", false)
               indexQuantity = i;
             }
 
-            if(stock.stock[i][4] > 0){
+            if (stock.stock[i][4] > 0) {
               $('#sizeXL').prop("disabled", false)
               indexQuantity = i;
             }
@@ -166,7 +166,7 @@ import { GetColorName } from 'hex-color-to-color-name';
           }
         }
 
-        $(document).on("click", "#sizeS", function (){
+        $(document).on("click", "#sizeS", function () {
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][1])
 
@@ -175,28 +175,28 @@ import { GetColorName } from 'hex-color-to-color-name';
             size: 'S'
           })
         })
-        $(document).on("click", "#sizeM", function (){
+        $(document).on("click", "#sizeM", function () {
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][2])
-          
+
           setData2({
             color: id,
             size: 'M'
           })
         })
-        $(document).on("click", "#sizeL", function (){
+        $(document).on("click", "#sizeL", function () {
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][3])
-          
+
           setData2({
             color: id,
             size: 'L'
           })
         })
-        $(document).on("click", "#sizeXL", function (){
+        $(document).on("click", "#sizeXL", function () {
           $('#quantity').text('0')
           setMaxQuantity(stock.stock[indexQuantity][4])
-          
+
           setData2({
             color: id,
             size: 'XL'
@@ -205,14 +205,14 @@ import { GetColorName } from 'hex-color-to-color-name';
       })
     })
 
-    if(result !== ''){
+    if (result !== '') {
 
       html.innerHTML = result
     }
-    
+
   }
 
-  function setReserve(){
+  function setReserve() {
 
     setAllData({
       design: data1.design,
@@ -228,7 +228,7 @@ import { GetColorName } from 'hex-color-to-color-name';
   //Se ejecutan las funciones
   setColor()
 
- // VISTA DEL COMPONENTE
+  // VISTA DEL COMPONENTE
   return (
     <div className="modal fade" id="detailProduct">
       <div className="modal-dialog modal-dialog-centered modal-lg">
@@ -295,20 +295,20 @@ import { GetColorName } from 'hex-color-to-color-name';
                   <div className="mb-4">
                     <h4 className="modalText text-left">Cantidad</h4>
                     <div className="btn-group " role="group" aria-label="Basic example">
-                      <button type="button" className="btn btn-primary" onClick={()=>{
-                        
+                      <button type="button" className="btn btn-primary" onClick={() => {
+
                         let quantity = parseInt(document.getElementById("quantity").textContent)
-                        if(quantity !== 0){
+                        if (quantity !== 0) {
                           quantity -= 1
                           $('#quantity').text(quantity)
                         }
                         return
                       }}>-</button>
                       <button type="button" className="btn btn-primary px-3" id="quantity" disabled></button>
-                      <button type="button" className="btn btn-primary" onClick={()=>{
+                      <button type="button" className="btn btn-primary" onClick={() => {
 
                         let quantity = parseInt(document.getElementById("quantity").textContent)
-                        if(quantity < maxQuantity){
+                        if (quantity < maxQuantity) {
                           quantity += 1
                           $('#quantity').text(quantity)
                         }
@@ -320,18 +320,19 @@ import { GetColorName } from 'hex-color-to-color-name';
                       type="button"
                       className="btn btn-success btn-lg btn-block"
                       id="addToBag"
-                      onClick={()=>{
-                        if(($('#quantity').text()) !== '0'){
+                      onClick={() => {
+                        if (($('#quantity').text()) !== '0') {
                           setReserve() //importante
-                          if(alldata.design !== ''){
-                           addItem(alldata);
-                           Swal.fire({
-                            icon: 'success',
-                            title: 'Maravilloso!',
-                            text: `El producto ha sido agregado`
+                          if (alldata.design !== '') {
+                            addItem(alldata);
+                            Swal.fire({
+                              icon: 'success',
+                              title: 'Maravilloso!',
+                              text: `El producto ha sido agregado`
+                            }
+                            )
                           }
-                          )}
-                        }else{
+                        } else {
                           Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -348,10 +349,10 @@ import { GetColorName } from 'hex-color-to-color-name';
                       type="button"
                       className="btn btn-primary btn-lg btn-block"
                       id="reserveNow"
-                      onClick={()=>{
-                        if(($('#quantity').text()) !== '0'){
+                      onClick={() => {
+                        if (($('#quantity').text()) !== '0') {
                           setReserve()
-                        }else{
+                        } else {
                           Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -374,8 +375,8 @@ import { GetColorName } from 'hex-color-to-color-name';
 }
 
 const mapDispatchToProps = dispatch => ({
-  addItem: alldata=> dispatch(addItem(alldata))
+  addItem: alldata => dispatch(addItem(alldata))
 });
 
 
-export default connect(null,mapDispatchToProps) (ProductDetail);
+export default connect(null, mapDispatchToProps)(ProductDetail);
