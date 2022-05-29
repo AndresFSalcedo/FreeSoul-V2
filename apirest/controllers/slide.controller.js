@@ -1,424 +1,361 @@
-
 //IMPORTAR MODELO
 
-const Slide = require('../models/slide.model')
+const Slide = require('../models/slide.model');
 
 //Administrados de carpetas y files
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
 // FUNCION GET
 
 let showSlide = (req, res) => {
+   Slide.find({}).exec((err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: GET Function',
+         });
+      }
 
-	Slide.find({})
-		.exec((err, data) => {
+      //CONTAR LA CANTIDAD DE REGISTROS
 
-			if (err) {
+      Slide.countDocuments({}, (err, total) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: GET Function',
+               err,
+            });
+         }
 
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: GET Function"
-				})
-			}
-
-			//CONTAR LA CANTIDAD DE REGISTROS
-
-			Slide.countDocuments({}, (err, total) => {
-
-				if (err) {
-
-					return res.json({
-
-						status: 500,
-						msg: "Request Error: GET Function",
-						err
-					})
-				}
-
-				res.json({
-					status: 200,
-					total,
-					data
-				})
-			})
-
-
-		})
-}
+         res.json({
+            status: 200,
+            total,
+            data,
+         });
+      });
+   });
+};
 
 //Function post
- 
+
 let createSlide = (req, res) => {
+   let body = req.body;
 
-	let body = req.body
+   //SE PREGUNTA SI VIENE UN file
 
-	//SE PREGUNTA SI VIENE UN file
+   if (!req.files) {
+      res.json({
+         status: 500,
+         msg: 'The image cannot be empty',
+      });
+   }
 
-	if (!req.files) {
+   if (!req.body.position) {
+      res.json({
+         status: 500,
+         msg: 'the position cannot be empty',
+      });
+   }
 
-		res.json({
+   //CAPTURA DE file
 
-			status: 500,
-			msg: "The image cannot be empty"
-		})
-	}
+   let file = req.files.picture;
 
-	if (!req.body.position) {
+   //VALIDAR LA EXTENSION DEL file
 
-		res.json({
+   if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
+      return res.json({
+         status: 400,
+         msg: 'The image must be JPG or PNG',
+      });
+   }
 
-			status: 500,
-			msg: "the position cannot be empty"
-		})
-	}
+   if (file.size > 2000000) {
+      return res.json({
+         status: 400,
+         msg: 'The size must be max 2MB',
+      });
+   }
 
-	//CAPTURA DE file
-	
-	let file = req.files.picture
+   //CAMBIAR name AL file
 
-	//VALIDAR LA EXTENSION DEL file
+   let name = Math.floor(Math.random() * 10000);
 
-	if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
+   let extension = file.name.split('.').pop();
 
-		return res.json({
+   //Mover file a la carpeta
 
-			status: 400,
-			msg: "The image must be JPG or PNG"
-		})
-	}
+   file.mv(`./files/slide/${name}.${extension}`, (err) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: POST Function',
+            err,
+         });
+      }
 
-	if (file.size > 2000000) {
+      // OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
+      let slide = new Slide({
+         picture: `${name}.${extension}`,
+         position: `${body.position}`,
+      });
 
-		return res.json({
+      //GUARDAR EN MONGODB
 
-			status: 400,
-			msg: "The size must be max 2MB"
-		})
-	}
+      slide.save((err, data) => {
+         if (err) {
+            return res.json({
+               status: 400,
+               msg: 'Error storing the slide in the database',
+               err,
+            });
+         }
 
-	//CAMBIAR name AL file
-
-	let name = Math.floor(Math.random() * 10000)
-
-	let extension = file.name.split('.').pop()
-
-	//Mover file a la carpeta
-
-	file.mv(`./files/slide/${name}.${extension}`, err => {
-		if (err) {
-
-			return res.json({
-
-				status: 500,
-				msg: "Request Error: POST Function",
-				err
-			})
-		}
-
-		// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
-		let slide = new Slide({
-
-			picture: `${name}.${extension}`,
-			position: `${body.position}`
-		})
-
-
-		//GUARDAR EN MONGODB
-
-		slide.save((err, data) => {
-
-			if (err) {
-				return res.json({
-
-					status: 400,
-					msg: "Error storing the slide in the database",
-					err
-				})
-			}
-
-			res.json({
-
-				status: 200,
-				data,
-				msg: "The slide has been created!"
-			})
-		})
-	})
-}
+         res.json({
+            status: 200,
+            data,
+            msg: 'The slide has been created!',
+         });
+      });
+   });
+};
 
 //FUNCION PUT
 
 let editSlide = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   // Obtener el cuerpo del formulario
 
-	// Obtener el cuerpo del formulario
+   let body = req.body;
 
-	let body = req.body
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
-
-	Slide.findById(id, (err, data) => {
-
-		if (err) {
-
-			return res.json({
-
-				status: 500,
-				msg: "Request Error: PUT Function",
-				err
-			})
-		}
-
-		if (!data) {
-
-			return res.json({
-
-				status: 400,
-				msg: "Slide does not exists",
-			})
-		}
-
-		let picRoute = data.picture
-
-		//2. Se valida cambio de imagen
-
-		let checkFileChange = (req, picRoute) => {
-
-			return new Promise((resolve, reject) => {
-
-				if (req.files) {
-
-					let file = req.files.file
-
-					//VALIDAR LA EXTENSION DEL file
-
-					if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
-
-						let respu = {
-
-							res: res,
-							msg: "The image must be JPG or PNG"
-						}
-
-						reject(respu)
-					}
-
-					if (file.size > 2000000) {
-
-						let respu = {
-
-							res: res,
-							msg: "The size must be max 2MB"
-						}
-
-						reject(respu)
-					}
-
-					//CAMBIAR name AL file
-
-					let name = Math.floor(Math.random() * 10000)
-
-					//CAPTURAR LA EXTENSION DEL file
-
-					let extension = file.name.split('.').pop()
-
-					//MOVER file A CARPETA
-
-					file.mv(`./files/slide/${name}.${extension}`, err => {
-
-						if (err) {
-
-							let respu = {
-
-								res: res,
-								msg: "Request Error: PUT Function"
-							}
-
-							reject(respu)
-						}
-
-						//Borrar antigua imagen
-						if (fs.existsSync(`./files/slide/${picRoute}`)) {
-
-							fs.unlinkSync(`./files/slide/${picRoute}`)
-						}
-
-						//Damos valor a nueva imagen
-						picRoute = `${name}.${extension}`
-
-						resolve(picRoute)
-					})
-
-
-				} else {
-
-					resolve(picRoute)
-				}
-			})
-		}
-
-		//3. Actualizamos registros
-
-		let registryChangeDb = (id, picRoute) => {
-
-			return new Promise((resolve, reject) => {
-				let dataSlide = {
-
-					picture: picRoute,
-					position: body.position
-				}
-
-				//Actualizamos en MongoDb
-
-				Slide.findByIdAndUpdate(id, dataSlide, {
-					new: true,
-					runValidators: true
-				}, (err, data) => {
-
-					if (err) {
-
-						let respu = {
-
-							res: res,
-							err: err
-						}
-						reject(respu)
-					}
-
-					let respu = {
-
-						res: res,
-						data: data
-					}
-
-					resolve(respu)
-				})
-			})
-		}
-
-		//SINCRONIZAMOS LAS PROMESAS
-
-		checkFileChange(req, picRoute).then(picRoute => {
-
-			registryChangeDb(id, picRoute).then(respu => {
-
-				respu["res"].json({
-					status: 200,
-					data: respu["data"],
-					msg: "The slide has been updated!"
-				})
-
-			}).catch(respu => {
-
-				respu["res"].json({
-
-					status: 400,
-					err: respu["err"],
-					msg: "Error editing the slide"
-				})
-			})
-		}).catch(respu => {
-
-			respu["res"].json({
-
-				status: 400,
-				msg: respu["msg"]
-			})
-		})
-
-	})
-}
+   Slide.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: PUT Function',
+            err,
+         });
+      }
+
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'Slide does not exists',
+         });
+      }
+
+      let picRoute = data.picture;
+
+      //2. Se valida cambio de imagen
+
+      let checkFileChange = (req, picRoute) => {
+         return new Promise((resolve, reject) => {
+            if (req.files) {
+               let file = req.files.file;
+
+               //VALIDAR LA EXTENSION DEL file
+
+               if (
+                  file.mimetype != 'image/jpeg' &&
+                  file.mimetype != 'image/png'
+               ) {
+                  let respu = {
+                     res: res,
+                     msg: 'The image must be JPG or PNG',
+                  };
+
+                  reject(respu);
+               }
+
+               if (file.size > 2000000) {
+                  let respu = {
+                     res: res,
+                     msg: 'The size must be max 2MB',
+                  };
+
+                  reject(respu);
+               }
+
+               //CAMBIAR name AL file
+
+               let name = Math.floor(Math.random() * 10000);
+
+               //CAPTURAR LA EXTENSION DEL file
+
+               let extension = file.name.split('.').pop();
+
+               //MOVER file A CARPETA
+
+               file.mv(`./files/slide/${name}.${extension}`, (err) => {
+                  if (err) {
+                     let respu = {
+                        res: res,
+                        msg: 'Request Error: PUT Function',
+                     };
+
+                     reject(respu);
+                  }
+
+                  //Borrar antigua imagen
+                  if (fs.existsSync(`./files/slide/${picRoute}`)) {
+                     fs.unlinkSync(`./files/slide/${picRoute}`);
+                  }
+
+                  //Damos valor a nueva imagen
+                  picRoute = `${name}.${extension}`;
+
+                  resolve(picRoute);
+               });
+            } else {
+               resolve(picRoute);
+            }
+         });
+      };
+
+      //3. Actualizamos registros
+
+      let registryChangeDb = (id, picRoute) => {
+         return new Promise((resolve, reject) => {
+            let dataSlide = {
+               picture: picRoute,
+               position: body.position,
+            };
+
+            //Actualizamos en MongoDb
+
+            Slide.findByIdAndUpdate(
+               id,
+               dataSlide,
+               {
+                  new: true,
+                  runValidators: true,
+               },
+               (err, data) => {
+                  if (err) {
+                     let respu = {
+                        res: res,
+                        err: err,
+                     };
+                     reject(respu);
+                  }
+
+                  let respu = {
+                     res: res,
+                     data: data,
+                  };
+
+                  resolve(respu);
+               }
+            );
+         });
+      };
+
+      //SINCRONIZAMOS LAS PROMESAS
+
+      checkFileChange(req, picRoute)
+         .then((picRoute) => {
+            registryChangeDb(id, picRoute)
+               .then((respu) => {
+                  respu['res'].json({
+                     status: 200,
+                     data: respu['data'],
+                     msg: 'The slide has been updated!',
+                  });
+               })
+               .catch((respu) => {
+                  respu['res'].json({
+                     status: 400,
+                     err: respu['err'],
+                     msg: 'Error editing the slide',
+                  });
+               });
+         })
+         .catch((respu) => {
+            respu['res'].json({
+               status: 400,
+               msg: respu['msg'],
+            });
+         });
+   });
+};
 
 // FUNCIOND DELETE
 
 let deleteSlide = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
+   Slide.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: DELETE Function',
+            err,
+         });
+      }
 
-	Slide.findById(id, (err, data) => {
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'Slide does not exists',
+         });
+      }
 
-		if (err) {
+      //Borrar antigua foto
+      if (fs.existsSync(`./files/slide/${data.picture}`)) {
+         fs.unlinkSync(`./files/slide/${data.picture}`);
+      }
 
-			return res.json({
+      //Borrar registro en MongoDB
 
-				status: 500,
-				msg: "Request Error: DELETE Function",
-				err
-			})
-		}
+      Slide.findByIdAndRemove(id, (err, data) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: DELETE Function',
+               err,
+            });
+         }
 
-		if (!data) {
-
-			return res.json({
-
-				status: 400,
-				msg: "Slide does not exists",
-			})
-		}
-
-		//Borrar antigua foto
-		if (fs.existsSync(`./files/slide/${data.picture}`)) {
-
-			fs.unlinkSync(`./files/slide/${data.picture}`)
-		}
-
-		//Borrar registro en MongoDB
-
-		Slide.findByIdAndRemove(id, (err, data) => {
-
-			if (err) {
-
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: DELETE Function",
-					err
-				})
-			}
-
-			res.json({
-				status:200,
-				msg:"The slide has been deleted!"
-			})
-		})
-	})
-
-}
+         res.json({
+            status: 200,
+            msg: 'The slide has been deleted!',
+         });
+      });
+   });
+};
 
 // FUNCION GET PARA ACCESO A IMAGENES SEPARADAS
 
-let showSlideImg = (req, res)=>{
+let showSlideImg = (req, res) => {
+   let image = req.params.image;
+   let imgRoute = `./files/slide/${image}`;
 
-	let image = req.params.image
-	let imgRoute = `./files/slide/${image}`
+   fs.exists(imgRoute, (exists) => {
+      if (!exists) {
+         return res.json({
+            status: 400,
+            msg: 'The slide does not exists',
+         });
+      }
 
-	fs.exists(imgRoute, exists =>{
-
-		if(!exists){
-			return res.json({
-				status:400,
-				msg: "The slide does not exists"
-			})
-		}
-
-		res.sendFile(path.resolve(imgRoute))
-	})
-}
-
+      res.sendFile(path.resolve(imgRoute));
+   });
+};
 
 module.exports = {
-	showSlide,
-	createSlide,
-	editSlide,
-	deleteSlide,
-	showSlideImg
-}
+   showSlide,
+   createSlide,
+   editSlide,
+   deleteSlide,
+   showSlideImg,
+};

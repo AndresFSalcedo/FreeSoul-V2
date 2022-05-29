@@ -5,32 +5,27 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let pictureSchema = new Schema({
+   productType: {
+      type: String,
+      required: [true, 'The product type is required'],
+   },
 
-	productType: {
+   design: {
+      type: String,
+      required: [true, 'The design is required'],
+   },
 
-		type: String,
-		required: [true, "The product type is required"]
-	},
+   image: {
+      type: String,
+      required: [true, 'The image is required'],
+   },
 
-	design: {
-
-		type: String,
-		required: [true, "The design is required"]
-	},
-	
-	image: {
-
-		type: String,
-		required: [true, "The image is required"]
-	},
-
-	productCode: {
-
-		type: String,
-		required: false
-	}
-})
+   productCode: {
+      type: String,
+      required: false,
+   },
+});
 
 // Exportar el modelo
 
-module.exports = mongoose.model("pictures", pictureSchema)
+module.exports = mongoose.model('pictures', pictureSchema);

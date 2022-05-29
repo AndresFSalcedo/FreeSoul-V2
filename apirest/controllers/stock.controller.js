@@ -1,327 +1,276 @@
 //IMPORTAR MODELO
 
-const Stock = require('../models/stock.model')
+const Stock = require('../models/stock.model');
 
 // FUNCION GET
 
 let showStock = (req, res) => {
+   Stock.find({}).exec((err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: GET Function',
+         });
+      }
 
-	Stock.find({})
-		.exec((err, data) => {
+      //CONTAR LA CANTIDAD DE REGISTROS
 
-			if (err) {
+      Stock.countDocuments({}, (err, total) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: GET Function',
+               err,
+            });
+         }
 
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: GET Function"
-				})
-			}
-
-			//CONTAR LA CANTIDAD DE REGISTROS
-
-			Stock.countDocuments({}, (err, total) => {
-
-				if (err) {
-
-					return res.json({
-
-						status: 500,
-						msg: "Request Error: GET Function",
-						err
-					})
-				}
-
-				res.json({
-					status: 200,
-					total,
-					data
-				})
-			})
-
-
-		})
-}
+         res.json({
+            status: 200,
+            total,
+            data,
+         });
+      });
+   });
+};
 
 // FUNCION POST
 
 let createStock = (req, res) => {
+   let body = req.body;
 
-	let body = req.body
+   //SE PREGUNTA SI VIENEN TODOS LOS CAMPOS
 
-	//SE PREGUNTA SI VIENEN TODOS LOS CAMPOS
+   if (!req.body.productType) {
+      res.json({
+         status: 500,
+         msg: 'The product type cannot be empt',
+      });
+   }
 
-	if (!req.body.productType) {
+   if (!req.body.design) {
+      res.json({
+         status: 500,
+         msg: 'The design cannot be empt',
+      });
+   }
 
-		res.json({
+   if (!req.body.codColor) {
+      res.json({
+         status: 500,
+         msg: 'The color cannot be empt',
+      });
+   }
 
-			status: 500,
-			msg: "The product type cannot be empt"
-		})
-	}
+   if (!req.body.price) {
+      res.json({
+         status: 500,
+         msg: 'The price cannot be empt',
+      });
+   }
 
-	if (!req.body.design) {
+   if (!req.body.S) {
+      res.json({
+         status: 500,
+         msg: 'The S size cannot be empt',
+      });
+   }
 
-		res.json({
+   if (!req.body.M) {
+      res.json({
+         status: 500,
+         msg: 'The M size cannot be empt',
+      });
+   }
 
-			status: 500,
-			msg: "The design cannot be empt"
-		})
-	}
+   if (!req.body.L) {
+      res.json({
+         status: 500,
+         msg: 'The L size cannot be empt',
+      });
+   }
 
-	if (!req.body.codColor) {
+   if (!req.body.XL) {
+      res.json({
+         status: 500,
+         msg: 'The XL size cannot be empt',
+      });
+   }
 
-		res.json({
+   // OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
+   let stock = new Stock({
+      productType: `${body.productType}`,
+      design: `${body.design}`,
+      codColor: `${body.codColor}`,
+      price: `${body.price}`,
+      S: `${body.S}`,
+      M: `${body.M}`,
+      L: `${body.L}`,
+      XL: `${body.XL}`,
+      productCode: `${body.productType}-${body.design}`,
+   });
 
-			status: 500,
-			msg: "The color cannot be empt"
-		})
-	}
+   //GUARDAR EN MONGODB
 
-	if (!req.body.price) {
+   stock.save((err, data) => {
+      if (err) {
+         return res.json({
+            status: 400,
+            msg: 'Error storing the item in the database',
+            err,
+         });
+      }
 
-		res.json({
-
-			status: 500,
-			msg: "The price cannot be empt"
-		})
-	}
-
-	if (!req.body.S) {
-
-		res.json({
-
-			status: 500,
-			msg: "The S size cannot be empt"
-		})
-	}
-
-	if (!req.body.M) {
-
-		res.json({
-
-			status: 500,
-			msg: "The M size cannot be empt"
-		})
-	}
-
-	if (!req.body.L) {
-
-		res.json({
-
-			status: 500,
-			msg: "The L size cannot be empt"
-		})
-	}
-
-	if (!req.body.XL) {
-
-		res.json({
-
-			status: 500,
-			msg: "The XL size cannot be empt"
-		})
-	}
-
-	// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
-	let stock = new Stock({
-
-		productType: `${body.productType}`,
-		design: `${body.design}`,
-		codColor: `${body.codColor}`,
-		price: `${body.price}`,
-		S: `${body.S}`,
-		M: `${body.M}`,
-		L: `${body.L}`,
-		XL: `${body.XL}`,
-		productCode:`${body.productType}-${body.design}`
-	})
-
-
-	//GUARDAR EN MONGODB
-
-	stock.save((err, data) => {
-
-		if (err) {
-			return res.json({
-
-				status: 400,
-				msg: "Error storing the item in the database",
-				err
-			})
-		}
-
-		res.json({
-
-			status: 200,
-			data,
-			msg: "The item has been created!"
-		})
-	})
-}
+      res.json({
+         status: 200,
+         data,
+         msg: 'The item has been created!',
+      });
+   });
+};
 
 //FUNCION PUT
 
 let editStock = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   // Obtener el cuerpo del formulario
 
-	// Obtener el cuerpo del formulario
+   let body = req.body;
 
-	let body = req.body
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
+   Stock.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: PUT Function',
+            err,
+         });
+      }
 
-	Stock.findById(id, (err, data) => {
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'Item does not exists',
+         });
+      }
 
-		if (err) {
+      //2. Actualizamos registros
 
-			return res.json({
+      let dataChangeDb = (id, body) => {
+         return new Promise((resolve, reject) => {
+            let newData = {
+               productType: body.productType,
+               design: body.design,
+               price: body.price,
+               codColor: body.codColor,
+               S: body.S,
+               M: body.M,
+               L: body.L,
+               XL: body.XL,
+               productCode: `${body.productType}-${body.design}`,
+            };
 
-				status: 500,
-				msg: "Request Error: PUT Function",
-				err
-			})
-		}
+            //Actualizamos en MongoDb
 
-		if (!data) {
+            Stock.findByIdAndUpdate(
+               id,
+               newData,
+               {
+                  new: true,
+                  runValidators: true,
+               },
+               (err, data) => {
+                  if (err) {
+                     let response = {
+                        res: res,
+                        err: err,
+                     };
+                     reject(response);
+                  }
 
-			return res.json({
+                  let response = {
+                     res: res,
+                     data: data,
+                  };
 
-				status: 400,
-				msg: "Item does not exists",
-			})
-		}
+                  resolve(response);
+               }
+            );
+         });
+      };
 
-		//2. Actualizamos registros
+      //SINCRONIZAMOS LAS PROMESAS
 
-		let dataChangeDb = (id, body) => {
-
-			return new Promise((resolve, reject) => {
-				let newData = {
-
-					productType: body.productType,
-					design:body.design,
-					price: body.price,
-					codColor: body.codColor,
-					S: body.S,
-					M: body.M,
-					L: body.L,
-					XL: body.XL,
-					productCode:`${body.productType}-${body.design}`
-				}
-
-				//Actualizamos en MongoDb
-
-				Stock.findByIdAndUpdate(id, newData, {
-					new: true,
-					runValidators: true
-				}, (err, data) => {
-
-					if (err) {
-
-						let response = {
-
-							res: res,
-							err: err
-						}
-						reject(response)
-					}
-
-					let response = {
-
-						res: res,
-						data: data
-					}
-
-					resolve(response)
-				})
-			})
-		}
-
-		//SINCRONIZAMOS LAS PROMESAS
-
-		dataChangeDb(id, body).then(response => {
-
-			response["res"].json({
-				status: 200,
-				data: response["data"],
-				msg: "The item has been updated!"
-			})
-
-		}).catch(response => {
-
-			response["res"].json({
-
-				status: 400,
-				err: response["err"],
-				msg: "Error editing the item"
-			})
-		})
-	})
-}
+      dataChangeDb(id, body)
+         .then((response) => {
+            response['res'].json({
+               status: 200,
+               data: response['data'],
+               msg: 'The item has been updated!',
+            });
+         })
+         .catch((response) => {
+            response['res'].json({
+               status: 400,
+               err: response['err'],
+               msg: 'Error editing the item',
+            });
+         });
+   });
+};
 
 // FUNCIOND DELETE
 
 let deleteStock = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
+   Stock.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: DELETE Function',
+            err,
+         });
+      }
 
-	Stock.findById(id, (err, data) => {
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'Item does not exists',
+         });
+      }
 
-		if (err) {
+      //Borrar registro en MongoDB
 
-			return res.json({
+      Stock.findByIdAndRemove(id, (err, data) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: DELETE Function',
+               err,
+            });
+         }
 
-				status: 500,
-				msg: "Request Error: DELETE Function",
-				err
-			})
-		}
-
-		if (!data) {
-
-			return res.json({
-
-				status: 400,
-				msg: "Item does not exists",
-			})
-		}
-
-		//Borrar registro en MongoDB
-
-		Stock.findByIdAndRemove(id, (err, data) => {
-
-			if (err) {
-
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: DELETE Function",
-					err
-				})
-			}
-
-			res.json({
-				status:200,
-				msg:"The item has been deleted!"
-			})
-		})
-	})
-
-}
+         res.json({
+            status: 200,
+            msg: 'The item has been deleted!',
+         });
+      });
+   });
+};
 
 //EXPORTAMOS FUNCIONES DEL CONTROLADOR
 
 module.exports = {
-	showStock,
-	createStock,
-	editStock,
-	deleteStock
-}
+   showStock,
+   createStock,
+   editStock,
+   deleteStock,
+};

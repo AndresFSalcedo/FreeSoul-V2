@@ -7,7 +7,7 @@ const Blog = require('../controllers/blog.controller');
 
 //IMPORTAR MIDDLEWARE
 
-const { verifyToken } = require('../middlewares/autentification')
+const { verifyToken } = require('../middlewares/autentification');
 
 //CREACION DE RUTA HTTP
 

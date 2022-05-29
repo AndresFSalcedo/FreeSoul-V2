@@ -23,4 +23,4 @@ app.get('/show-pictureImg/:image', Picture.showPictureImg);
 
 //EXPORTAR LA RUTA
 
-module.exports = app
+module.exports = app;

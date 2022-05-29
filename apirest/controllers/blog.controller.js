@@ -1,411 +1,352 @@
 //IMPORTAR MODELO
-const Blog = require('../models/blog.model')
+const Blog = require('../models/blog.model');
 
 //ADMINISTRADORES DE CARPETAS Y ARCHIVOS
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
 // FUNCION GET
 let showBlogs = (req, res) => {
+   Blog.find({}).exec((err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: GET Function',
+         });
+      }
 
-	Blog.find({})
-		.exec((err, data) => {
+      //CONTAR LA CANTIDAD DE REGISTROS
+      Blog.countDocuments({}, (err, total) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: GET Function',
+               err,
+            });
+         }
 
-			if (err) {
-
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: GET Function"
-				})
-			}
-
-			//CONTAR LA CANTIDAD DE REGISTROS
-			Blog.countDocuments({}, (err, total) => {
-
-				if (err) {
-
-					return res.json({
-
-						status: 500,
-						msg: "Request Error: GET Function",
-						err
-					})
-				}
-
-				res.json({
-					status: 200,
-					total,
-					data
-				})
-			})
-		})
-}
+         res.json({
+            status: 200,
+            total,
+            data,
+         });
+      });
+   });
+};
 
 //FUNCION POST
 let createBlog = (req, res) => {
+   let body = req.body;
 
-	let body = req.body
+   //Se pregunta si existe un archivo
 
-	//Se pregunta si existe un archivo
+   if (!req.files) {
+      res.json({
+         status: 500,
+         msg: 'The image cannot be empty',
+      });
+   }
 
-	if (!req.files) {
+   //CAPTURA DE file
 
-		res.json({
+   let file = req.files.image;
 
-			status: 500,
-			msg: "The image cannot be empty"
-		})
-	}
+   //VALIDAR LA EXTENSION DEL file
 
-	//CAPTURA DE file
-	
-	let file = req.files.image
+   if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
+      return res.json({
+         status: 400,
+         msg: 'The image must be JPG or PNG',
+      });
+   }
 
-	//VALIDAR LA EXTENSION DEL file
+   if (file.size > 2000000) {
+      return res.json({
+         status: 400,
+         msg: 'The size must be max 2MB',
+      });
+   }
 
-	if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
+   //CAMBIAR NOMBRE AL FILE
 
-		return res.json({
+   let name = Math.floor(Math.random() * 10000);
 
-			status: 400,
-			msg: "The image must be JPG or PNG"
-		})
-	}
+   let extension = file.name.split('.').pop();
 
-	if (file.size > 2000000) {
+   //MOVER FILE A LA CARPETA
 
-		return res.json({
+   file.mv(`./files/blog/${name}.${extension}`, (err) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Error al guardar la imagen',
+            err,
+         });
+      }
 
-			status: 400,
-			msg: "The size must be max 2MB"
-		})
-	}
+      // OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
+      let blog = new Blog({
+         image: `${name}.${extension}`,
+         url: body.url,
+         title: body.title,
+         intro: body.intro,
+      });
 
-	//CAMBIAR NOMBRE AL FILE
+      //GUARDAR EN MONGODB
 
-	let name = Math.floor(Math.random() * 10000)
+      blog.save((err, data) => {
+         if (err) {
+            return res.json({
+               status: 400,
+               msg: 'Error storing the image in the database',
+               err,
+            });
+         }
 
-	let extension = file.name.split('.').pop()
-
-	//MOVER FILE A LA CARPETA
-
-	file.mv(`./files/blog/${name}.${extension}`, err => {
-		if (err) {
-
-			return res.json({
-
-				status: 500,
-				msg: "Error al guardar la imagen",
-				err
-			})
-		}
-
-		// OBETENER LOS DATOS DEL FORMULARIO PARA PASARLOS AL MODELO
-		let blog = new Blog({
-			
-			image: `${name}.${extension}`,
-			url: body.url,
-			title: body.title,
-			intro: body.intro
-		})
-
-		//GUARDAR EN MONGODB
-
-		blog.save((err, data) => {
-
-			if (err) {
-				return res.json({
-
-					status: 400,
-					msg: "Error storing the image in the database",
-					err
-				})
-			}
-
-			res.json({
-
-				status: 200,
-				data,
-				msg: "The blog has been created!"
-			})
-		})
-	})
-}
+         res.json({
+            status: 200,
+            data,
+            msg: 'The blog has been created!',
+         });
+      });
+   });
+};
 
 //FUNCION PUT
 
 let editBlog = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   // Obtener el cuerpo del formulario
 
-	// Obtener el cuerpo del formulario
+   let body = req.body;
 
-	let body = req.body
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
-
-	Blog.findById(id, (err, data) => {
-
-		if (err) {
-
-			return res.json({
-
-				status: 500,
-				msg: "Request Error: PUT Function",
-				err
-			})
-		}
-
-		if (!data) {
-
-			return res.json({
-
-				status: 400,
-				msg: "The blog does not exists",
-			})
-		}
-
-		let picRoute = data.image
-
-		//2. Se valida cambio de imagen
-
-		let checkFileChange = (req, picRoute) => {
-
-			return new Promise((resolve, reject) => {
-
-				if (req.files) {
-
-					let file = req.files.file
-
-					//VALIDAR LA EXTENSION DEL file
-
-					if (file.mimetype != 'image/jpeg' && file.mimetype != 'image/png') {
-
-						let respu = {
-
-							res: res,
-							msg: "The image must be JPG or PNG"
-						}
-
-						reject(respu)
-					}
-
-					if (file.size > 2000000) {
-
-						let respu = {
-
-							res: res,
-							msg: "The size must be max 2MB"
-						}
-
-						reject(respu)
-					}
-
-					//CAMBIAR name AL file
-
-					let name = Math.floor(Math.random() * 10000)
-
-					//CAPTURAR LA EXTENSION DEL file
-
-					let extension = file.name.split('.').pop()
-
-					//MOVER file A CARPETA
-
-					file.mv(`./files/blog/${name}.${extension}`, err => {
-
-						if (err) {
-
-							let respu = {
-
-								res: res,
-								msg: "Request Error: PUT Function"
-							}
-
-							reject(respu)
-						}
-
-						//Borrar antigua imagen
-						if (fs.existsSync(`./files/blog/${picRoute}`)) {
-
-							fs.unlinkSync(`./files/blog/${picRoute}`)
-						}
-
-						//Damos valor a nueva imagen
-						picRoute = `${name}.${extension}`
-
-						resolve(picRoute)
-					})
-
-
-				} else {
-
-					resolve(picRoute)
-				}
-			})
-		}
-
-		//3. Actualizamos registros
-
-		let registryChangeDb = (id, body, picRoute) => {
-
-			return new Promise((resolve, reject) => {
-				let dataBlog = {
-					
-					image: picRoute,
-					url: body.url,
-					title: body.title,
-					intro: body.intro
-					
-				}
-
-				//Actualizamos en MongoDb
-
-				Blog.findByIdAndUpdate(id, dataBlog, {
-					new: true,
-					runValidators: true
-				}, (err, data) => {
-
-					if (err) {
-
-						let respu = {
-
-							res: res,
-							err: err
-						}
-						reject(respu)
-					}
-
-					let respu = {
-
-						res: res,
-						data: data
-					}
-
-					resolve(respu)
-				})
-			})
-		}
-
-		//SINCRONIZAMOS LAS PROMESAS
-
-		checkFileChange(req, picRoute).then(picRoute => {
-
-			registryChangeDb(id, body, picRoute).then(respu => {
-
-				respu["res"].json({
-					status: 200,
-					data: respu["data"],
-					msg: "The blog has been updated!"
-				})
-
-			}).catch(respu => {
-
-				respu["res"].json({
-
-					status: 400,
-					err: respu["err"],
-					msg: "Error editing the blog"
-				})
-			})
-		}).catch(respu => {
-
-			respu["res"].json({
-
-				status: 400,
-				msg: respu["msg"]
-			})
-		})
-
-	})
-}
+   Blog.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: PUT Function',
+            err,
+         });
+      }
+
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'The blog does not exists',
+         });
+      }
+
+      let picRoute = data.image;
+
+      //2. Se valida cambio de imagen
+
+      let checkFileChange = (req, picRoute) => {
+         return new Promise((resolve, reject) => {
+            if (req.files) {
+               let file = req.files.file;
+
+               //VALIDAR LA EXTENSION DEL file
+
+               if (
+                  file.mimetype != 'image/jpeg' &&
+                  file.mimetype != 'image/png'
+               ) {
+                  let respu = {
+                     res: res,
+                     msg: 'The image must be JPG or PNG',
+                  };
+
+                  reject(respu);
+               }
+
+               if (file.size > 2000000) {
+                  let respu = {
+                     res: res,
+                     msg: 'The size must be max 2MB',
+                  };
+
+                  reject(respu);
+               }
+
+               //CAMBIAR name AL file
+
+               let name = Math.floor(Math.random() * 10000);
+
+               //CAPTURAR LA EXTENSION DEL file
+
+               let extension = file.name.split('.').pop();
+
+               //MOVER file A CARPETA
+
+               file.mv(`./files/blog/${name}.${extension}`, (err) => {
+                  if (err) {
+                     let respu = {
+                        res: res,
+                        msg: 'Request Error: PUT Function',
+                     };
+
+                     reject(respu);
+                  }
+
+                  //Borrar antigua imagen
+                  if (fs.existsSync(`./files/blog/${picRoute}`)) {
+                     fs.unlinkSync(`./files/blog/${picRoute}`);
+                  }
+
+                  //Damos valor a nueva imagen
+                  picRoute = `${name}.${extension}`;
+
+                  resolve(picRoute);
+               });
+            } else {
+               resolve(picRoute);
+            }
+         });
+      };
+
+      //3. Actualizamos registros
+
+      let registryChangeDb = (id, body, picRoute) => {
+         return new Promise((resolve, reject) => {
+            let dataBlog = {
+               image: picRoute,
+               url: body.url,
+               title: body.title,
+               intro: body.intro,
+            };
+
+            //Actualizamos en MongoDb
+
+            Blog.findByIdAndUpdate(
+               id,
+               dataBlog,
+               {
+                  new: true,
+                  runValidators: true,
+               },
+               (err, data) => {
+                  if (err) {
+                     let respu = {
+                        res: res,
+                        err: err,
+                     };
+                     reject(respu);
+                  }
+
+                  let respu = {
+                     res: res,
+                     data: data,
+                  };
+
+                  resolve(respu);
+               }
+            );
+         });
+      };
+
+      //SINCRONIZAMOS LAS PROMESAS
+
+      checkFileChange(req, picRoute)
+         .then((picRoute) => {
+            registryChangeDb(id, body, picRoute)
+               .then((respu) => {
+                  respu['res'].json({
+                     status: 200,
+                     data: respu['data'],
+                     msg: 'The blog has been updated!',
+                  });
+               })
+               .catch((respu) => {
+                  respu['res'].json({
+                     status: 400,
+                     err: respu['err'],
+                     msg: 'Error editing the blog',
+                  });
+               });
+         })
+         .catch((respu) => {
+            respu['res'].json({
+               status: 400,
+               msg: respu['msg'],
+            });
+         });
+   });
+};
 
 let deleteBlog = (req, res) => {
+   //Capturar el ID a actualizar
 
-	//Capturar el ID a actualizar
+   let id = req.params.id;
 
-	let id = req.params.id
+   //1. Se valida que el ID exista
 
-	//1. Se valida que el ID exista
+   Blog.findById(id, (err, data) => {
+      if (err) {
+         return res.json({
+            status: 500,
+            msg: 'Request Error: DELETE Function',
+            err,
+         });
+      }
 
-	Blog.findById(id, (err, data) => {
+      if (!data) {
+         return res.json({
+            status: 400,
+            msg: 'The blog does not exists',
+         });
+      }
 
-		if (err) {
+      //Borrar antigua foto
+      if (fs.existsSync(`./files/blog/${data.image}`)) {
+         fs.unlinkSync(`./files/blog/${data.image}`);
+      }
 
-			return res.json({
+      //Borrar registro en MongoDB
 
-				status: 500,
-				msg: "Request Error: DELETE Function",
-				err
-			})
-		}
+      Blog.findByIdAndRemove(id, (err, data) => {
+         if (err) {
+            return res.json({
+               status: 500,
+               msg: 'Request Error: DELETE Function',
+               err,
+            });
+         }
 
-		if (!data) {
+         res.json({
+            status: 200,
+            msg: 'The blog has been deleted!',
+         });
+      });
+   });
+};
 
-			return res.json({
+let showBlogImg = (req, res) => {
+   let image = req.params.image;
+   let imgRoute = `./files/blog/${image}`;
 
-				status: 400,
-				msg: "The blog does not exists",
-			})
-		}
+   fs.exists(imgRoute, (exists) => {
+      if (!exists) {
+         return res.json({
+            status: 400,
+            msg: 'The image does not exists',
+         });
+      }
 
-		//Borrar antigua foto
-		if (fs.existsSync(`./files/blog/${data.image}`)) {
+      res.sendFile(path.resolve(imgRoute));
+   });
+};
 
-			fs.unlinkSync(`./files/blog/${data.image}`)
-		}
-
-		//Borrar registro en MongoDB
-
-		Blog.findByIdAndRemove(id, (err, data) => {
-
-			if (err) {
-
-				return res.json({
-
-					status: 500,
-					msg: "Request Error: DELETE Function",
-					err
-				})
-			}
-
-			res.json({
-				status:200,
-				msg:"The blog has been deleted!"
-			})
-		})
-	})
-
-}
-
-let showBlogImg = (req,res)=>{
-
-	let image = req.params.image
-	let imgRoute = `./files/blog/${image}`
-
-	fs.exists(imgRoute, exists =>{
-
-		if(!exists){
-			return res.json({
-				status:400,
-				msg: "The image does not exists"
-			})
-		}
-
-		res.sendFile(path.resolve(imgRoute))
-	})
-}
-
-
-
-//Exports of functions 
+//Exports of functions
 
 module.exports = {
-	showBlogs,
-	createBlog,
-	editBlog,
-	deleteBlog,
-	showBlogImg
-}
+   showBlogs,
+   createBlog,
+   editBlog,
+   deleteBlog,
+   showBlogImg,
+};

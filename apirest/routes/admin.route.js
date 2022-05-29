@@ -3,7 +3,7 @@ const app = express();
 
 //IMPORTAR CONTROLADOR
 
-const Admins = require('../controllers/admin.controller')
+const Admins = require('../controllers/admin.controller');
 
 //IMPORTAR MIDDLEWARE
 
@@ -15,8 +15,8 @@ app.get('/show-admins', verifyToken, Admins.showAdmins);
 
 app.put('/edit-admin/:id', verifyToken, Admins.editAdmin);
 
-app.post('/login', Admins.login)
+app.post('/login', Admins.login);
 
 //EXPORTAR LA RUTA
 
-module.exports = app
+module.exports = app;
