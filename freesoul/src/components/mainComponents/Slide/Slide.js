@@ -58,7 +58,7 @@ export default function Slider() {
       setSlideIndex(index);
    };
 
-   dataSlider.sort((first, second) => {
+   dataSlider?.sort((first, second) => {
       if (first.position < second.position) {
          return -1;
       }
@@ -75,7 +75,7 @@ export default function Slider() {
          </h1>
          <div className='container-fluid'>
             <div className='img-fluid container-slider mt-2'>
-               {dataSlider.map((obj, index) => {
+               {dataSlider?.map((obj, index) => {
                   return (
                      <div
                         key={dataSlider[index]._id}
@@ -96,7 +96,7 @@ export default function Slider() {
                <BtnSlider moveSlide={prevSlide} direction={'prev'} />
 
                <div className='container-dots'>
-                  {Array.from({ length: `${dataSlider.length}` }).map(
+                  {Array.from({ length: `${dataSlider?.length}` }).map(
                      (item, index) => (
                         <div
                            key={`${dataSlider[index]._id}`}

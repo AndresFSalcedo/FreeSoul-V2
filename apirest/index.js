@@ -20,7 +20,7 @@ app.use(fileUpload());
 //EJECUTANDO CORS
 app.use(
    cors({
-      origin: 'https://fressoul-backend.herokuapp.com',
+      origin: 'http://localhost:3000',
    })
 );
 

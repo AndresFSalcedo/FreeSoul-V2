@@ -1,19 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import { Provider } from 'react-redux';
-
+import { render } from 'react-dom';
 import store from '../src/components/redux/store';
-
 import AdminPage from './components/adminComponents/AdminPage';
+import { Provider } from 'react-redux';
+import './index.css';
 
-ReactDOM.render(
+const rootElement = document.getElementById('root');
+
+render(
    <Provider store={store}>
       <AdminPage />
    </Provider>,
-   document.getElementById('root')
+   rootElement
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
